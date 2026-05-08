@@ -176,6 +176,16 @@ video.ready{opacity:1;}
 }
 .archive-tag.show{display:block;}
 
+/* ── ARCHIVE DAY HEADER ── */
+.archive-day-header{
+  text-align:center;margin-bottom:16px;
+  padding:10px 16px;
+  background:var(--card);border:1px solid rgba(250,204,21,.3);
+  border-radius:12px;
+}
+.archive-day-header-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:2px;}
+.archive-day-header-date{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:var(--text);}
+
 /* ── HINT ── */
 .hint{text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin:14px 0;min-height:18px;}
 
@@ -373,7 +383,8 @@ video.ready{opacity:1;}
 
 ```
 <div id="game">
-  <div class="progress" id="progress"></div>
+  <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
+  <div class="progress" id="progress" style="display:none"></div>
 
   <div class="video-wrap">
     <div class="video-top">
@@ -628,6 +639,14 @@ window.showTab = (tab) => {
   if (isArchive) renderCalendar();
 };
 
+function showTodayViewKeepArchiveTab() {
+  // Show the game area but keep archive tab highlighted
+  $('todayView').style.display    = 'block';
+  $('calendarView').classList.remove('show');
+  $('tabToday').classList.remove('active');
+  $('tabArchive').classList.add('active');
+}
+
 // ── GAME ENGINE ───────────────────────────────
 let clips       = [];
 let answered    = false;
@@ -638,6 +657,7 @@ let gameState   = null;
 
 function buildProgress() {
   const row = $('progress');
+  row.style.display = 'flex';
   row.innerHTML = '';
   clips.forEach((_, i) => {
     const pip = document.createElement('div');
@@ -652,6 +672,9 @@ function loadClip(index) {
   answered = false;
   const clip  = clips[index];
   const video = $('video');
+
+  // Hide archive header if playing today
+  if (!archiveMode) { $('archiveDayHeader').style.display = 'none'; $('archiveTag').classList.remove('show'); }
 
   video.classList.remove('ready');
   $('clipLabel').textContent = `Clip ${index+1} of ${clips.length}`;
@@ -783,7 +806,7 @@ function showDone({ score, total, isArchive, date }) {
 async function playArchiveDay(code, date) {
   if (archive[code]?.done) return;
 
-  showTab('today');
+  showTodayViewKeepArchiveTab();
   $('appScreen').style.display     = 'none';
   $('loadingScreen').classList.add('show');
 
@@ -802,6 +825,8 @@ async function playArchiveDay(code, date) {
 
   $('archiveTag').textContent = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive`;
   $('archiveTag').classList.add('show');
+  $('archiveDayHeader').style.display = 'block';
+  $('archiveDayHeader').innerHTML = `<div class="archive-day-header-label">Archive</div><div class="archive-day-header-date">${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}</div>`;
   $('game').style.display = 'block';
   $('done').classList.remove('visible');
 
