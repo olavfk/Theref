@@ -1,529 +1,1166 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>THE REF — Daily Football Ruling Game</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
+
+<title>THE REF</title>
+
+<meta name="theme-color" content="#0a0f0a">
+<link rel="icon" href="data:,">
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --pitch: #0d1f0a; --card: #161e15; --border: #2a3529;
-    --text: #e8f0e7; --muted: #6b7a6a;
-    --none-color: #22c55e; --fk-color: #38bdf8;
-    --yellow-color: #facc15; --red-color: #f43f5e; --accent: #a3e635;
-  }
-  html, body { background: var(--pitch); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; overflow-x: hidden; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 0; opacity: 0.4;
-  }
-  .wrapper { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root{
+  --bg:#0a0f0a;
+  --card:#121712;
+  --card-2:#181f18;
+  --border:#273127;
+  --text:#f3f6f2;
+  --muted:#8b978a;
+  --accent:#a3e635;
+
+  --green:#22c55e;
+  --blue:#38bdf8;
+  --yellow:#facc15;
+  --red:#f43f5e;
+}
+
+html,
+body{
+  background:
+    radial-gradient(circle at top, #162014 0%, #0a0f0a 45%),
+    #0a0f0a;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-family:'Inter',sans-serif;
+}
+
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.35;
+  pointer-events:none;
+}
+
+.wrapper{
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:720px;
+  margin:0 auto;
+  padding:20px 16px 80px;
+}
 
 /* HEADER */
-.header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid var(–border); margin-bottom: 24px; }
-.logo { font-family: ‘Bebas Neue’, cursive; font-size: 36px; letter-spacing: 3px; color: var(–accent); text-shadow: 0 0 30px #a3e63550; line-height: 1; }
-.logo span { color: var(–text); opacity: 0.4; font-size: 13px; display: block; letter-spacing: 4px; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 600; margin-top: 2px; }
-.streak-badge { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.streak-fire { font-size: 28px; line-height: 1; }
-.streak-count { font-family: ‘Bebas Neue’, cursive; font-size: 22px; color: #fb923c; line-height: 1; }
-.streak-label { font-size: 10px; color: var(–muted); letter-spacing: 2px; font-family: ‘Barlow Condensed’, sans-serif; text-transform: uppercase; }
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
+
+.logo{
+  font-family:'Bebas Neue',cursive;
+  font-size:40px;
+  letter-spacing:3px;
+  line-height:1;
+}
+
+.logo span{
+  display:block;
+  margin-top:2px;
+  font-size:12px;
+  letter-spacing:3px;
+  opacity:.45;
+  font-family:'Barlow Condensed',sans-serif;
+}
+
+.streak{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+}
+
+.streak-fire{
+  font-size:24px;
+}
+
+.streak-count{
+  font-family:'Bebas Neue',cursive;
+  font-size:24px;
+  line-height:1;
+  color:#fb923c;
+}
+
+.streak-label{
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
 
 /* PROGRESS */
-.progress-row { display: flex; gap: 8px; margin-bottom: 24px; }
-.progress-pip { flex: 1; height: 6px; border-radius: 3px; background: var(–border); transition: background 0.4s ease; position: relative; overflow: hidden; }
-.progress-pip.correct { background: var(–none-color); }
-.progress-pip.wrong   { background: var(–red-color); }
-.progress-pip.active::after { content: ‘’; position: absolute; left: 0; top: 0; bottom: 0; width: 60%; background: var(–accent); border-radius: 3px; animation: pulse-pip 1.4s ease-in-out infinite; }
-@keyframes pulse-pip { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.progress{
+  display:flex;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.progress-pip{
+  flex:1;
+  height:6px;
+  border-radius:999px;
+  background:#202820;
+  overflow:hidden;
+  position:relative;
+}
+
+.progress-pip.active::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:var(--accent);
+  animation:pulse 1.4s infinite;
+}
+
+.progress-pip.correct{
+  background:var(--green);
+}
+
+.progress-pip.wrong{
+  background:var(--red);
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
+}
 
 /* VIDEO */
-.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(–border); box-shadow: 0 20px 60px #00000080; }
-.video-wrap video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
-.video-topbar { position: absolute; top: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(to bottom, #000000cc, transparent); display: flex; justify-content: space-between; align-items: center; pointer-events: none; z-index: 2; }
-.clip-label { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; color: #ffffffcc; text-transform: uppercase; }
-.make-call-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #000000aa; opacity: 0; pointer-events: none; transition: opacity 0.4s; z-index: 3; }
-.make-call-overlay.visible { opacity: 1; }
-.make-call-badge { background: #000000cc; border: 2px solid var(–yellow-color); border-radius: 10px; padding: 14px 28px; font-family: ‘Bebas Neue’, cursive; font-size: 26px; letter-spacing: 3px; color: var(–yellow-color); text-shadow: 0 0 20px var(–yellow-color); animation: flicker 1.5s ease-in-out infinite; }
-@keyframes flicker { 0%,100%{opacity:1} 50%{opacity:0.75} }
 
-/* CLIP INFO */
-.clip-info { margin: 16px 0 12px; }
-.clip-num { font-family: ‘Bebas Neue’, cursive; font-size: 13px; letter-spacing: 2px; color: var(–muted); margin-bottom: 4px; }
-.clip-title { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 20px; color: var(–text); }
+.video-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:20px;
+  background:#000;
+  border:1px solid #1f271f;
+  box-shadow:0 20px 80px rgba(0,0,0,.55);
+}
+
+video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+  display:block;
+  opacity:0;
+  transition:opacity .35s ease;
+}
+
+video.ready{
+  opacity:1;
+}
+
+.video-top{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  padding:14px;
+  background:linear-gradient(to bottom, rgba(0,0,0,.75), transparent);
+  z-index:2;
+}
+
+.clip-label{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#ffffffcc;
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;
+}
+
+/* INFO */
+
+.clip-info{
+  margin:18px 0 12px;
+}
+
+.clip-number{
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.clip-title{
+  font-size:24px;
+  font-weight:700;
+  line-height:1.15;
+}
 
 /* HINT */
-.watching-hint { text-align: center; font-family: ‘Barlow Condensed’, sans-serif; font-size: 13px; letter-spacing: 2px; color: var(–muted); text-transform: uppercase; margin-bottom: 10px; min-height: 20px; }
 
-/* ANSWER BUTTONS */
-.answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.ans-btn { position: relative; padding: 18px 12px; border-radius: 12px; border: 2px solid var(–border); background: var(–card); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s ease; overflow: hidden; user-select: none; }
-.ans-btn::before { content: ‘’; position: absolute; inset: 0; opacity: 0; transition: opacity 0.2s; }
-.ans-btn.none::before     { background: radial-gradient(circle at 50% 100%, #22c55e18, transparent 70%); }
-.ans-btn.freekick::before { background: radial-gradient(circle at 50% 100%, #38bdf818, transparent 70%); }
-.ans-btn.yellow::before   { background: radial-gradient(circle at 50% 100%, #facc1518, transparent 70%); }
-.ans-btn.red::before      { background: radial-gradient(circle at 50% 100%, #f43f5e18, transparent 70%); }
-.ans-btn:not(:disabled):not(.locked):hover { transform: translateY(-2px); border-color: var(–accent); }
-.ans-btn:not(:disabled):not(.locked):hover::before { opacity: 1; }
-.ans-btn:disabled { cursor: not-allowed; }
-.ans-btn.locked { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
-.ans-btn.selected-correct { border-color: var(–none-color) !important; background: #14532d !important; transform: none; }
-.ans-btn.selected-wrong   { border-color: var(–red-color) !important;  background: #450a0a !important; transform: none; }
-.ans-btn.reveal-correct   { border-color: var(–none-color) !important; background: #14532d50 !important; }
-.ans-icon  { font-size: 28px; line-height: 1; }
-.ans-label { font-family: ‘Bebas Neue’, cursive; font-size: 17px; letter-spacing: 1.5px; }
-.ans-btn.none .ans-label     { color: var(–none-color); }
-.ans-btn.freekick .ans-label { color: var(–fk-color); }
-.ans-btn.yellow .ans-label   { color: var(–yellow-color); }
-.ans-btn.red .ans-label      { color: var(–red-color); }
+.hint{
+  text-align:center;
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#9ca3af;
+  margin:14px 0;
+  min-height:18px;
+}
+
+/* ANSWERS */
+
+.answers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:8px;
+}
+
+.answer{
+  position:relative;
+  padding:22px 14px;
+  border-radius:18px;
+  border:1px solid #2d3a2c;
+  background:linear-gradient(to bottom, #1b241a, #141a13);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+  transition:
+    transform .15s ease,
+    border-color .2s ease,
+    background .2s ease,
+    opacity .2s ease;
+}
+
+.answer:hover:not(:disabled):not(.locked){
+  transform:translateY(-3px);
+  border-color:#84cc16;
+  background:linear-gradient(to bottom, #212b1f, #171d16);
+}
+
+.answer:disabled{
+  cursor:not-allowed;
+}
+
+.answer.locked{
+  opacity:.35;
+}
+
+.answer.correct-selected{
+  border-color:var(--green)!important;
+  background:#14532d!important;
+}
+
+.answer.wrong-selected{
+  border-color:var(--red)!important;
+  background:#450a0a!important;
+}
+
+.answer.reveal{
+  border-color:var(--green)!important;
+  background:#14532d55!important;
+}
+
+.answer-icon{
+  font-size:30px;
+}
+
+.answer-label{
+  font-family:'Bebas Neue',cursive;
+  letter-spacing:1.5px;
+  font-size:18px;
+}
+
+.answer.none .answer-label{
+  color:var(--green);
+}
+
+.answer.freekick .answer-label{
+  color:var(--blue);
+}
+
+.answer.yellow .answer-label{
+  color:var(--yellow);
+}
+
+.answer.red .answer-label{
+  color:var(--red);
+}
 
 /* RESULT */
-.result-card { background: var(–card); border-radius: 12px; border: 1px solid var(–border); padding: 16px 18px; margin-bottom: 16px; animation: slideUp 0.3s ease; }
-@keyframes slideUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-.result-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-.result-verdict { font-family: ‘Bebas Neue’, cursive; font-size: 22px; letter-spacing: 2px; }
-.result-verdict.correct { color: var(–none-color); }
-.result-verdict.wrong   { color: var(–red-color); }
-.result-answer-tag { margin-left: auto; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; padding: 3px 8px; border-radius: 4px; background: #ffffff15; }
-.result-explanation { font-size: 14px; color: #a8b8a7; line-height: 1.6; }
 
-/* NEXT BTN */
-.next-btn { width: 100%; padding: 16px; background: var(–accent); color: #0d1f0a; border: none; border-radius: 12px; font-family: ‘Bebas Neue’, cursive; font-size: 20px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s ease; display: none; }
-.next-btn.visible { display: block; }
-.next-btn:hover { background: #bef264; transform: translateY(-1px); }
+.result{
+  display:none;
+  margin-top:16px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:18px;
+  animation:up .25s ease;
+}
 
-/* DONE / WAITING */
-.done-screen, .waiting-screen { display: none; flex-direction: column; align-items: center; text-align: center; padding: 32px 0; gap: 20px; animation: slideUp 0.5s ease; }
-.done-screen.visible, .waiting-screen.visible { display: flex; }
-.done-emoji { font-size: 64px; }
-.done-title { font-family: ‘Bebas Neue’, cursive; font-size: 42px; letter-spacing: 3px; color: var(–accent); }
-.done-score { font-family: ‘Barlow Condensed’, sans-serif; font-size: 18px; color: var(–muted); }
-.done-score strong { color: var(–text); font-size: 28px; }
-.score-pips { display: flex; gap: 10px; }
-.score-pip { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-.score-pip.correct { background: #14532d; border: 1px solid var(–none-color); }
-.score-pip.wrong   { background: #450a0a; border: 1px solid var(–red-color); }
-.comeback-box { background: var(–card); border: 1px solid var(–border); border-radius: 12px; padding: 20px 28px; width: 100%; }
-.comeback-label { font-family: ‘Barlow Condensed’, sans-serif; font-size: 12px; letter-spacing: 3px; color: var(–muted); text-transform: uppercase; margin-bottom: 8px; }
-.countdown { font-family: ‘Bebas Neue’, cursive; font-size: 40px; color: var(–text); letter-spacing: 4px; }
-.share-btn { width: 100%; padding: 14px; background: transparent; color: var(–text); border: 1px solid var(–border); border-radius: 12px; font-family: ‘Bebas Neue’, cursive; font-size: 18px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s ease; }
-.share-btn:hover { border-color: var(–accent); color: var(–accent); }
-.replay-btn { padding: 10px 22px; background: transparent; color: var(–muted); border: 1px solid var(–border); border-radius: 8px; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
-.replay-btn:hover { color: var(–text); border-color: var(–muted); }
+@keyframes up{
+  from{
+    opacity:0;
+    transform:translateY(8px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
 
-/* NO CLIPS */
-.no-clips { background: var(–card); border: 1px solid var(–border); border-radius: 12px; padding: 32px; text-align: center; margin-top: 16px; }
-.no-clips h2 { font-family: ‘Bebas Neue’, cursive; font-size: 28px; letter-spacing: 2px; color: var(–muted); margin-bottom: 12px; }
-.no-clips code { display: block; margin-top: 16px; background: #0a120a; border: 1px solid var(–border); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(–accent); font-family: monospace; text-align: left; line-height: 2; }
+.result-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
 
-.copied-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(–accent); color: #0d1f0a; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 2px; padding: 10px 24px; border-radius: 8px; opacity: 0; transition: all 0.3s ease; pointer-events: none; z-index: 100; }
-.copied-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.result-title{
+  font-family:'Bebas Neue',cursive;
+  letter-spacing:2px;
+  font-size:24px;
+}
+
+.result-title.correct{
+  color:var(--green);
+}
+
+.result-title.wrong{
+  color:var(--red);
+}
+
+.result-tag{
+  margin-left:auto;
+  padding:4px 8px;
+  border-radius:6px;
+  background:#ffffff12;
+  font-size:12px;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+.result-text{
+  color:#a8b5a7;
+  line-height:1.7;
+  font-size:14px;
+}
+
+/* BUTTON */
+
+.next{
+  width:100%;
+  margin-top:16px;
+  padding:16px;
+  border:none;
+  border-radius:18px;
+  background:var(--accent);
+  color:#0a0f0a;
+  font-family:'Bebas Neue',cursive;
+  font-size:22px;
+  letter-spacing:3px;
+  cursor:pointer;
+  display:none;
+  transition:transform .15s ease;
+}
+
+.next:hover{
+  transform:translateY(-2px);
+}
+
+.next.visible{
+  display:block;
+}
+
+/* END */
+
+.done{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  gap:22px;
+  padding-top:40px;
+}
+
+.done.visible{
+  display:flex;
+}
+
+.done-emoji{
+  font-size:70px;
+}
+
+.done-title{
+  font-family:'Bebas Neue',cursive;
+  font-size:54px;
+  letter-spacing:4px;
+}
+
+.done-score{
+  font-size:18px;
+  color:var(--muted);
+}
+
+.done-score strong{
+  color:var(--text);
+  font-size:34px;
+}
+
+.score-row{
+  display:flex;
+  gap:10px;
+}
+
+.score-box{
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.score-box.correct{
+  background:#14532d;
+  border:1px solid var(--green);
+}
+
+.score-box.wrong{
+  background:#450a0a;
+  border:1px solid var(--red);
+}
+
+.countdown-box{
+  width:100%;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:20px;
+}
+
+.countdown-label{
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+.countdown{
+  font-family:'Bebas Neue',cursive;
+  font-size:42px;
+  letter-spacing:4px;
+}
+
+.share{
+  width:100%;
+  padding:16px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+  font-family:'Bebas Neue',cursive;
+  font-size:20px;
+  letter-spacing:3px;
+}
+
+.share:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:28px;
+  transform:translateX(-50%) translateY(16px);
+  background:var(--accent);
+  color:#0a0f0a;
+  padding:10px 20px;
+  border-radius:10px;
+  font-size:13px;
+  letter-spacing:2px;
+  font-weight:700;
+  opacity:0;
+  transition:.3s ease;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+
+.no-clips{
+  margin-top:20px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:32px;
+  text-align:center;
+}
+
+.no-clips h2{
+  font-family:'Bebas Neue',cursive;
+  letter-spacing:2px;
+  font-size:34px;
+  margin-bottom:10px;
+}
+
+.no-clips p{
+  color:var(--muted);
+  line-height:1.7;
+}
 </style>
-
 </head>
+
 <body>
+
 <div class="wrapper">
 
   <header class="header">
-    <div class="logo">THE REF<span>DAILY FOOTBALL RULING</span></div>
-    <div class="streak-badge">
+    <div class="logo">
+      THE REF
+      <span>DAILY FOOTBALL DECISIONS</span>
+    </div>
+
+    <div class="streak">
       <div class="streak-fire">🔥</div>
       <div class="streak-count" id="streakCount">0</div>
-      <div class="streak-label">Day Streak</div>
+      <div class="streak-label">Streak</div>
     </div>
   </header>
 
-  <div id="gameArea">
-    <div class="progress-row" id="progressRow"></div>
+  <div id="game">
 
-```
-<div class="video-wrap" id="videoWrap">
-  <div class="video-topbar">
-    <div class="clip-label" id="clipLabel">Clip 1</div>
+    <div class="progress" id="progress"></div>
+
+    <div class="video-wrap">
+      <div class="video-top">
+        <div class="clip-label" id="clipLabel">Clip 1</div>
+      </div>
+
+      <video
+        id="video"
+        playsinline
+        webkit-playsinline
+        controls
+      ></video>
+    </div>
+
+    <div class="clip-info">
+      <div class="clip-number" id="clipNumber">Incident 1</div>
+      <div class="clip-title" id="clipTitle">Loading...</div>
+    </div>
+
+    <div class="hint" id="hint">
+      Watch the clip
+    </div>
+
+    <div class="answers">
+
+      <button class="answer none locked" data-answer="none">
+        <div class="answer-icon">✅</div>
+        <div class="answer-label">No Foul</div>
+      </button>
+
+      <button class="answer freekick locked" data-answer="freekick">
+        <div class="answer-icon">⚽</div>
+        <div class="answer-label">Free Kick</div>
+      </button>
+
+      <button class="answer yellow locked" data-answer="yellow">
+        <div class="answer-icon">🟨</div>
+        <div class="answer-label">Yellow</div>
+      </button>
+
+      <button class="answer red locked" data-answer="red">
+        <div class="answer-icon">🟥</div>
+        <div class="answer-label">Red Card</div>
+      </button>
+
+    </div>
+
+    <div class="result" id="result"></div>
+
+    <button class="next" id="nextButton">
+      NEXT →
+    </button>
+
   </div>
-  <video id="videoEl" playsinline webkit-playsinline controls></video>
-  <div class="make-call-overlay" id="makeCallOverlay">
-    <div class="make-call-badge">⚡ MAKE YOUR CALL</div>
-  </div>
-</div>
 
-<div class="clip-info">
-  <div class="clip-num" id="clipNum">INCIDENT 1</div>
-  <div class="clip-title" id="clipTitle"></div>
-</div>
+  <div class="done" id="done">
 
-<div class="watching-hint" id="watchingHint">Watch the clip, then make your call</div>
-
-<div class="answer-grid">
-  <button class="ans-btn none locked"     data-ans="none"     onclick="submitAnswer('none')"><span class="ans-icon">✅</span><span class="ans-label">No Foul</span></button>
-  <button class="ans-btn freekick locked" data-ans="freekick" onclick="submitAnswer('freekick')"><span class="ans-icon">⚽</span><span class="ans-label">Free Kick</span></button>
-  <button class="ans-btn yellow locked"   data-ans="yellow"   onclick="submitAnswer('yellow')"><span class="ans-icon">🟨</span><span class="ans-label">Yellow Card</span></button>
-  <button class="ans-btn red locked"      data-ans="red"      onclick="submitAnswer('red')"><span class="ans-icon">🟥</span><span class="ans-label">Red Card</span></button>
-</div>
-
-<div class="result-card" id="resultCard" style="display:none"></div>
-<button class="next-btn" id="nextBtn" onclick="nextClip()">NEXT CLIP →</button>
-```
-
-  </div>
-
-  <div class="done-screen" id="doneScreen">
     <div class="done-emoji" id="doneEmoji">🏆</div>
-    <div class="done-title">FULL TIME</div>
-    <div class="done-score">You scored <strong id="finalScore"></strong></div>
-    <div class="score-pips" id="scorePips"></div>
-    <div class="comeback-box">
-      <div class="comeback-label">Next match in</div>
-      <div class="countdown" id="countdown">00:00:00</div>
-    </div>
-    <button class="share-btn" onclick="shareResult()">📋 SHARE YOUR RESULT</button>
-    <button class="replay-btn" onclick="resetForDemo()">↩ Reset (Demo)</button>
-  </div>
 
-  <div class="waiting-screen" id="waitingScreen">
-    <div style="font-size:56px">⏱️</div>
-    <div style="font-family:'Bebas Neue',cursive;font-size:36px;letter-spacing:2px;color:var(--accent)">SEE YOU TOMORROW</div>
-    <div style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:15px">You've already made your calls today.</div>
-    <div class="comeback-box">
-      <div class="comeback-label">Next match in</div>
-      <div class="countdown" id="countdown2">00:00:00</div>
+    <div class="done-title">
+      FULL TIME
     </div>
-    <button class="share-btn" onclick="shareResult()">📋 SHARE TODAY'S RESULT</button>
-    <button class="replay-btn" onclick="resetForDemo()">↩ Reset (Demo)</button>
+
+    <div class="done-score">
+      You scored <strong id="finalScore">0/3</strong>
+    </div>
+
+    <div class="score-row" id="scoreRow"></div>
+
+    <div class="countdown-box">
+      <div class="countdown-label">
+        Next clips in
+      </div>
+
+      <div class="countdown" id="countdown">
+        00:00:00
+      </div>
+    </div>
+
+    <button class="share" id="shareButton">
+      SHARE RESULT
+    </button>
+
   </div>
 
 </div>
-<div class="copied-toast" id="toast">COPIED TO CLIPBOARD</div>
+
+<div class="toast" id="toast">
+  COPIED
+</div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-//  FILE NAMING CONVENTION  →  DDMMYY-N-X.mp4
-//
-//  DD   = day (zero-padded)
-//  MM   = month (zero-padded)
-//  YY   = 2-digit year
-//  N    = clip number (1, 2, 3 …)
-//  X    = answer code:
-//           n = No Foul
-//           f = Free Kick
-//           y = Yellow Card
-//           r = Red Card
-//
-//  Examples for 8 May 2026:
-//    080526-1-r.mp4   clip 1 → Red Card
-//    080526-2-y.mp4   clip 2 → Yellow Card
-//    080526-3-f.mp4   clip 3 → Free Kick
-//    080526-4-n.mp4   clip 4 → No Foul
-//
-//  Just drop the files in the same folder as this HTML.
-//  No other config needed — the game reads the date and loads
-//  whatever clips it finds automatically.
-// ═══════════════════════════════════════════════════════════════
+const ANSWER_MAP = {
+  n:'none',
+  f:'freekick',
+  y:'yellow',
+  r:'red'
+};
 
-// Optional: add titles & explanations per clip (key = "DDMMYY-N")
+const ANSWER_LABELS = {
+  none:'No Foul ✅',
+  freekick:'Free Kick ⚽',
+  yellow:'Yellow Card 🟨',
+  red:'Red Card 🟥'
+};
+
+const DEFAULT_EXPLANATIONS = {
+  none:'No foul. Play continues.',
+  freekick:'A foul was committed. Free kick awarded.',
+  yellow:'Reckless challenge. Yellow card.',
+  red:'Serious foul play. Red card.'
+};
+
 const CLIP_META = {
-  "080526-1": {
-    title: "Gerrard Stamp",
-    explanation: "Gerrard deliberately stamps on his opponent's leg with no attempt to play the ball. Totally unnecessary and intentional — straight red card for violent conduct.",
+  '080526-1':{
+    title:'Dangerous Tackle',
+    explanation:'Studs up with excessive force. Clear red card.'
   },
+  '080526-2':{
+    title:'Late Challenge',
+    explanation:'Late and reckless. Yellow card is correct.'
+  },
+  '080526-3':{
+    title:'Shoulder Duel',
+    explanation:'Fair physical contact. No foul.'
+  }
 };
 
-// ── Defaults ──
-const ANSWER_MAP    = { n:"none", f:"freekick", y:"yellow", r:"red" };
-const ANSWER_LABELS = { none:"No Foul ✅", freekick:"Free Kick ⚽", yellow:"Yellow Card 🟨", red:"Red Card 🟥" };
-const DEFAULT_EXPLANATION = {
-  none:     "No foul — the challenge was fair and the referee played on.",
-  freekick: "A foul was committed, awarding a free kick to the opposition.",
-  yellow:   "A reckless or unsporting challenge — yellow card shown.",
-  red:      "Serious foul play or violent conduct — straight red card.",
-};
-
-// ── Date helpers ──
-function getTodayCode() {
+function getTodayCode(){
   const d = new Date();
-  const dd = String(d.getDate()).padStart(2,"0");
-  const mm = String(d.getMonth()+1).padStart(2,"0");
+
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
   const yy = String(d.getFullYear()).slice(-2);
+
   return `${dd}${mm}${yy}`;
 }
 
-function getTodayISO() {
-  return new Date().toISOString().split("T")[0];
+function getTodayISO(){
+  return new Date().toISOString().split('T')[0];
 }
 
-// ── Probe whether a video file exists ──
-async function probeVideo(filename) {
-  try {
-    const res = await fetch(filename, { method: "HEAD" });
-    return res.ok;
-  } catch(e) {
+async function exists(url){
+  try{
+    const r = await fetch(url,{method:'HEAD'});
+    return r.ok;
+  }catch{
     return false;
   }
 }
 
-// ── Build clip list for today ──
-async function buildClipList(code) {
+async function buildClips(code){
+
   const clips = [];
-  for (let i = 1; i <= 9; i++) {
-    let found = false;
-    for (const code2 of ["n","f","y","r"]) {
-      const filename = `${code}-${i}-${code2}.mp4`;
-      if (await probeVideo(filename)) {
-        const key  = `${code}-${i}`;
+
+  for(let i=1;i<=3;i++){
+
+    for(const c of ['n','f','y','r']){
+
+      const filename = `${code}/${code}-${i}-${c}.mp4`;
+
+      const ok = await exists(filename);
+
+      if(ok){
+
+        const key = `${code}-${i}`;
         const meta = CLIP_META[key] || {};
-        const ans  = ANSWER_MAP[code2];
+
         clips.push({
           filename,
-          correct: ans,
-          title:       meta.title       || `Incident ${i}`,
-          explanation: meta.explanation || DEFAULT_EXPLANATION[ans],
+          correct:ANSWER_MAP[c],
+          title:meta.title || `Incident ${i}`,
+          explanation:meta.explanation || DEFAULT_EXPLANATIONS[ANSWER_MAP[c]]
         });
-        found = true;
+
         break;
       }
     }
-    if (!found && i > 1) break; // stop scanning after first gap
   }
+
   return clips;
 }
 
-// ══════════════════════════════
-//  STATE
-// ══════════════════════════════
 const TODAY_CODE = getTodayCode();
-const TODAY_ISO  = getTodayISO();
+const TODAY_ISO = getTodayISO();
 
-let CLIPS = [];
-let state  = { clipIndex:0, answers:[], done:false, date:TODAY_ISO };
-let streak = { count:0, lastDate:null };
-let hasAnswered = false;
+let clips = [];
 
-function loadPersistedState() {
-  try {
-    const s = JSON.parse(localStorage.getItem("theref_state")||"null");
-    if (s && s.date === TODAY_ISO) state = s;
-    const sk = JSON.parse(localStorage.getItem("theref_streak")||"null");
-    if (sk) streak = sk;
-  } catch(e) {}
+let state = {
+  clipIndex:0,
+  answers:[],
+  done:false,
+  date:TODAY_ISO
+};
+
+let streak = {
+  count:0,
+  lastDate:null
+};
+
+function loadStorage(){
+
+  try{
+
+    const s = JSON.parse(localStorage.getItem('theref_state'));
+
+    if(s && s.date === TODAY_ISO){
+      state = s;
+    }
+
+    const st = JSON.parse(localStorage.getItem('theref_streak'));
+
+    if(st){
+      streak = st;
+    }
+
+  }catch(e){}
 }
-function saveState()  { localStorage.setItem("theref_state",  JSON.stringify(state));  }
-function saveStreak() { localStorage.setItem("theref_streak", JSON.stringify(streak)); }
 
-// ══════════════════════════════
-//  PROGRESS PIPS
-// ══════════════════════════════
-function buildProgress() {
-  const row = document.getElementById("progressRow");
-  row.innerHTML = "";
-  CLIPS.forEach((_,i) => {
-    const pip = document.createElement("div");
-    pip.className = "progress-pip";
-    pip.id = `pip-${i}`;
-    if      (i < state.answers.length)        pip.classList.add(state.answers[i].correct ? "correct" : "wrong");
-    else if (i === state.clipIndex)            pip.classList.add("active");
-    row.appendChild(pip);
+function saveState(){
+  localStorage.setItem('theref_state',JSON.stringify(state));
+}
+
+function saveStreak(){
+  localStorage.setItem('theref_streak',JSON.stringify(streak));
+}
+
+function buildProgress(){
+
+  const row = document.getElementById('progress');
+
+  row.innerHTML = '';
+
+  clips.forEach((_,i)=>{
+
+    const el = document.createElement('div');
+
+    el.className = 'progress-pip';
+
+    if(i < state.answers.length){
+      el.classList.add(
+        state.answers[i].correct ? 'correct' : 'wrong'
+      );
+    }else if(i === state.clipIndex){
+      el.classList.add('active');
+    }
+
+    row.appendChild(el);
   });
 }
 
-// ══════════════════════════════
-//  CLIP LOADING
-// ══════════════════════════════
-function loadClip(index) {
-  hasAnswered = false;
-  const clip  = CLIPS[index];
-  const video = document.getElementById("videoEl");
+let answered = false;
 
-  document.getElementById("clipLabel").textContent  = `Clip ${index+1} of ${CLIPS.length}`;
-  document.getElementById("clipNum").textContent    = `INCIDENT ${index+1} OF ${CLIPS.length}`;
-  document.getElementById("clipTitle").textContent  = clip.title;
-  document.getElementById("resultCard").style.display = "none";
-  document.getElementById("nextBtn").classList.remove("visible");
-  document.getElementById("makeCallOverlay").classList.remove("visible");
-  document.getElementById("watchingHint").textContent = "Watch the clip, then make your call";
+function loadClip(index){
 
-  // Lock buttons until video ends
-  document.querySelectorAll(".ans-btn").forEach(b => {
-    b.classList.add("locked");
-    b.disabled = false;
-    b.classList.remove("selected-correct","selected-wrong","reveal-correct");
+  answered = false;
+
+  const clip = clips[index];
+
+  const video = document.getElementById('video');
+
+  video.classList.remove('ready');
+
+  document.getElementById('clipLabel').textContent =
+    `Clip ${index+1} of ${clips.length}`;
+
+  document.getElementById('clipNumber').textContent =
+    `Incident ${index+1}`;
+
+  document.getElementById('clipTitle').textContent =
+    clip.title;
+
+  document.getElementById('hint').textContent =
+    'Watch the clip';
+
+  document.getElementById('result').style.display = 'none';
+
+  document.getElementById('nextButton').classList.remove('visible');
+
+  document.querySelectorAll('.answer').forEach(btn=>{
+
+    btn.classList.add('locked');
+
+    btn.disabled = false;
+
+    btn.classList.remove(
+      'correct-selected',
+      'wrong-selected',
+      'reveal'
+    );
   });
 
   buildProgress();
 
   video.src = clip.filename;
-  video.currentTime = 0;
+
   video.load();
 
-  video.onended = () => {
-    if (!hasAnswered) {
-      document.querySelectorAll(".ans-btn").forEach(b => b.classList.remove("locked"));
-      document.getElementById("makeCallOverlay").classList.add("visible");
-      document.getElementById("watchingHint").textContent = "";
-    }
+  video.oncanplay = ()=>{
+    video.classList.add('ready');
   };
 
-  video.play().catch(() => {
-    document.getElementById("watchingHint").textContent = "▶ Tap video to play";
-  });
-}
+  video.onended = ()=>{
 
-// ══════════════════════════════
-//  ANSWERING
-// ══════════════════════════════
-function submitAnswer(chosen) {
-  // Reject if buttons still locked
-  if (document.querySelector(`.ans-btn[data-ans="${chosen}"]`).classList.contains("locked")) return;
-  if (hasAnswered) return;
-  hasAnswered = true;
+    if(answered) return;
 
-  document.getElementById("makeCallOverlay").classList.remove("visible");
+    document.querySelectorAll('.answer').forEach(btn=>{
+      btn.classList.remove('locked');
+    });
 
-  const clip      = CLIPS[state.clipIndex];
-  const isCorrect = chosen === clip.correct;
+    document.getElementById('hint').textContent =
+      'Choose your decision';
+  };
 
-  state.answers.push({ chosen, correct: isCorrect });
-  saveState();
-
-  document.querySelectorAll(".ans-btn").forEach(b => {
-    b.disabled = true;
-    const id = b.getAttribute("data-ans");
-    if (id === chosen && isCorrect)  b.classList.add("selected-correct");
-    if (id === chosen && !isCorrect) b.classList.add("selected-wrong");
-    if (id === clip.correct && !isCorrect) b.classList.add("reveal-correct");
+  video.play().catch(()=>{
+    document.getElementById('hint').textContent =
+      'Tap play';
   });
 
-  const pip = document.getElementById(`pip-${state.clipIndex}`);
-  if (pip) { pip.classList.remove("active"); pip.classList.add(isCorrect ? "correct" : "wrong"); }
+  const next = clips[index+1];
 
-  const card = document.getElementById("resultCard");
-  card.style.display = "block";
-  card.innerHTML = `
-    <div class="result-header">
-      <span style="font-size:22px">${isCorrect ? "✅" : "❌"}</span>
-      <span class="result-verdict ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? "CORRECT!" : "WRONG CALL"}</span>
-      <span class="result-answer-tag">${ANSWER_LABELS[clip.correct]}</span>
-    </div>
-    <div class="result-explanation">${clip.explanation}</div>
-  `;
+  if(next){
 
-  const isLast = state.clipIndex >= CLIPS.length - 1;
-  const btn = document.getElementById("nextBtn");
-  btn.classList.add("visible");
-  btn.textContent = isLast ? "SEE RESULTS →" : "NEXT CLIP →";
-}
+    const preload = document.createElement('link');
 
-// ══════════════════════════════
-//  NEXT / FINISH
-// ══════════════════════════════
-function nextClip() {
-  if (state.clipIndex >= CLIPS.length - 1) {
-    finishGame();
-  } else {
-    state.clipIndex++;
-    loadClip(state.clipIndex);
+    preload.rel = 'preload';
+    preload.as = 'video';
+    preload.href = next.filename;
+
+    document.head.appendChild(preload);
   }
 }
 
-function finishGame() {
-  state.done = true;
+function submitAnswer(choice){
+
+  const btn = document.querySelector(
+    `[data-answer="${choice}"]`
+  );
+
+  if(btn.classList.contains('locked')) return;
+
+  if(answered) return;
+
+  answered = true;
+
+  const clip = clips[state.clipIndex];
+
+  const correct = choice === clip.correct;
+
+  state.answers.push({
+    chosen:choice,
+    correct
+  });
+
   saveState();
 
-  const yesterday = new Date(Date.now()-86400000).toISOString().split("T")[0];
-  if      (streak.lastDate === yesterday)  streak.count++;
-  else if (streak.lastDate !== TODAY_ISO)  streak.count = 1;
+  document.querySelectorAll('.answer').forEach(el=>{
+
+    el.disabled = true;
+
+    const id = el.dataset.answer;
+
+    if(id === choice && correct){
+      el.classList.add('correct-selected');
+    }
+
+    if(id === choice && !correct){
+      el.classList.add('wrong-selected');
+    }
+
+    if(id === clip.correct && !correct){
+      el.classList.add('reveal');
+    }
+  });
+
+  buildProgress();
+
+  const result = document.getElementById('result');
+
+  result.style.display = 'block';
+
+  result.innerHTML = `
+    <div class="result-top">
+      <div style="font-size:22px">
+        ${correct ? '✅' : '❌'}
+      </div>
+
+      <div class="result-title ${correct ? 'correct' : 'wrong'}">
+        ${correct ? 'Correct' : 'Wrong Call'}
+      </div>
+
+      <div class="result-tag">
+        ${ANSWER_LABELS[clip.correct]}
+      </div>
+    </div>
+
+    <div class="result-text">
+      ${clip.explanation}
+    </div>
+  `;
+
+  const nextButton = document.getElementById('nextButton');
+
+  nextButton.classList.add('visible');
+
+  nextButton.textContent =
+    state.clipIndex >= clips.length - 1
+      ? 'SEE RESULTS →'
+      : 'NEXT →';
+}
+
+function nextClip(){
+
+  if(state.clipIndex >= clips.length - 1){
+    finishGame();
+    return;
+  }
+
+  state.clipIndex++;
+
+  loadClip(state.clipIndex);
+}
+
+function finishGame(){
+
+  state.done = true;
+
+  saveState();
+
+  const yesterday = new Date(
+    Date.now()-86400000
+  ).toISOString().split('T')[0];
+
+  if(streak.lastDate === yesterday){
+    streak.count++;
+  }else if(streak.lastDate !== TODAY_ISO){
+    streak.count = 1;
+  }
+
   streak.lastDate = TODAY_ISO;
+
   saveStreak();
 
-  document.getElementById("streakCount").textContent = streak.count;
-  document.getElementById("gameArea").style.display = "none";
-  const done = document.getElementById("doneScreen");
-  done.classList.add("visible");
+  document.getElementById('streakCount').textContent =
+    streak.count;
 
-  const score = state.answers.filter(a => a.correct).length;
-  document.getElementById("finalScore").textContent = `${score}/${CLIPS.length}`;
-  document.getElementById("doneEmoji").textContent  = score === CLIPS.length ? "🏆" : score >= Math.ceil(CLIPS.length*0.6) ? "🟨" : "🟥";
-  document.getElementById("scorePips").innerHTML    = state.answers.map(a =>
-    `<div class="score-pip ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
-  ).join("");
+  document.getElementById('game').style.display = 'none';
+
+  document.getElementById('done').classList.add('visible');
+
+  const score = state.answers.filter(a=>a.correct).length;
+
+  document.getElementById('finalScore').textContent =
+    `${score}/${clips.length}`;
+
+  const emoji =
+    score === 3 ? '🏆' :
+    score === 2 ? '👏' :
+    score === 1 ? '😬' :
+    '💀';
+
+  document.getElementById('doneEmoji').textContent = emoji;
+
+  document.getElementById('scoreRow').innerHTML =
+    state.answers.map(a=>`
+      <div class="score-box ${a.correct ? 'correct' : 'wrong'}">
+        ${a.correct ? '✅' : '❌'}
+      </div>
+    `).join('');
 
   startCountdown();
 }
 
-// ══════════════════════════════
-//  COUNTDOWN / SHARE / RESET
-// ══════════════════════════════
-function startCountdown() {
-  function tick() {
-    const now = new Date(), midnight = new Date(now); midnight.setHours(24,0,0,0);
-    const d = midnight - now;
-    const t = `${String(Math.floor(d/3600000)).padStart(2,"0")}:${String(Math.floor(d%3600000/60000)).padStart(2,"0")}:${String(Math.floor(d%60000/1000)).padStart(2,"0")}`;
-    document.querySelectorAll(".countdown").forEach(el => el.textContent = t);
+function startCountdown(){
+
+  function tick(){
+
+    const now = new Date();
+
+    const midnight = new Date(now);
+
+    midnight.setHours(24,0,0,0);
+
+    const diff = midnight - now;
+
+    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+    const s = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+
+    document.getElementById('countdown').textContent =
+      `${h}:${m}:${s}`;
   }
-  tick(); setInterval(tick, 1000);
+
+  tick();
+
+  setInterval(tick,1000);
 }
 
-function shareResult() {
+function shareResult(){
+
   const score = state.answers.filter(a=>a.correct).length;
-  const pips  = state.answers.map(a => a.correct ? "🟩" : "🟥").join("");
-  const text  = `THE REF — ${TODAY_ISO}\n${pips}\n${score}/${CLIPS.length} correct\n🔥 ${streak.count} day streak\ntheref.game`;
-  navigator.clipboard.writeText(text).then(() => {
-    const t = document.getElementById("toast");
-    t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 2200);
+
+  const pips = state.answers.map(a=>
+    a.correct ? '🟩' : '🟥'
+  ).join('');
+
+  const text = `THE REF ${TODAY_ISO}
+
+${pips}
+${score}/${clips.length}
+
+🔥 ${streak.count} day streak`;
+
+  navigator.clipboard.writeText(text).then(()=>{
+
+    const toast = document.getElementById('toast');
+
+    toast.classList.add('show');
+
+    setTimeout(()=>{
+      toast.classList.remove('show');
+    },2000);
   });
 }
 
-function resetForDemo() {
-  localStorage.removeItem("theref_state");
-  location.reload();
-}
+document
+  .querySelectorAll('.answer')
+  .forEach(btn=>{
 
-// ══════════════════════════════
-//  INIT
-// ══════════════════════════════
-async function init() {
-  loadPersistedState();
-  document.getElementById("streakCount").textContent = streak.count;
+    btn.addEventListener('click',()=>{
 
-  if (state.done) {
-    document.getElementById("gameArea").style.display = "none";
-    document.getElementById("waitingScreen").classList.add("visible");
+      submitAnswer(
+        btn.dataset.answer
+      );
+    });
+  });
+
+document
+  .getElementById('nextButton')
+  .addEventListener('click',nextClip);
+
+document
+  .getElementById('shareButton')
+  .addEventListener('click',shareResult);
+
+async function init(){
+
+  loadStorage();
+
+  document.getElementById('streakCount').textContent =
+    streak.count;
+
+  if(state.done){
+
+    document.getElementById('game').style.display =
+      'none';
+
+    document.getElementById('done').classList.add('visible');
+
+    const score = state.answers.filter(a=>a.correct).length;
+
+    document.getElementById('finalScore').textContent =
+      `${score}/${state.answers.length}`;
+
     startCountdown();
+
     return;
   }
 
-  // Show a loading state while probing files
-  document.getElementById("watchingHint").textContent = "Loading today's clips…";
+  document.getElementById('hint').textContent =
+    'Loading clips...';
 
-  CLIPS = await buildClipList(TODAY_CODE);
+  clips = await buildClips(TODAY_CODE);
 
-  if (CLIPS.length === 0) {
-    document.getElementById("progressRow").style.display  = "none";
-    document.getElementById("videoWrap").style.display    = "none";
-    document.getElementById("watchingHint").style.display = "none";
-    document.querySelector(".answer-grid").style.display  = "none";
-    document.querySelector(".clip-info").style.display    = "none";
-    document.getElementById("gameArea").insertAdjacentHTML("beforeend", `
+  if(clips.length === 0){
+
+    document.getElementById('game').innerHTML = `
       <div class="no-clips">
-        <h2>No clips found for today</h2>
-        <p style="color:var(--muted);font-size:14px;line-height:1.6">
-          Place your MP4 files in the <strong style="color:var(--text)">same folder</strong> as this HTML.<br>
-          Today's date code is <strong style="color:var(--accent)">${TODAY_CODE}</strong>
+        <h2>No clips found</h2>
+
+        <p>
+          Create a folder named:
+          <br><br>
+          <strong>${TODAY_CODE}</strong>
+          <br><br>
+          Then add:
+          <br><br>
+          ${TODAY_CODE}-1-r.mp4<br>
+          ${TODAY_CODE}-2-y.mp4<br>
+          ${TODAY_CODE}-3-f.mp4
         </p>
-        <code>${TODAY_CODE}-1-r.mp4 &nbsp;← clip 1, Red Card
-${TODAY_CODE}-2-y.mp4 &nbsp;← clip 2, Yellow Card
-${TODAY_CODE}-3-f.mp4 &nbsp;← clip 3, Free Kick
-${TODAY_CODE}-4-n.mp4 &nbsp;← clip 4, No Foul
-${TODAY_CODE}-5-r.mp4 &nbsp;← clip 5, Red Card</code>
       </div>
-    `);
+    `;
+
     return;
   }
 
-  if (state.clipIndex >= CLIPS.length) state.clipIndex = CLIPS.length - 1;
   buildProgress();
+
   loadClip(state.clipIndex);
 }
 
