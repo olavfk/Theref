@@ -1,665 +1,529 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>THE REF</title>
-
-<meta name="theme-color" content="#0a0f0a">
+<meta name="theme-color" content="#0a0f0a"/>
 <link rel="icon" href="data:,">
-
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
   --bg:#0a0f0a;
   --card:#121712;
-  --card-2:#181f18;
+  --card2:#181f18;
   --border:#273127;
   --text:#f3f6f2;
   --muted:#8b978a;
   --accent:#a3e635;
-
   --green:#22c55e;
   --blue:#38bdf8;
   --yellow:#facc15;
   --red:#f43f5e;
 }
 
-html,
-body{
-  background:
-    radial-gradient(circle at top, #162014 0%, #0a0f0a 45%),
-    #0a0f0a;
+html,body{
+  background:radial-gradient(circle at top,#162014 0%,#0a0f0a 45%),#0a0f0a;
   color:var(--text);
   min-height:100vh;
   overflow-x:hidden;
   font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
 
 body::before{
-  content:'';
-  position:fixed;
-  inset:0;
+  content:'';position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity:.35;
-  pointer-events:none;
+  opacity:.35;pointer-events:none;z-index:0;
 }
 
-.wrapper{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:720px;
-  margin:0 auto;
-  padding:20px 16px 80px;
+.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:20px 16px 80px;}
+
+/* ── AUTH SCREEN ── */
+#authScreen{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;gap:0;
+  padding:40px 20px;
 }
 
-/* HEADER */
+.auth-logo{
+  font-family:'Bebas Neue',cursive;font-size:56px;letter-spacing:4px;
+  color:var(--accent);text-shadow:0 0 40px #a3e63540;line-height:1;
+  margin-bottom:6px;
+}
 
+.auth-sub{
+  font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:40px;
+}
+
+.auth-card{
+  width:100%;max-width:380px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:32px;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+.auth-title{
+  font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;
+  color:var(--text);margin-bottom:4px;text-align:center;
+}
+
+.auth-toggle{
+  text-align:center;font-size:13px;color:var(--muted);margin-bottom:4px;
+}
+
+.auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600;}
+.auth-toggle a:hover{text-decoration:underline;}
+
+.input-group{display:flex;flex-direction:column;gap:6px;}
+
+.input-label{font-size:12px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
+
+.input-field{
+  background:#0d130d;border:1.5px solid var(--border);
+  border-radius:12px;padding:13px 16px;
+  font-size:15px;color:var(--text);font-family:'Inter',sans-serif;
+  outline:none;transition:border-color .2s;width:100%;
+}
+
+.input-field:focus{border-color:var(--accent);}
+.input-field::placeholder{color:#3a4a39;}
+
+.btn-primary{
+  width:100%;padding:14px;border:none;border-radius:14px;
+  background:var(--accent);color:#0a0f0a;
+  font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px;
+  cursor:pointer;transition:transform .15s,background .15s;
+}
+.btn-primary:hover{background:#b5f040;transform:translateY(-1px);}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+
+.divider{
+  display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;
+}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+.btn-google{
+  width:100%;padding:13px;border:1.5px solid var(--border);
+  border-radius:14px;background:transparent;color:var(--text);
+  font-size:15px;font-weight:600;font-family:'Inter',sans-serif;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:border-color .2s,background .2s;
+}
+.btn-google:hover{border-color:#6b7a6a;background:#0d130d;}
+
+.google-icon{width:20px;height:20px;}
+
+.auth-error{
+  background:#450a0a;border:1px solid var(--red);
+  border-radius:10px;padding:10px 14px;
+  font-size:13px;color:#fca5a5;display:none;
+}
+
+.auth-error.show{display:block;}
+
+/* ── LOADING ── */
+#loadingScreen{
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;gap:16px;
+}
+
+#loadingScreen.show{display:flex;}
+
+.spinner{
+  width:36px;height:36px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--accent);
+  animation:spin .8s linear infinite;
+}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
+
+/* ── HEADER ── */
 .header{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-bottom:28px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:24px;padding-top:4px;
 }
 
-.logo{
-  font-family:'Bebas Neue',cursive;
-  font-size:40px;
-  letter-spacing:3px;
-  line-height:1;
+.logo{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;line-height:1;}
+.logo span{display:block;margin-top:2px;font-size:12px;letter-spacing:3px;opacity:.45;font-family:'Barlow Condensed',sans-serif;}
+
+.header-right{display:flex;align-items:center;gap:12px;}
+
+.streak{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.streak-fire{font-size:22px;}
+.streak-count{font-family:'Bebas Neue',cursive;font-size:24px;line-height:1;color:#fb923c;}
+.streak-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+
+.user-btn{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--card2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;transition:border-color .2s;
+  flex-shrink:0;
 }
+.user-btn:hover{border-color:var(--muted);}
 
-.logo span{
-  display:block;
-  margin-top:2px;
-  font-size:12px;
-  letter-spacing:3px;
-  opacity:.45;
-  font-family:'Barlow Condensed',sans-serif;
+/* User menu */
+.user-menu{
+  position:fixed;top:0;right:0;bottom:0;left:0;
+  z-index:50;display:none;
 }
-
-.streak{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:2px;
+.user-menu.show{display:block;}
+.user-menu-backdrop{position:absolute;inset:0;}
+.user-menu-card{
+  position:absolute;top:68px;right:20px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:8px;min-width:220px;
+  box-shadow:0 20px 60px #00000080;
 }
-
-.streak-fire{
-  font-size:24px;
+.user-menu-email{padding:10px 12px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:4px;}
+.user-menu-item{
+  padding:11px 14px;border-radius:10px;font-size:14px;font-weight:500;
+  cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:10px;
 }
+.user-menu-item:hover{background:var(--card2);}
+.user-menu-item.danger{color:var(--red);}
 
-.streak-count{
-  font-family:'Bebas Neue',cursive;
-  font-size:24px;
-  line-height:1;
-  color:#fb923c;
-}
+/* ── PROGRESS ── */
+.progress{display:flex;gap:8px;margin-bottom:20px;}
+.progress-pip{flex:1;height:6px;border-radius:999px;background:#202820;overflow:hidden;position:relative;}
+.progress-pip.active::after{content:'';position:absolute;inset:0;background:var(--accent);animation:pulse 1.4s infinite;}
+.progress-pip.correct{background:var(--green);}
+.progress-pip.wrong{background:var(--red);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-.streak-label{
-  font-size:10px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* PROGRESS */
-
-.progress{
-  display:flex;
-  gap:8px;
-  margin-bottom:20px;
-}
-
-.progress-pip{
-  flex:1;
-  height:6px;
-  border-radius:999px;
-  background:#202820;
-  overflow:hidden;
-  position:relative;
-}
-
-.progress-pip.active::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:var(--accent);
-  animation:pulse 1.4s infinite;
-}
-
-.progress-pip.correct{
-  background:var(--green);
-}
-
-.progress-pip.wrong{
-  background:var(--red);
-}
-
-@keyframes pulse{
-  0%,100%{opacity:1}
-  50%{opacity:.35}
-}
-
-/* VIDEO */
-
+/* ── VIDEO ── */
 .video-wrap{
-  position:relative;
-  width:100%;
-  aspect-ratio:16/9;
-  overflow:hidden;
-  border-radius:20px;
-  background:#000;
-  border:1px solid #1f271f;
-  box-shadow:0 20px 80px rgba(0,0,0,.55);
+  position:relative;width:100%;aspect-ratio:16/9;
+  overflow:hidden;border-radius:20px;background:#000;
+  border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);
 }
 
 video{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-  display:block;
-  opacity:0;
-  transition:opacity .35s ease;
+  width:100%;height:100%;object-fit:contain;background:#000;display:block;
+  opacity:0;transition:opacity .35s ease;
 }
-
-video.ready{
-  opacity:1;
-}
+video.ready{opacity:1;}
 
 .video-top{
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  padding:14px;
-  background:linear-gradient(to bottom, rgba(0,0,0,.75), transparent);
-  z-index:2;
+  position:absolute;top:0;left:0;right:0;padding:14px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);z-index:2;
 }
+.clip-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#ffffffcc;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
 
-.clip-label{
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:#ffffffcc;
-  font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;
-}
-
-/* INFO */
-
-.clip-info{
-  margin:18px 0 12px;
-}
-
-.clip-number{
-  font-size:12px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:4px;
-}
-
-.clip-title{
-  font-size:24px;
-  font-weight:700;
-  line-height:1.15;
-}
-
-/* HINT */
+/* ── INFO ── */
+.clip-info{margin:18px 0 4px;}
+.clip-number{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.clip-title{font-size:24px;font-weight:700;line-height:1.15;}
 
 .hint{
-  text-align:center;
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#9ca3af;
-  margin:14px 0;
-  min-height:18px;
+  text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;
+  color:#9ca3af;margin:14px 0;min-height:18px;
 }
 
-/* ANSWERS */
-
-.answers{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-top:8px;
-}
+/* ── ANSWERS ── */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
 
 .answer{
-  position:relative;
-  padding:22px 14px;
-  border-radius:18px;
+  position:relative;padding:22px 14px;border-radius:18px;
   border:1px solid #2d3a2c;
-  background:linear-gradient(to bottom, #1b241a, #141a13);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:8px;
+  background:linear-gradient(to bottom,#1b241a,#141a13);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
   cursor:pointer;
-  transition:
-    transform .15s ease,
-    border-color .2s ease,
-    background .2s ease,
-    opacity .2s ease;
+  transition:transform .15s,border-color .2s,background .2s,opacity .2s;
 }
 
-.answer:hover:not(:disabled):not(.locked){
-  transform:translateY(-3px);
-  border-color:#84cc16;
-  background:linear-gradient(to bottom, #212b1f, #171d16);
-}
+.answer:hover:not(:disabled):not(.locked){transform:translateY(-3px);border-color:#84cc16;background:linear-gradient(to bottom,#212b1f,#171d16);}
+.answer:disabled{cursor:not-allowed;}
+.answer.locked{opacity:.35;cursor:not-allowed;pointer-events:none;}
 
-.answer:disabled{
-  cursor:not-allowed;
-}
+.answer.correct-selected{border-color:var(--green)!important;background:#14532d!important;}
+.answer.wrong-selected{border-color:var(--red)!important;background:#450a0a!important;}
+.answer.reveal{border-color:var(--green)!important;background:#14532d55!important;}
+.answer.dimmed{opacity:.3;}
 
-.answer.locked{
-  opacity:.35;
-}
+.answer-icon{font-size:30px;}
+.answer-label{font-family:'Bebas Neue',cursive;letter-spacing:1.5px;font-size:18px;}
+.answer.none .answer-label{color:var(--green);}
+.answer.freekick .answer-label{color:var(--blue);}
+.answer.yellow .answer-label{color:var(--yellow);}
+.answer.red .answer-label{color:var(--red);}
 
-.answer.correct-selected{
-  border-color:var(--green)!important;
-  background:#14532d!important;
-}
-
-.answer.wrong-selected{
-  border-color:var(--red)!important;
-  background:#450a0a!important;
-}
-
-.answer.reveal{
-  border-color:var(--green)!important;
-  background:#14532d55!important;
-}
-
-.answer-icon{
-  font-size:30px;
-}
-
-.answer-label{
-  font-family:'Bebas Neue',cursive;
-  letter-spacing:1.5px;
-  font-size:18px;
-}
-
-.answer.none .answer-label{
-  color:var(--green);
-}
-
-.answer.freekick .answer-label{
-  color:var(--blue);
-}
-
-.answer.yellow .answer-label{
-  color:var(--yellow);
-}
-
-.answer.red .answer-label{
-  color:var(--red);
-}
-
-/* RESULT */
-
+/* ── RESULT ── */
 .result{
-  display:none;
-  margin-top:16px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-  animation:up .25s ease;
+  display:none;margin-top:16px;background:var(--card);
+  border:1px solid var(--border);border-radius:18px;
+  padding:18px;animation:up .25s ease;
 }
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-@keyframes up{
-  from{
-    opacity:0;
-    transform:translateY(8px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
+.result-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.result-title{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:24px;}
+.result-title.correct{color:var(--green);}
+.result-title.wrong{color:var(--red);}
+.result-tag{margin-left:auto;padding:4px 8px;border-radius:6px;background:#ffffff12;font-size:12px;letter-spacing:1px;font-weight:700;}
+.result-text{color:#a8b5a7;line-height:1.7;font-size:14px;}
 
-.result-top{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-}
-
-.result-title{
-  font-family:'Bebas Neue',cursive;
-  letter-spacing:2px;
-  font-size:24px;
-}
-
-.result-title.correct{
-  color:var(--green);
-}
-
-.result-title.wrong{
-  color:var(--red);
-}
-
-.result-tag{
-  margin-left:auto;
-  padding:4px 8px;
-  border-radius:6px;
-  background:#ffffff12;
-  font-size:12px;
-  letter-spacing:1px;
-  font-weight:700;
-}
-
-.result-text{
-  color:#a8b5a7;
-  line-height:1.7;
-  font-size:14px;
-}
-
-/* BUTTON */
-
+/* ── NEXT ── */
 .next{
-  width:100%;
-  margin-top:16px;
-  padding:16px;
-  border:none;
-  border-radius:18px;
-  background:var(--accent);
-  color:#0a0f0a;
-  font-family:'Bebas Neue',cursive;
-  font-size:22px;
-  letter-spacing:3px;
-  cursor:pointer;
-  display:none;
-  transition:transform .15s ease;
+  width:100%;margin-top:16px;padding:16px;border:none;
+  border-radius:18px;background:var(--accent);color:#0a0f0a;
+  font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;
+  cursor:pointer;display:none;transition:transform .15s;
 }
+.next:hover{transform:translateY(-2px);}
+.next.visible{display:block;}
 
-.next:hover{
-  transform:translateY(-2px);
-}
+/* ── DONE ── */
+.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:22px;padding-top:40px;}
+.done.visible{display:flex;}
+.done-emoji{font-size:70px;}
+.done-title{font-family:'Bebas Neue',cursive;font-size:54px;letter-spacing:4px;}
+.done-score{font-size:18px;color:var(--muted);}
+.done-score strong{color:var(--text);font-size:34px;}
+.score-row{display:flex;gap:10px;}
+.score-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.score-box.correct{background:#14532d;border:1px solid var(--green);}
+.score-box.wrong{background:#450a0a;border:1px solid var(--red);}
 
-.next.visible{
-  display:block;
-}
+.countdown-box{width:100%;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;}
+.countdown-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.countdown{font-family:'Bebas Neue',cursive;font-size:42px;letter-spacing:4px;}
 
-/* END */
+.btn-row{display:flex;flex-direction:column;gap:10px;width:100%;}
+.share{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;}
+.share:hover{background:#b5f040;}
 
-.done{
-  display:none;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  gap:22px;
-  padding-top:40px;
-}
+/* ── NO CLIPS ── */
+.no-clips{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;}
+.no-clips h2{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:34px;margin-bottom:10px;}
+.no-clips p{color:var(--muted);line-height:1.7;}
+.no-clips code{display:inline-block;margin-top:12px;background:#0d130d;border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:monospace;font-size:13px;color:var(--accent);text-align:left;line-height:2;}
 
-.done.visible{
-  display:flex;
-}
-
-.done-emoji{
-  font-size:70px;
-}
-
-.done-title{
-  font-family:'Bebas Neue',cursive;
-  font-size:54px;
-  letter-spacing:4px;
-}
-
-.done-score{
-  font-size:18px;
-  color:var(--muted);
-}
-
-.done-score strong{
-  color:var(--text);
-  font-size:34px;
-}
-
-.score-row{
-  display:flex;
-  gap:10px;
-}
-
-.score-box{
-  width:38px;
-  height:38px;
-  border-radius:10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.score-box.correct{
-  background:#14532d;
-  border:1px solid var(--green);
-}
-
-.score-box.wrong{
-  background:#450a0a;
-  border:1px solid var(--red);
-}
-
-.countdown-box{
-  width:100%;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:20px;
-}
-
-.countdown-label{
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:10px;
-}
-
-.countdown{
-  font-family:'Bebas Neue',cursive;
-  font-size:42px;
-  letter-spacing:4px;
-}
-
-.share{
-  width:100%;
-  padding:16px;
-  border-radius:18px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text);
-  cursor:pointer;
-  font-family:'Bebas Neue',cursive;
-  font-size:20px;
-  letter-spacing:3px;
-}
-
-.share:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-}
-
+/* ── TOAST ── */
 .toast{
-  position:fixed;
-  left:50%;
-  bottom:28px;
+  position:fixed;left:50%;bottom:28px;
   transform:translateX(-50%) translateY(16px);
-  background:var(--accent);
-  color:#0a0f0a;
-  padding:10px 20px;
-  border-radius:10px;
-  font-size:13px;
-  letter-spacing:2px;
-  font-weight:700;
-  opacity:0;
-  transition:.3s ease;
-  pointer-events:none;
+  background:var(--accent);color:#0a0f0a;
+  padding:10px 20px;border-radius:10px;
+  font-size:13px;letter-spacing:2px;font-weight:700;
+  opacity:0;transition:.3s ease;pointer-events:none;z-index:200;
 }
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-
-.no-clips{
-  margin-top:20px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:32px;
-  text-align:center;
-}
-
-.no-clips h2{
-  font-family:'Bebas Neue',cursive;
-  letter-spacing:2px;
-  font-size:34px;
-  margin-bottom:10px;
-}
-
-.no-clips p{
-  color:var(--muted);
-  line-height:1.7;
-}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
-</head>
 
+</head>
 <body>
 
+<!-- ── AUTH SCREEN ── -->
+
+<div id="authScreen">
+  <div class="auth-logo">THE REF</div>
+  <div class="auth-sub">Daily Football Decisions</div>
+
+  <div class="auth-card">
+    <div class="auth-title" id="authTitle">SIGN IN</div>
+
+```
+<div class="auth-error" id="authError"></div>
+
+<!-- Email fields -->
+<div class="input-group">
+  <div class="input-label">Email</div>
+  <input class="input-field" type="email" id="authEmail" placeholder="you@example.com" autocomplete="email"/>
+</div>
+
+<div class="input-group">
+  <div class="input-label">Password</div>
+  <input class="input-field" type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password"/>
+</div>
+
+<!-- Name field (register only) -->
+<div class="input-group" id="nameGroup" style="display:none">
+  <div class="input-label">Name</div>
+  <input class="input-field" type="text" id="authName" placeholder="Your name"/>
+</div>
+
+<button class="btn-primary" id="authSubmit" onclick="handleEmailAuth()">SIGN IN</button>
+
+<div class="divider">or</div>
+
+<button class="btn-google" onclick="handleGoogleAuth()">
+  <svg class="google-icon" viewBox="0 0 24 24">
+    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+  </svg>
+  Continue with Google
+</button>
+
+<div class="auth-toggle" id="authToggle">
+  No account? <a onclick="toggleAuthMode()">Create one</a>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- ── LOADING ── -->
+
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <div class="loading-text">Loading clips…</div>
+</div>
+
+<!-- ── GAME ── -->
+
+<div style="display:none" id="appScreen">
 <div class="wrapper">
 
   <header class="header">
-    <div class="logo">
-      THE REF
-      <span>DAILY FOOTBALL DECISIONS</span>
-    </div>
-
-    <div class="streak">
-      <div class="streak-fire">🔥</div>
-      <div class="streak-count" id="streakCount">0</div>
-      <div class="streak-label">Streak</div>
+    <div class="logo">THE REF<span>DAILY FOOTBALL DECISIONS</span></div>
+    <div class="header-right">
+      <div class="streak">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-count" id="streakCount">0</div>
+        <div class="streak-label">Streak</div>
+      </div>
+      <div class="user-btn" id="userBtn" onclick="toggleUserMenu()">👤</div>
     </div>
   </header>
 
+  <!-- User menu -->
+
+  <div class="user-menu" id="userMenu">
+    <div class="user-menu-backdrop" onclick="toggleUserMenu()"></div>
+    <div class="user-menu-card">
+      <div class="user-menu-email" id="userMenuEmail"></div>
+      <div class="user-menu-item danger" onclick="signOut()">
+        <span>🚪</span> Sign out
+      </div>
+    </div>
+  </div>
+
+  <!-- GAME AREA -->
+
   <div id="game">
 
-    <div class="progress" id="progress"></div>
+```
+<div class="progress" id="progress"></div>
 
-    <div class="video-wrap">
-      <div class="video-top">
-        <div class="clip-label" id="clipLabel">Clip 1</div>
-      </div>
+<div class="video-wrap">
+  <div class="video-top">
+    <div class="clip-label" id="clipLabel">Clip 1</div>
+  </div>
+  <video id="video" playsinline webkit-playsinline controls></video>
+</div>
 
-      <video
-        id="video"
-        playsinline
-        webkit-playsinline
-        controls
-      ></video>
-    </div>
+<div class="clip-info">
+  <div class="clip-number" id="clipNumber">Incident 1</div>
+  <div class="clip-title" id="clipTitle">Loading…</div>
+</div>
 
-    <div class="clip-info">
-      <div class="clip-number" id="clipNumber">Incident 1</div>
-      <div class="clip-title" id="clipTitle">Loading...</div>
-    </div>
+<div class="hint" id="hint">Watch the clip</div>
 
-    <div class="hint" id="hint">
-      Watch the clip
-    </div>
+<div class="answers">
+  <button class="answer none locked" data-answer="none">
+    <div class="answer-icon">✅</div>
+    <div class="answer-label">No Foul</div>
+  </button>
+  <button class="answer freekick locked" data-answer="freekick">
+    <div class="answer-icon">⚽</div>
+    <div class="answer-label">Free Kick</div>
+  </button>
+  <button class="answer yellow locked" data-answer="yellow">
+    <div class="answer-icon">🟨</div>
+    <div class="answer-label">Yellow</div>
+  </button>
+  <button class="answer red locked" data-answer="red">
+    <div class="answer-icon">🟥</div>
+    <div class="answer-label">Red Card</div>
+  </button>
+</div>
 
-    <div class="answers">
-
-      <button class="answer none locked" data-answer="none">
-        <div class="answer-icon">✅</div>
-        <div class="answer-label">No Foul</div>
-      </button>
-
-      <button class="answer freekick locked" data-answer="freekick">
-        <div class="answer-icon">⚽</div>
-        <div class="answer-label">Free Kick</div>
-      </button>
-
-      <button class="answer yellow locked" data-answer="yellow">
-        <div class="answer-icon">🟨</div>
-        <div class="answer-label">Yellow</div>
-      </button>
-
-      <button class="answer red locked" data-answer="red">
-        <div class="answer-icon">🟥</div>
-        <div class="answer-label">Red Card</div>
-      </button>
-
-    </div>
-
-    <div class="result" id="result"></div>
-
-    <button class="next" id="nextButton">
-      NEXT →
-    </button>
+<div class="result" id="result"></div>
+<button class="next" id="nextButton">NEXT →</button>
+```
 
   </div>
+
+  <!-- DONE -->
 
   <div class="done" id="done">
-
     <div class="done-emoji" id="doneEmoji">🏆</div>
-
-    <div class="done-title">
-      FULL TIME
-    </div>
-
-    <div class="done-score">
-      You scored <strong id="finalScore">0/3</strong>
-    </div>
-
+    <div class="done-title">FULL TIME</div>
+    <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
     <div class="score-row" id="scoreRow"></div>
-
     <div class="countdown-box">
-      <div class="countdown-label">
-        Next clips in
-      </div>
-
-      <div class="countdown" id="countdown">
-        00:00:00
-      </div>
+      <div class="countdown-label">Next clips in</div>
+      <div class="countdown" id="countdown">00:00:00</div>
     </div>
-
-    <button class="share" id="shareButton">
-      SHARE RESULT
-    </button>
-
+    <div class="btn-row">
+      <button class="share" onclick="shareResult()">SHARE RESULT</button>
+    </div>
   </div>
 
 </div>
-
-<div class="toast" id="toast">
-  COPIED
 </div>
 
-<script>
-const ANSWER_MAP = {
-  n:'none',
-  f:'freekick',
-  y:'yellow',
-  r:'red'
+<div class="toast" id="toast">COPIED</div>
+
+<!-- ══════════════════════════════════════════════
+     FIREBASE
+══════════════════════════════════════════════ -->
+
+<script type="module">
+import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAnalytics }                         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut as fbSignOut,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ── Config ──
+const firebaseConfig = {
+  apiKey:            "AIzaSyCqJdsYjI6fS54klT1RGLQEF8UmzIbkxC4",
+  authDomain:        "bearef-d744a.firebaseapp.com",
+  projectId:         "bearef-d744a",
+  storageBucket:     "bearef-d744a.firebasestorage.app",
+  messagingSenderId: "791177751904",
+  appId:             "1:791177751904:web:f820463c4fba309d728205",
+  measurementId:     "G-925SX7ZHLS"
 };
+
+const app       = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth      = getAuth(app);
+const db        = getFirestore(app);
+
+// ══════════════════════════════════════════════
+//  CLIP DATA CONFIG
+// ══════════════════════════════════════════════
+
+const ANSWER_MAP = { n:'none', f:'freekick', y:'yellow', r:'red' };
 
 const ANSWER_LABELS = {
   none:'No Foul ✅',
@@ -669,502 +533,413 @@ const ANSWER_LABELS = {
 };
 
 const DEFAULT_EXPLANATIONS = {
-  none:'No foul. Play continues.',
-  freekick:'A foul was committed. Free kick awarded.',
-  yellow:'Reckless challenge. Yellow card.',
-  red:'Serious foul play. Red card.'
+  none:     'No foul was committed. The challenge was fair — play continues.',
+  freekick: 'A foul was committed, awarding a free kick to the opposition.',
+  yellow:   'A reckless or unsporting challenge — yellow card shown.',
+  red:      'Serious foul play or violent conduct — straight red card.'
 };
 
+// Add titles and explanations per clip here
+// Key = "DDMMYY-N"
 const CLIP_META = {
-  '080526-1':{
-    title:'Dangerous Tackle',
-    explanation:'Studs up with excessive force. Clear red card.'
-  },
-  '080526-2':{
-    title:'Late Challenge',
-    explanation:'Late and reckless. Yellow card is correct.'
-  },
-  '080526-3':{
-    title:'Shoulder Duel',
-    explanation:'Fair physical contact. No foul.'
-  }
+  '080526-1':{ title:'Gerrard Stamp', explanation:'Gerrard deliberately stamps on his opponent\'s leg with no attempt to play the ball. Totally unnecessary and intentional — straight red card for violent conduct.' },
+  // '080526-2':{ title:'...', explanation:'...' },
+  // '080526-3':{ title:'...', explanation:'...' },
 };
 
-function getTodayCode(){
+// ── Dates ──
+function todayCode() {
   const d = new Date();
+  return String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + String(d.getFullYear()).slice(-2);
+}
+function todayISO() { return new Date().toISOString().split('T')[0]; }
 
-  const dd = String(d.getDate()).padStart(2,'0');
-  const mm = String(d.getMonth()+1).padStart(2,'0');
-  const yy = String(d.getFullYear()).slice(-2);
-
-  return `${dd}${mm}${yy}`;
+// ── File probe ──
+async function fileExists(url) {
+  try { const r = await fetch(url,{method:'HEAD'}); return r.ok; }
+  catch { return false; }
 }
 
-function getTodayISO(){
-  return new Date().toISOString().split('T')[0];
-}
-
-async function exists(url){
-  try{
-    const r = await fetch(url,{method:'HEAD'});
-    return r.ok;
-  }catch{
-    return false;
-  }
-}
-
-async function buildClips(code){
-
+// ── Build clips ──
+async function buildClips(code) {
   const clips = [];
-
-  for(let i=1;i<=3;i++){
-
-    for(const c of ['n','f','y','r']){
-
-      const filename = `${code}/${code}-${i}-${c}.mp4`;
-
-      const ok = await exists(filename);
-
-      if(ok){
-
-        const key = `${code}-${i}`;
+  for (let i = 1; i <= 9; i++) {
+    let found = false;
+    for (const c of ['n','f','y','r']) {
+      const filename = `${code}-${i}-${c}.mp4`;
+      if (await fileExists(filename)) {
+        const key  = `${code}-${i}`;
         const meta = CLIP_META[key] || {};
-
         clips.push({
           filename,
-          correct:ANSWER_MAP[c],
-          title:meta.title || `Incident ${i}`,
-          explanation:meta.explanation || DEFAULT_EXPLANATIONS[ANSWER_MAP[c]]
+          correct:     ANSWER_MAP[c],
+          title:       meta.title       || `Incident ${i}`,
+          explanation: meta.explanation || DEFAULT_EXPLANATIONS[ANSWER_MAP[c]]
         });
-
+        found = true;
         break;
       }
     }
+    if (!found && i > clips.length) break;
   }
-
   return clips;
 }
 
-const TODAY_CODE = getTodayCode();
-const TODAY_ISO = getTodayISO();
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
 
-let clips = [];
+const TODAY_CODE = todayCode();
+const TODAY_ISO  = todayISO();
 
-let state = {
-  clipIndex:0,
-  answers:[],
-  done:false,
-  date:TODAY_ISO
+let clips    = [];
+let answered = false;
+let currentUser = null;
+
+// Per-user state stored in Firestore
+let userState  = { clipIndex:0, answers:[], done:false, date:TODAY_ISO };
+let userStreak = { count:0, lastDate:null };
+
+// ── Firestore helpers ──
+async function loadUserData(uid) {
+  const ref  = doc(db, 'users', uid);
+  const snap = await getDoc(ref);
+  if (snap.exists()) {
+    const data = snap.data();
+    if (data.streak) userStreak = data.streak;
+    if (data.gameState && data.gameState.date === TODAY_ISO) {
+      userState = data.gameState;
+    }
+  }
+}
+
+async function saveUserData(uid) {
+  const ref = doc(db, 'users', uid);
+  await setDoc(ref, {
+    streak:    userStreak,
+    gameState: userState,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
+
+// ══════════════════════════════════════════════
+//  AUTH UI
+// ══════════════════════════════════════════════
+
+let isRegisterMode = false;
+
+window.toggleAuthMode = () => {
+  isRegisterMode = !isRegisterMode;
+  document.getElementById('authTitle').textContent    = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  document.getElementById('authSubmit').textContent   = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  document.getElementById('nameGroup').style.display  = isRegisterMode ? 'flex' : 'none';
+  document.getElementById('authToggle').innerHTML     = isRegisterMode
+    ? 'Have an account? <a onclick="toggleAuthMode()">Sign in</a>'
+    : 'No account? <a onclick="toggleAuthMode()">Create one</a>';
+  clearAuthError();
 };
 
-let streak = {
-  count:0,
-  lastDate:null
+function showAuthError(msg) {
+  const el = document.getElementById('authError');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function clearAuthError() {
+  document.getElementById('authError').classList.remove('show');
+}
+
+// Friendly Firebase error messages
+function friendlyError(code) {
+  switch(code) {
+    case 'auth/invalid-email':            return 'Invalid email address.';
+    case 'auth/user-not-found':           return 'No account found with this email.';
+    case 'auth/wrong-password':           return 'Incorrect password.';
+    case 'auth/email-already-in-use':     return 'An account already exists with this email.';
+    case 'auth/weak-password':            return 'Password must be at least 6 characters.';
+    case 'auth/popup-closed-by-user':     return 'Sign-in cancelled.';
+    case 'auth/network-request-failed':   return 'Network error. Check your connection.';
+    case 'auth/invalid-credential':       return 'Incorrect email or password.';
+    default: return 'Something went wrong. Please try again.';
+  }
+}
+
+window.handleEmailAuth = async () => {
+  clearAuthError();
+  const email    = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const name     = document.getElementById('authName').value.trim();
+  const btn      = document.getElementById('authSubmit');
+
+  if (!email || !password) { showAuthError('Please enter your email and password.'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '…';
+
+  try {
+    if (isRegisterMode) {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      if (name) await updateProfile(cred.user, { displayName: name });
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  } catch(e) {
+    showAuthError(friendlyError(e.code));
+    btn.disabled = false;
+    btn.textContent = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  }
 };
 
-function loadStorage(){
-
-  try{
-
-    const s = JSON.parse(localStorage.getItem('theref_state'));
-
-    if(s && s.date === TODAY_ISO){
-      state = s;
+window.handleGoogleAuth = async () => {
+  clearAuthError();
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch(e) {
+    if (e.code !== 'auth/popup-closed-by-user') {
+      showAuthError(friendlyError(e.code));
     }
+  }
+};
 
-    const st = JSON.parse(localStorage.getItem('theref_streak'));
+window.signOut = async () => {
+  await fbSignOut(auth);
+};
 
-    if(st){
-      streak = st;
-    }
+// Enter key on auth inputs
+['authEmail','authPassword','authName'].forEach(id => {
+  document.getElementById(id)?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') window.handleEmailAuth();
+  });
+});
 
-  }catch(e){}
-}
+// ══════════════════════════════════════════════
+//  GAME ENGINE
+// ══════════════════════════════════════════════
 
-function saveState(){
-  localStorage.setItem('theref_state',JSON.stringify(state));
-}
-
-function saveStreak(){
-  localStorage.setItem('theref_streak',JSON.stringify(streak));
-}
-
-function buildProgress(){
-
+function buildProgress() {
   const row = document.getElementById('progress');
-
   row.innerHTML = '';
-
-  clips.forEach((_,i)=>{
-
+  clips.forEach((_,i) => {
     const el = document.createElement('div');
-
     el.className = 'progress-pip';
-
-    if(i < state.answers.length){
-      el.classList.add(
-        state.answers[i].correct ? 'correct' : 'wrong'
-      );
-    }else if(i === state.clipIndex){
-      el.classList.add('active');
-    }
-
+    if      (i < userState.answers.length) el.classList.add(userState.answers[i].correct ? 'correct' : 'wrong');
+    else if (i === userState.clipIndex)    el.classList.add('active');
     row.appendChild(el);
   });
 }
 
-let answered = false;
-
-function loadClip(index){
-
+function loadClip(index) {
   answered = false;
-
-  const clip = clips[index];
-
+  const clip  = clips[index];
   const video = document.getElementById('video');
 
   video.classList.remove('ready');
-
-  document.getElementById('clipLabel').textContent =
-    `Clip ${index+1} of ${clips.length}`;
-
-  document.getElementById('clipNumber').textContent =
-    `Incident ${index+1}`;
-
-  document.getElementById('clipTitle').textContent =
-    clip.title;
-
-  document.getElementById('hint').textContent =
-    'Watch the clip';
-
-  document.getElementById('result').style.display = 'none';
-
+  document.getElementById('clipLabel').textContent  = `Clip ${index+1} of ${clips.length}`;
+  document.getElementById('clipNumber').textContent = `Incident ${index+1}`;
+  document.getElementById('clipTitle').textContent  = clip.title;
+  document.getElementById('hint').textContent       = 'Watch the clip';
+  document.getElementById('result').style.display   = 'none';
   document.getElementById('nextButton').classList.remove('visible');
 
-  document.querySelectorAll('.answer').forEach(btn=>{
-
+  document.querySelectorAll('.answer').forEach(btn => {
     btn.classList.add('locked');
-
     btn.disabled = false;
-
-    btn.classList.remove(
-      'correct-selected',
-      'wrong-selected',
-      'reveal'
-    );
+    btn.classList.remove('correct-selected','wrong-selected','reveal','dimmed');
   });
 
   buildProgress();
 
   video.src = clip.filename;
-
   video.load();
+  video.oncanplay = () => video.classList.add('ready');
 
-  video.oncanplay = ()=>{
-    video.classList.add('ready');
+  video.onended = () => {
+    if (answered) return;
+    document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
+    document.getElementById('hint').textContent = 'Choose your decision';
   };
 
-  video.onended = ()=>{
-
-    if(answered) return;
-
-    document.querySelectorAll('.answer').forEach(btn=>{
-      btn.classList.remove('locked');
-    });
-
-    document.getElementById('hint').textContent =
-      'Choose your decision';
-  };
-
-  video.play().catch(()=>{
-    document.getElementById('hint').textContent =
-      'Tap play';
+  video.play().catch(() => {
+    document.getElementById('hint').textContent = 'Tap play to watch';
   });
 
+  // Preload next clip
   const next = clips[index+1];
-
-  if(next){
-
-    const preload = document.createElement('link');
-
-    preload.rel = 'preload';
-    preload.as = 'video';
-    preload.href = next.filename;
-
-    document.head.appendChild(preload);
+  if (next) {
+    const link = document.createElement('link');
+    link.rel = 'preload'; link.as = 'video'; link.href = next.filename;
+    document.head.appendChild(link);
   }
 }
 
-function submitAnswer(choice){
-
-  const btn = document.querySelector(
-    `[data-answer="${choice}"]`
-  );
-
-  if(btn.classList.contains('locked')) return;
-
-  if(answered) return;
-
+function submitAnswer(choice) {
+  const btn = document.querySelector(`[data-answer="${choice}"]`);
+  if (!btn || btn.classList.contains('locked') || answered) return;
   answered = true;
 
-  const clip = clips[state.clipIndex];
-
+  const clip    = clips[userState.clipIndex];
   const correct = choice === clip.correct;
 
-  state.answers.push({
-    chosen:choice,
-    correct
-  });
+  userState.answers.push({ chosen:choice, correct });
+  saveUserData(currentUser.uid);
 
-  saveState();
-
-  document.querySelectorAll('.answer').forEach(el=>{
-
+  document.querySelectorAll('.answer').forEach(el => {
     el.disabled = true;
-
     const id = el.dataset.answer;
-
-    if(id === choice && correct){
-      el.classList.add('correct-selected');
-    }
-
-    if(id === choice && !correct){
-      el.classList.add('wrong-selected');
-    }
-
-    if(id === clip.correct && !correct){
-      el.classList.add('reveal');
-    }
+    if      (id === choice && correct)  el.classList.add('correct-selected');
+    else if (id === choice && !correct) el.classList.add('wrong-selected');
+    else if (id === clip.correct)       el.classList.add('reveal');
+    else                                el.classList.add('dimmed');
   });
 
   buildProgress();
 
   const result = document.getElementById('result');
-
   result.style.display = 'block';
-
   result.innerHTML = `
     <div class="result-top">
-      <div style="font-size:22px">
-        ${correct ? '✅' : '❌'}
-      </div>
-
-      <div class="result-title ${correct ? 'correct' : 'wrong'}">
-        ${correct ? 'Correct' : 'Wrong Call'}
-      </div>
-
-      <div class="result-tag">
-        ${ANSWER_LABELS[clip.correct]}
-      </div>
+      <div style="font-size:22px">${correct ? '✅' : '❌'}</div>
+      <div class="result-title ${correct ? 'correct' : 'wrong'}">${correct ? 'Correct' : 'Wrong Call'}</div>
+      <div class="result-tag">${ANSWER_LABELS[clip.correct]}</div>
     </div>
-
-    <div class="result-text">
-      ${clip.explanation}
-    </div>
+    <div class="result-text">${clip.explanation}</div>
   `;
 
-  const nextButton = document.getElementById('nextButton');
-
-  nextButton.classList.add('visible');
-
-  nextButton.textContent =
-    state.clipIndex >= clips.length - 1
-      ? 'SEE RESULTS →'
-      : 'NEXT →';
+  const nb = document.getElementById('nextButton');
+  nb.classList.add('visible');
+  nb.textContent = userState.clipIndex >= clips.length - 1 ? 'SEE RESULTS →' : 'NEXT →';
 }
 
-function nextClip(){
-
-  if(state.clipIndex >= clips.length - 1){
-    finishGame();
-    return;
-  }
-
-  state.clipIndex++;
-
-  loadClip(state.clipIndex);
+function nextClip() {
+  if (userState.clipIndex >= clips.length - 1) { finishGame(); return; }
+  userState.clipIndex++;
+  loadClip(userState.clipIndex);
 }
 
-function finishGame(){
+function finishGame() {
+  userState.done = true;
 
-  state.done = true;
+  const yesterday = new Date(Date.now()-86400000).toISOString().split('T')[0];
+  if      (userStreak.lastDate === yesterday)    userStreak.count++;
+  else if (userStreak.lastDate !== TODAY_ISO)    userStreak.count = 1;
+  userStreak.lastDate = TODAY_ISO;
 
-  saveState();
+  saveUserData(currentUser.uid);
 
-  const yesterday = new Date(
-    Date.now()-86400000
-  ).toISOString().split('T')[0];
-
-  if(streak.lastDate === yesterday){
-    streak.count++;
-  }else if(streak.lastDate !== TODAY_ISO){
-    streak.count = 1;
-  }
-
-  streak.lastDate = TODAY_ISO;
-
-  saveStreak();
-
-  document.getElementById('streakCount').textContent =
-    streak.count;
-
+  document.getElementById('streakCount').textContent = userStreak.count;
   document.getElementById('game').style.display = 'none';
-
   document.getElementById('done').classList.add('visible');
 
-  const score = state.answers.filter(a=>a.correct).length;
-
-  document.getElementById('finalScore').textContent =
-    `${score}/${clips.length}`;
-
-  const emoji =
-    score === 3 ? '🏆' :
-    score === 2 ? '👏' :
-    score === 1 ? '😬' :
-    '💀';
-
-  document.getElementById('doneEmoji').textContent = emoji;
-
-  document.getElementById('scoreRow').innerHTML =
-    state.answers.map(a=>`
-      <div class="score-box ${a.correct ? 'correct' : 'wrong'}">
-        ${a.correct ? '✅' : '❌'}
-      </div>
-    `).join('');
+  const score = userState.answers.filter(a=>a.correct).length;
+  document.getElementById('finalScore').textContent = `${score}/${clips.length}`;
+  document.getElementById('doneEmoji').textContent  = score===clips.length?'🏆':score>=2?'👏':score===1?'😬':'💀';
+  document.getElementById('scoreRow').innerHTML = userState.answers.map(a=>
+    `<div class="score-box ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
+  ).join('');
 
   startCountdown();
 }
 
-function startCountdown(){
-
-  function tick(){
-
-    const now = new Date();
-
-    const midnight = new Date(now);
-
-    midnight.setHours(24,0,0,0);
-
-    const diff = midnight - now;
-
-    const h = String(Math.floor(diff/3600000)).padStart(2,'0');
-    const m = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-    const s = String(Math.floor(diff%60000/1000)).padStart(2,'0');
-
-    document.getElementById('countdown').textContent =
-      `${h}:${m}:${s}`;
-  }
-
-  tick();
-
-  setInterval(tick,1000);
-}
-
-function shareResult(){
-
-  const score = state.answers.filter(a=>a.correct).length;
-
-  const pips = state.answers.map(a=>
-    a.correct ? '🟩' : '🟥'
-  ).join('');
-
-  const text = `THE REF ${TODAY_ISO}
-
-${pips}
-${score}/${clips.length}
-
-🔥 ${streak.count} day streak`;
-
+window.shareResult = () => {
+  const score = userState.answers.filter(a=>a.correct).length;
+  const pips  = userState.answers.map(a=>a.correct?'🟩':'🟥').join('');
+  const text  = `THE REF ${TODAY_ISO}\n${pips}\n${score}/${clips.length}\n🔥 ${userStreak.count} day streak`;
   navigator.clipboard.writeText(text).then(()=>{
-
-    const toast = document.getElementById('toast');
-
-    toast.classList.add('show');
-
-    setTimeout(()=>{
-      toast.classList.remove('show');
-    },2000);
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2000);
   });
+};
+
+function startCountdown() {
+  const tick = () => {
+    const now = new Date(), mn = new Date(now); mn.setHours(24,0,0,0);
+    const d = mn-now;
+    document.getElementById('countdown').textContent = [
+      Math.floor(d/3600000),Math.floor(d%3600000/60000),Math.floor(d%60000/1000)
+    ].map(n=>String(n).padStart(2,'0')).join(':');
+  };
+  tick(); setInterval(tick,1000);
 }
 
-document
-  .querySelectorAll('.answer')
-  .forEach(btn=>{
+// ── User menu ──
+window.toggleUserMenu = () => {
+  document.getElementById('userMenu').classList.toggle('show');
+};
 
-    btn.addEventListener('click',()=>{
+// ══════════════════════════════════════════════
+//  ANSWER BUTTON LISTENERS
+// ══════════════════════════════════════════════
+document.querySelectorAll('.answer').forEach(btn => {
+  btn.addEventListener('click', () => submitAnswer(btn.dataset.answer));
+});
+document.getElementById('nextButton').addEventListener('click', nextClip);
 
-      submitAnswer(
-        btn.dataset.answer
-      );
-    });
-  });
+// ══════════════════════════════════════════════
+//  AUTH STATE OBSERVER — main entry point
+// ══════════════════════════════════════════════
+onAuthStateChanged(auth, async (user) => {
 
-document
-  .getElementById('nextButton')
-  .addEventListener('click',nextClip);
-
-document
-  .getElementById('shareButton')
-  .addEventListener('click',shareResult);
-
-async function init(){
-
-  loadStorage();
-
-  document.getElementById('streakCount').textContent =
-    streak.count;
-
-  if(state.done){
-
-    document.getElementById('game').style.display =
-      'none';
-
-    document.getElementById('done').classList.add('visible');
-
-    const score = state.answers.filter(a=>a.correct).length;
-
-    document.getElementById('finalScore').textContent =
-      `${score}/${state.answers.length}`;
-
-    startCountdown();
-
+  if (!user) {
+    // Show auth screen
+    document.getElementById('authScreen').style.display   = 'flex';
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('appScreen').style.display    = 'none';
     return;
   }
 
-  document.getElementById('hint').textContent =
-    'Loading clips...';
+  // User signed in — show loading
+  currentUser = user;
+  document.getElementById('authScreen').style.display    = 'none';
+  document.getElementById('loadingScreen').classList.add('show');
+  document.getElementById('appScreen').style.display     = 'none';
 
+  // Load user data from Firestore
+  await loadUserData(user.uid);
+
+  // Set user menu info
+  document.getElementById('userMenuEmail').textContent =
+    user.displayName ? `${user.displayName}\n${user.email}` : user.email;
+  document.getElementById('streakCount').textContent = userStreak.count;
+
+  // Load today's clips
   clips = await buildClips(TODAY_CODE);
 
-  if(clips.length === 0){
+  // Hide loading, show app
+  document.getElementById('loadingScreen').classList.remove('show');
+  document.getElementById('appScreen').style.display = 'block';
 
+  if (!clips.length) {
     document.getElementById('game').innerHTML = `
       <div class="no-clips">
-        <h2>No clips found</h2>
-
-        <p>
-          Create a folder named:
-          <br><br>
-          <strong>${TODAY_CODE}</strong>
-          <br><br>
-          Then add:
-          <br><br>
-          ${TODAY_CODE}-1-r.mp4<br>
-          ${TODAY_CODE}-2-y.mp4<br>
-          ${TODAY_CODE}-3-f.mp4
-        </p>
+        <h2>No clips today</h2>
+        <p>Add your MP4 files to the repo.<br>Today's code: <strong style="color:var(--accent)">${TODAY_CODE}</strong><br><br>
+        <code>${TODAY_CODE}-1-r.mp4<br>${TODAY_CODE}-2-y.mp4<br>${TODAY_CODE}-3-f.mp4</code></p>
       </div>
     `;
-
     return;
   }
 
+  if (userState.done) {
+    // Already played today
+    const score = userState.answers.filter(a=>a.correct).length;
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('done').classList.add('visible');
+    document.getElementById('finalScore').textContent = `${score}/${userState.answers.length}`;
+    document.getElementById('doneEmoji').textContent  = score===clips.length?'🏆':score>=2?'👏':score===1?'😬':'💀';
+    document.getElementById('scoreRow').innerHTML = userState.answers.map(a=>
+      `<div class="score-box ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
+    ).join('');
+    startCountdown();
+    return;
+  }
+
+  if (userState.clipIndex >= clips.length) userState.clipIndex = 0;
   buildProgress();
+  loadClip(userState.clipIndex);
+});
 
-  loadClip(state.clipIndex);
-}
-
-init();
 </script>
 
 </body>
