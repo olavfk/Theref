@@ -104,6 +104,7 @@ body::before{
 #loadingScreen.show{display:flex;}
 .spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
+video.ready{opacity:1;}
 .loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 
 /* ── HEADER ── */
@@ -159,7 +160,7 @@ body::before{
 
 /* ── VIDEO ── */
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:20px;background:#000;border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);}
-video{width:100%;height:100%;object-fit:contain;background:#000;display:block;}
+video{width:100%;height:100%;object-fit:contain;background:#000;display:block;opacity:0;transition:opacity .35s ease;}
 
 .video-top{
   position:absolute;top:0;left:0;right:0;padding:14px;
@@ -175,13 +176,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;}
   padding:2px 8px;display:none;
 }
 .archive-tag.show{display:block;}
-
-.play-overlay{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-size:52px;color:rgba(255,255,255,.85);opacity:0;
-  transition:opacity .2s;pointer-events:none;
-}
-.play-overlay.show{opacity:1;}
 
 /* ── ARCHIVE DAY HEADER ── */
 .archive-day-header{
@@ -490,11 +484,6 @@ function showToast(msg) {
 
 window.toggleUserMenu = () => $('userMenu').classList.toggle('show');
 
-window.togglePlay = () => {
-  const v = $('video');
-  if (v.paused) { v.play(); $('playOverlay').classList.remove('show'); }
-  else          { v.pause(); $('playOverlay').classList.add('show'); }
-};
 
 // ── CLIP CONFIG ───────────────────────────────
 // File naming: DDMMYY/DDMMYY-N-X.mp4
@@ -702,7 +691,7 @@ function loadClip(index) {
   if (!archiveMode) { $('archiveDayHeader').style.display = 'none'; $('archiveTag').classList.remove('show'); }
 
   $('videoWrap').style.display  = 'block';
-  $('playOverlay').classList.remove('show');
+  $('video').controls = true;
   $('hint').style.display       = 'block';
   $('answersGrid').style.display = 'grid';
   video.classList.remove('ready');
@@ -722,11 +711,11 @@ function loadClip(index) {
 
   video.src = clip.file;
   video.load();
+  video.oncanplay = () => video.classList.add('ready');
   video.onended   = () => {
     if (answered) return;
     document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
     $('hint').textContent = 'Make your call';
-    $('playOverlay').classList.add('show');
   };
   video.play().catch(() => { $('hint').textContent = 'Tap play to watch'; });
 
