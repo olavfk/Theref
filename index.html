@@ -199,7 +199,7 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-//  FILE NAMING CONVENTION  →  DDMMYY-N-X.mp4
+//  FILE NAMING CONVENTION  →  DDMMYY-N-X.mov
 //
 //  DD   = day (zero-padded)
 //  MM   = month (zero-padded)
@@ -212,10 +212,10 @@
 //           r = Red Card
 //
 //  Examples for 8 May 2026:
-//    080526-1-r.mp4   clip 1 → Red Card
-//    080526-2-y.mp4   clip 2 → Yellow Card
-//    080526-3-f.mp4   clip 3 → Free Kick
-//    080526-4-n.mp4   clip 4 → No Foul
+//    080526-1-r.mov   clip 1 → Red Card
+//    080526-2-y.mov   clip 2 → Yellow Card
+//    080526-3-f.mov   clip 3 → Free Kick
+//    080526-4-n.mov   clip 4 → No Foul
 //
 //  Just drop the files in the same folder as this HTML.
 //  No other config needed — the game reads the date and loads
@@ -272,7 +272,7 @@ async function buildClipList(code) {
   for (let i = 1; i <= 9; i++) {
     let found = false;
     for (const code2 of ["n","f","y","r"]) {
-      const filename = `${code}-${i}-${code2}.mp4`;
+      const filename = `${code}-${i}-${code2}.mov`;
       if (await probeVideo(filename)) {
         const key  = `${code}-${i}`;
         const meta = CLIP_META[key] || {};
@@ -515,11 +515,11 @@ async function init() {
           Place your MP4 files in the <strong style="color:var(--text)">same folder</strong> as this HTML.<br>
           Today's date code is <strong style="color:var(--accent)">${TODAY_CODE}</strong>
         </p>
-        <code>${TODAY_CODE}-1-r.mp4 &nbsp;← clip 1, Red Card
-${TODAY_CODE}-2-y.mp4 &nbsp;← clip 2, Yellow Card
-${TODAY_CODE}-3-f.mp4 &nbsp;← clip 3, Free Kick
-${TODAY_CODE}-4-n.mp4 &nbsp;← clip 4, No Foul
-${TODAY_CODE}-5-r.mp4 &nbsp;← clip 5, Red Card</code>
+        <code>${TODAY_CODE}-1-r.mov &nbsp;← clip 1, Red Card
+${TODAY_CODE}-2-y.mov &nbsp;← clip 2, Yellow Card
+${TODAY_CODE}-3-f.mov &nbsp;← clip 3, Free Kick
+${TODAY_CODE}-4-n.mov &nbsp;← clip 4, No Foul
+${TODAY_CODE}-5-r.mov &nbsp;← clip 5, Red Card</code>
       </div>
     `);
     return;
