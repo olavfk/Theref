@@ -939,12 +939,7 @@ onAuthStateChanged(auth, async (user) => {
   $('appScreen').style.display = 'block';
 
   if (!clips.length) {
-    $('game').innerHTML = `
-      <div class="no-clips">
-        <h2>No clips today</h2>
-        <p>Add today's videos to the repo.<br>Folder: <strong style="color:var(--accent)">${TODAY_CODE}/</strong>
-        <code>${TODAY_CODE}-1-r.mp4<br>${TODAY_CODE}-2-y.mp4<br>${TODAY_CODE}-3-f.mp4</code></p>
-      </div>`;
+    $('game').innerHTML = '<div class="no-clips"><h2>No clips today</h2><p>Add your videos to the repo. Folder: <strong style="color:var(--accent)">' + TODAY_CODE + '/</strong></p><code>' + TODAY_CODE + '-1-r.mp4<br>' + TODAY_CODE + '-2-y.mp4<br>' + TODAY_CODE + '-3-f.mp4</code></div>';
     return;
   }
 
