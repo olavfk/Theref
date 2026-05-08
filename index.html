@@ -8,567 +8,126 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --pitch: #0d1f0a; --card: #161e15; --border: #2a3529;
+    --text: #e8f0e7; --muted: #6b7a6a;
+    --none-color: #22c55e; --fk-color: #38bdf8;
+    --yellow-color: #facc15; --red-color: #f43f5e; --accent: #a3e635;
+  }
+  html, body { background: var(--pitch); color: var(--text); font-family: 'Barlow', sans-serif; min-height: 100vh; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+  .wrapper { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 16px 60px; }
 
-:root {
-–pitch: #0d1f0a;
-–surface: #111811;
-–card: #161e15;
-–border: #2a3529;
-–text: #e8f0e7;
-–muted: #6b7a6a;
-–none-color: #22c55e;
-–fk-color: #38bdf8;
-–yellow-color: #facc15;
-–red-color: #f43f5e;
-–accent: #a3e635;
-}
+/* HEADER */
+.header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0 16px; border-bottom: 1px solid var(–border); margin-bottom: 24px; }
+.logo { font-family: ‘Bebas Neue’, cursive; font-size: 36px; letter-spacing: 3px; color: var(–accent); text-shadow: 0 0 30px #a3e63550; line-height: 1; }
+.logo span { color: var(–text); opacity: 0.4; font-size: 13px; display: block; letter-spacing: 4px; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 600; margin-top: 2px; }
+.streak-badge { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.streak-fire { font-size: 28px; line-height: 1; }
+.streak-count { font-family: ‘Bebas Neue’, cursive; font-size: 22px; color: #fb923c; line-height: 1; }
+.streak-label { font-size: 10px; color: var(–muted); letter-spacing: 2px; font-family: ‘Barlow Condensed’, sans-serif; text-transform: uppercase; }
 
-html, body {
-background: var(–pitch);
-color: var(–text);
-font-family: ‘Barlow’, sans-serif;
-min-height: 100vh;
-overflow-x: hidden;
-}
-
-/* Noise overlay */
-body::before {
-content: ‘’;
-position: fixed; inset: 0;
-background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
-pointer-events: none;
-z-index: 0;
-opacity: 0.4;
-}
-
-.wrapper {
-position: relative; z-index: 1;
-max-width: 680px;
-margin: 0 auto;
-padding: 0 16px 60px;
-}
-
-/* ── HEADER ── */
-.header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 20px 0 16px;
-border-bottom: 1px solid var(–border);
-margin-bottom: 24px;
-}
-
-.logo {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 36px;
-letter-spacing: 3px;
-color: var(–accent);
-text-shadow: 0 0 30px #a3e63550;
-line-height: 1;
-}
-
-.logo span {
-color: var(–text);
-opacity: 0.4;
-font-size: 13px;
-display: block;
-letter-spacing: 4px;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 600;
-margin-top: 2px;
-}
-
-.streak-badge {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 2px;
-}
-
-.streak-fire {
-font-size: 28px;
-line-height: 1;
-}
-
-.streak-count {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 22px;
-color: #fb923c;
-line-height: 1;
-}
-
-.streak-label {
-font-size: 10px;
-color: var(–muted);
-letter-spacing: 2px;
-font-family: ‘Barlow Condensed’, sans-serif;
-text-transform: uppercase;
-}
-
-/* ── PROGRESS ── */
-.progress-row {
-display: flex;
-gap: 8px;
-margin-bottom: 24px;
-}
-
-.progress-pip {
-flex: 1;
-height: 6px;
-border-radius: 3px;
-background: var(–border);
-transition: background 0.4s ease;
-position: relative;
-overflow: hidden;
-}
-
+/* PROGRESS */
+.progress-row { display: flex; gap: 8px; margin-bottom: 24px; }
+.progress-pip { flex: 1; height: 6px; border-radius: 3px; background: var(–border); transition: background 0.4s ease; position: relative; overflow: hidden; }
 .progress-pip.correct { background: var(–none-color); }
-.progress-pip.wrong { background: var(–red-color); }
-.progress-pip.active {
-background: var(–border);
-}
-.progress-pip.active::after {
-content: ‘’;
-position: absolute; left: 0; top: 0; bottom: 0;
-width: 60%;
-background: var(–accent);
-border-radius: 3px;
-animation: pulse-pip 1.4s ease-in-out infinite;
-}
+.progress-pip.wrong   { background: var(–red-color); }
+.progress-pip.active::after { content: ‘’; position: absolute; left: 0; top: 0; bottom: 0; width: 60%; background: var(–accent); border-radius: 3px; animation: pulse-pip 1.4s ease-in-out infinite; }
+@keyframes pulse-pip { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-@keyframes pulse-pip {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.3; }
-}
+/* VIDEO */
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: 14px; overflow: hidden; background: #000; border: 1px solid var(–border); box-shadow: 0 20px 60px #00000080; }
+.video-wrap video { width: 100%; height: 100%; object-fit: contain; background: #000; display: block; }
+.video-topbar { position: absolute; top: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(to bottom, #000000cc, transparent); display: flex; justify-content: space-between; align-items: center; pointer-events: none; z-index: 2; }
+.clip-label { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; color: #ffffffcc; text-transform: uppercase; }
+.make-call-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #000000aa; opacity: 0; pointer-events: none; transition: opacity 0.4s; z-index: 3; }
+.make-call-overlay.visible { opacity: 1; }
+.make-call-badge { background: #000000cc; border: 2px solid var(–yellow-color); border-radius: 10px; padding: 14px 28px; font-family: ‘Bebas Neue’, cursive; font-size: 26px; letter-spacing: 3px; color: var(–yellow-color); text-shadow: 0 0 20px var(–yellow-color); animation: flicker 1.5s ease-in-out infinite; }
+@keyframes flicker { 0%,100%{opacity:1} 50%{opacity:0.75} }
 
-/* ── VIDEO CONTAINER ── */
-.video-wrap {
-position: relative;
-width: 100%;
-aspect-ratio: 16/9;
-border-radius: 14px;
-overflow: hidden;
-background: #000;
-border: 1px solid var(–border);
-box-shadow: 0 20px 60px #00000080;
-}
+/* CLIP INFO */
+.clip-info { margin: 16px 0 12px; }
+.clip-num { font-family: ‘Bebas Neue’, cursive; font-size: 13px; letter-spacing: 2px; color: var(–muted); margin-bottom: 4px; }
+.clip-title { font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 20px; color: var(–text); }
 
-.video-wrap iframe {
-position: absolute; inset: 0;
-width: 100%; height: 100%;
-border: none;
-}
+/* HINT */
+.watching-hint { text-align: center; font-family: ‘Barlow Condensed’, sans-serif; font-size: 13px; letter-spacing: 2px; color: var(–muted); text-transform: uppercase; margin-bottom: 10px; min-height: 20px; }
 
-/* Freeze overlay */
-.freeze-overlay {
-position: absolute; inset: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-pointer-events: none;
-opacity: 0;
-transition: opacity 0.3s;
-}
-
-.freeze-overlay.visible {
-opacity: 1;
-}
-
-.freeze-badge {
-background: #000000cc;
-border: 2px solid var(–yellow-color);
-border-radius: 8px;
-padding: 10px 20px;
-font-family: ‘Bebas Neue’, cursive;
-font-size: 22px;
-letter-spacing: 3px;
-color: var(–yellow-color);
-text-shadow: 0 0 20px var(–yellow-color);
-animation: flicker 1.5s ease-in-out infinite;
-}
-
-@keyframes flicker {
-0%, 100% { opacity: 1; }
-50% { opacity: 0.7; }
-}
-
-/* Video top bar */
-.video-topbar {
-position: absolute;
-top: 0; left: 0; right: 0;
-padding: 10px 14px;
-background: linear-gradient(to bottom, #000000cc, transparent);
-display: flex;
-justify-content: space-between;
-align-items: center;
-pointer-events: none;
-z-index: 2;
-}
-
-.clip-label {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 13px;
-letter-spacing: 2px;
-color: #ffffffcc;
-text-transform: uppercase;
-}
-
-.live-dot {
-display: flex;
-align-items: center;
-gap: 5px;
-background: #ef444490;
-border-radius: 4px;
-padding: 2px 8px;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 11px;
-font-weight: 700;
-letter-spacing: 1px;
-color: white;
-}
-
-.live-dot::before {
-content: ‘’;
-width: 6px; height: 6px;
-border-radius: 50%;
-background: #ef4444;
-animation: blink 1s infinite;
-}
-
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-/* ── CLIP INFO ── */
-.clip-info {
-margin: 16px 0 20px;
-display: flex;
-align-items: flex-start;
-justify-content: space-between;
-gap: 12px;
-}
-
-.clip-num {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 13px;
-letter-spacing: 2px;
-color: var(–muted);
-}
-
-.clip-title {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 20px;
-letter-spacing: 0.5px;
-color: var(–text);
-flex: 1;
-}
-
-/* ── ANSWER BUTTONS ── */
-.answer-grid {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 10px;
-margin-bottom: 16px;
-}
-
-.ans-btn {
-position: relative;
-padding: 18px 12px;
-border-radius: 12px;
-border: 2px solid var(–border);
-background: var(–card);
-cursor: pointer;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 6px;
-transition: all 0.15s ease;
-overflow: hidden;
-user-select: none;
-}
-
-.ans-btn::before {
-content: ‘’;
-position: absolute; inset: 0;
-opacity: 0;
-transition: opacity 0.2s;
-}
-
-.ans-btn.none::before   { background: radial-gradient(circle at 50% 100%, #22c55e18, transparent 70%); }
+/* ANSWER BUTTONS */
+.answer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.ans-btn { position: relative; padding: 18px 12px; border-radius: 12px; border: 2px solid var(–border); background: var(–card); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all 0.15s ease; overflow: hidden; user-select: none; }
+.ans-btn::before { content: ‘’; position: absolute; inset: 0; opacity: 0; transition: opacity 0.2s; }
+.ans-btn.none::before     { background: radial-gradient(circle at 50% 100%, #22c55e18, transparent 70%); }
 .ans-btn.freekick::before { background: radial-gradient(circle at 50% 100%, #38bdf818, transparent 70%); }
-.ans-btn.yellow::before { background: radial-gradient(circle at 50% 100%, #facc1518, transparent 70%); }
-.ans-btn.red::before    { background: radial-gradient(circle at 50% 100%, #f43f5e18, transparent 70%); }
-
-.ans-btn:not(:disabled):hover {
-transform: translateY(-2px);
-border-color: var(–accent);
-}
-
-.ans-btn:not(:disabled):hover::before { opacity: 1; }
-
-.ans-btn:disabled { cursor: not-allowed; opacity: 0.7; }
-
-.ans-btn.selected-correct {
-border-color: var(–none-color) !important;
-background: #14532d !important;
-transform: none;
-}
-
-.ans-btn.selected-wrong {
-border-color: var(–red-color) !important;
-background: #450a0a !important;
-transform: none;
-}
-
-.ans-btn.reveal-correct {
-border-color: var(–none-color) !important;
-background: #14532d50 !important;
-}
-
-.ans-icon {
-font-size: 28px;
-line-height: 1;
-}
-
-.ans-label {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 17px;
-letter-spacing: 1.5px;
-color: var(–text);
-}
-
-.ans-btn.none .ans-label   { color: var(–none-color); }
+.ans-btn.yellow::before   { background: radial-gradient(circle at 50% 100%, #facc1518, transparent 70%); }
+.ans-btn.red::before      { background: radial-gradient(circle at 50% 100%, #f43f5e18, transparent 70%); }
+.ans-btn:not(:disabled):not(.locked):hover { transform: translateY(-2px); border-color: var(–accent); }
+.ans-btn:not(:disabled):not(.locked):hover::before { opacity: 1; }
+.ans-btn:disabled { cursor: not-allowed; }
+.ans-btn.locked { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+.ans-btn.selected-correct { border-color: var(–none-color) !important; background: #14532d !important; transform: none; }
+.ans-btn.selected-wrong   { border-color: var(–red-color) !important;  background: #450a0a !important; transform: none; }
+.ans-btn.reveal-correct   { border-color: var(–none-color) !important; background: #14532d50 !important; }
+.ans-icon  { font-size: 28px; line-height: 1; }
+.ans-label { font-family: ‘Bebas Neue’, cursive; font-size: 17px; letter-spacing: 1.5px; }
+.ans-btn.none .ans-label     { color: var(–none-color); }
 .ans-btn.freekick .ans-label { color: var(–fk-color); }
-.ans-btn.yellow .ans-label { color: var(–yellow-color); }
-.ans-btn.red .ans-label    { color: var(–red-color); }
+.ans-btn.yellow .ans-label   { color: var(–yellow-color); }
+.ans-btn.red .ans-label      { color: var(–red-color); }
 
-/* ── RESULT CARD ── */
-.result-card {
-background: var(–card);
-border-radius: 12px;
-border: 1px solid var(–border);
-padding: 16px 18px;
-margin-bottom: 16px;
-animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(12px); }
-to   { opacity: 1; transform: translateY(0); }
-}
-
-.result-header {
-display: flex;
-align-items: center;
-gap: 10px;
-margin-bottom: 8px;
-}
-
-.result-verdict {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 22px;
-letter-spacing: 2px;
-}
-
+/* RESULT */
+.result-card { background: var(–card); border-radius: 12px; border: 1px solid var(–border); padding: 16px 18px; margin-bottom: 16px; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.result-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.result-verdict { font-family: ‘Bebas Neue’, cursive; font-size: 22px; letter-spacing: 2px; }
 .result-verdict.correct { color: var(–none-color); }
 .result-verdict.wrong   { color: var(–red-color); }
+.result-answer-tag { margin-left: auto; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 1px; padding: 3px 8px; border-radius: 4px; background: #ffffff15; }
+.result-explanation { font-size: 14px; color: #a8b8a7; line-height: 1.6; }
 
-.result-answer-tag {
-margin-left: auto;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 12px;
-letter-spacing: 1px;
-padding: 3px 8px;
-border-radius: 4px;
-background: #ffffff15;
-color: var(–text);
-}
-
-.result-explanation {
-font-size: 14px;
-color: #a8b8a7;
-line-height: 1.6;
-}
-
-/* ── NEXT BUTTON ── */
-.next-btn {
-width: 100%;
-padding: 16px;
-background: var(–accent);
-color: #0d1f0a;
-border: none;
-border-radius: 12px;
-font-family: ‘Bebas Neue’, cursive;
-font-size: 20px;
-letter-spacing: 3px;
-cursor: pointer;
-transition: all 0.15s ease;
-display: none;
-}
-
+/* NEXT BTN */
+.next-btn { width: 100%; padding: 16px; background: var(–accent); color: #0d1f0a; border: none; border-radius: 12px; font-family: ‘Bebas Neue’, cursive; font-size: 20px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s ease; display: none; }
 .next-btn.visible { display: block; }
 .next-btn:hover { background: #bef264; transform: translateY(-1px); }
 
-/* ── DONE SCREEN ── */
-.done-screen {
-display: none;
-flex-direction: column;
-align-items: center;
-text-align: center;
-padding: 32px 0;
-gap: 20px;
-animation: slideUp 0.5s ease;
-}
-
-.done-screen.visible { display: flex; }
-
+/* DONE / WAITING */
+.done-screen, .waiting-screen { display: none; flex-direction: column; align-items: center; text-align: center; padding: 32px 0; gap: 20px; animation: slideUp 0.5s ease; }
+.done-screen.visible, .waiting-screen.visible { display: flex; }
 .done-emoji { font-size: 64px; }
-
-.done-title {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 42px;
-letter-spacing: 3px;
-color: var(–accent);
-}
-
-.done-score {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 18px;
-color: var(–muted);
-letter-spacing: 1px;
-}
-
-.done-score strong {
-color: var(–text);
-font-size: 28px;
-}
-
-.score-pips {
-display: flex;
-gap: 10px;
-}
-
-.score-pip {
-width: 36px;
-height: 36px;
-border-radius: 8px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 18px;
-}
-
+.done-title { font-family: ‘Bebas Neue’, cursive; font-size: 42px; letter-spacing: 3px; color: var(–accent); }
+.done-score { font-family: ‘Barlow Condensed’, sans-serif; font-size: 18px; color: var(–muted); }
+.done-score strong { color: var(–text); font-size: 28px; }
+.score-pips { display: flex; gap: 10px; }
+.score-pip { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
 .score-pip.correct { background: #14532d; border: 1px solid var(–none-color); }
 .score-pip.wrong   { background: #450a0a; border: 1px solid var(–red-color); }
-
-.comeback-box {
-background: var(–card);
-border: 1px solid var(–border);
-border-radius: 12px;
-padding: 20px 28px;
-width: 100%;
-}
-
-.comeback-label {
-font-family: ‘Barlow Condensed’, sans-serif;
-font-size: 12px;
-letter-spacing: 3px;
-color: var(–muted);
-text-transform: uppercase;
-margin-bottom: 8px;
-}
-
-.countdown {
-font-family: ‘Bebas Neue’, cursive;
-font-size: 40px;
-color: var(–text);
-letter-spacing: 4px;
-}
-
-.share-btn {
-width: 100%;
-padding: 14px;
-background: transparent;
-color: var(–text);
-border: 1px solid var(–border);
-border-radius: 12px;
-font-family: ‘Bebas Neue’, cursive;
-font-size: 18px;
-letter-spacing: 3px;
-cursor: pointer;
-transition: all 0.15s ease;
-}
-
+.comeback-box { background: var(–card); border: 1px solid var(–border); border-radius: 12px; padding: 20px 28px; width: 100%; }
+.comeback-label { font-family: ‘Barlow Condensed’, sans-serif; font-size: 12px; letter-spacing: 3px; color: var(–muted); text-transform: uppercase; margin-bottom: 8px; }
+.countdown { font-family: ‘Bebas Neue’, cursive; font-size: 40px; color: var(–text); letter-spacing: 4px; }
+.share-btn { width: 100%; padding: 14px; background: transparent; color: var(–text); border: 1px solid var(–border); border-radius: 12px; font-family: ‘Bebas Neue’, cursive; font-size: 18px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s ease; }
 .share-btn:hover { border-color: var(–accent); color: var(–accent); }
+.replay-btn { padding: 10px 22px; background: transparent; color: var(–muted); border: 1px solid var(–border); border-radius: 8px; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 1px; cursor: pointer; transition: all 0.15s; }
+.replay-btn:hover { color: var(–text); border-color: var(–muted); }
 
-.copied-toast {
-position: fixed;
-bottom: 30px;
-left: 50%;
-transform: translateX(-50%) translateY(20px);
-background: var(–accent);
-color: #0d1f0a;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 700;
-font-size: 14px;
-letter-spacing: 2px;
-padding: 10px 24px;
-border-radius: 8px;
-opacity: 0;
-transition: all 0.3s ease;
-pointer-events: none;
-z-index: 100;
-}
+/* NO CLIPS */
+.no-clips { background: var(–card); border: 1px solid var(–border); border-radius: 12px; padding: 32px; text-align: center; margin-top: 16px; }
+.no-clips h2 { font-family: ‘Bebas Neue’, cursive; font-size: 28px; letter-spacing: 2px; color: var(–muted); margin-bottom: 12px; }
+.no-clips code { display: block; margin-top: 16px; background: #0a120a; border: 1px solid var(–border); border-radius: 8px; padding: 14px 18px; font-size: 13px; color: var(–accent); font-family: monospace; text-align: left; line-height: 2; }
 
-.copied-toast.show {
-opacity: 1;
-transform: translateX(-50%) translateY(0);
-}
-
-/* ── WAITING SCREEN (already played today) ── */
-.waiting-screen {
-display: none;
-flex-direction: column;
-align-items: center;
-text-align: center;
-padding: 40px 0;
-gap: 20px;
-}
-
-.waiting-screen.visible { display: flex; }
-
-/* Replay button */
-.replay-btn {
-padding: 10px 22px;
-background: transparent;
-color: var(–muted);
-border: 1px solid var(–border);
-border-radius: 8px;
-font-family: ‘Barlow Condensed’, sans-serif;
-font-weight: 600;
-font-size: 13px;
-letter-spacing: 1px;
-cursor: pointer;
-transition: all 0.15s ease;
-margin-top: 8px;
-}
-
-.replay-btn:hover { border-color: var(–muted); color: var(–text); }
+.copied-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(–accent); color: #0d1f0a; font-family: ‘Barlow Condensed’, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 2px; padding: 10px 24px; border-radius: 8px; opacity: 0; transition: all 0.3s ease; pointer-events: none; z-index: 100; }
+.copied-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 </style>
 
 </head>
 <body>
-
 <div class="wrapper">
 
-  <!-- HEADER -->
-
   <header class="header">
-    <div class="logo">
-      THE REF
-      <span>DAILY FOOTBALL RULING</span>
-    </div>
+    <div class="logo">THE REF<span>DAILY FOOTBALL RULING</span></div>
     <div class="streak-badge">
       <div class="streak-fire">🔥</div>
       <div class="streak-count" id="streakCount">0</div>
@@ -576,262 +135,260 @@ margin-top: 8px;
     </div>
   </header>
 
-  <!-- GAME AREA -->
-
   <div id="gameArea">
+    <div class="progress-row" id="progressRow"></div>
 
 ```
-<!-- Progress pips -->
-<div class="progress-row" id="progressRow"></div>
-
-<!-- Video -->
 <div class="video-wrap" id="videoWrap">
   <div class="video-topbar">
-    <div class="clip-label" id="clipLabel">Clip 1 of 5</div>
-    <div class="live-dot" id="liveDot">LIVE</div>
+    <div class="clip-label" id="clipLabel">Clip 1</div>
   </div>
-  <div id="ytPlayer"></div>
-  <div class="freeze-overlay" id="freezeOverlay">
-    <div class="freeze-badge">⏸ WHAT'S YOUR CALL?</div>
+  <video id="videoEl" playsinline webkit-playsinline controls></video>
+  <div class="make-call-overlay" id="makeCallOverlay">
+    <div class="make-call-badge">⚡ MAKE YOUR CALL</div>
   </div>
 </div>
 
-<!-- Clip title -->
 <div class="clip-info">
-  <div>
-    <div class="clip-num" id="clipNum">INCIDENT 1 OF 5</div>
-    <div class="clip-title" id="clipTitle">Loading...</div>
-  </div>
+  <div class="clip-num" id="clipNum">INCIDENT 1</div>
+  <div class="clip-title" id="clipTitle"></div>
 </div>
 
-<!-- Answer buttons -->
-<div class="answer-grid" id="answerGrid">
-  <button class="ans-btn none"     data-ans="none"     onclick="submitAnswer('none')">
-    <span class="ans-icon">✅</span>
-    <span class="ans-label">No Foul</span>
-  </button>
-  <button class="ans-btn freekick" data-ans="freekick" onclick="submitAnswer('freekick')">
-    <span class="ans-icon">⚽</span>
-    <span class="ans-label">Free Kick</span>
-  </button>
-  <button class="ans-btn yellow"   data-ans="yellow"   onclick="submitAnswer('yellow')">
-    <span class="ans-icon">🟨</span>
-    <span class="ans-label">Yellow Card</span>
-  </button>
-  <button class="ans-btn red"      data-ans="red"      onclick="submitAnswer('red')">
-    <span class="ans-icon">🟥</span>
-    <span class="ans-label">Red Card</span>
-  </button>
+<div class="watching-hint" id="watchingHint">Watch the clip, then make your call</div>
+
+<div class="answer-grid">
+  <button class="ans-btn none locked"     data-ans="none"     onclick="submitAnswer('none')"><span class="ans-icon">✅</span><span class="ans-label">No Foul</span></button>
+  <button class="ans-btn freekick locked" data-ans="freekick" onclick="submitAnswer('freekick')"><span class="ans-icon">⚽</span><span class="ans-label">Free Kick</span></button>
+  <button class="ans-btn yellow locked"   data-ans="yellow"   onclick="submitAnswer('yellow')"><span class="ans-icon">🟨</span><span class="ans-label">Yellow Card</span></button>
+  <button class="ans-btn red locked"      data-ans="red"      onclick="submitAnswer('red')"><span class="ans-icon">🟥</span><span class="ans-label">Red Card</span></button>
 </div>
 
-<!-- Result card -->
 <div class="result-card" id="resultCard" style="display:none"></div>
-
-<!-- Next button -->
 <button class="next-btn" id="nextBtn" onclick="nextClip()">NEXT CLIP →</button>
 ```
 
   </div>
 
-  <!-- DONE SCREEN -->
-
   <div class="done-screen" id="doneScreen">
     <div class="done-emoji" id="doneEmoji">🏆</div>
     <div class="done-title">FULL TIME</div>
-    <div class="done-score">You scored <strong id="finalScore">0/5</strong></div>
+    <div class="done-score">You scored <strong id="finalScore"></strong></div>
     <div class="score-pips" id="scorePips"></div>
     <div class="comeback-box">
       <div class="comeback-label">Next match in</div>
       <div class="countdown" id="countdown">00:00:00</div>
     </div>
     <button class="share-btn" onclick="shareResult()">📋 SHARE YOUR RESULT</button>
+    <button class="replay-btn" onclick="resetForDemo()">↩ Reset (Demo)</button>
   </div>
-
-  <!-- ALREADY PLAYED TODAY -->
 
   <div class="waiting-screen" id="waitingScreen">
     <div style="font-size:56px">⏱️</div>
     <div style="font-family:'Bebas Neue',cursive;font-size:36px;letter-spacing:2px;color:var(--accent)">SEE YOU TOMORROW</div>
-    <div style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:16px">
-      You've already made your calls today.<br>Come back for new clips.
-    </div>
+    <div style="color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:15px">You've already made your calls today.</div>
     <div class="comeback-box">
       <div class="comeback-label">Next match in</div>
       <div class="countdown" id="countdown2">00:00:00</div>
     </div>
     <button class="share-btn" onclick="shareResult()">📋 SHARE TODAY'S RESULT</button>
-    <button class="replay-btn" onclick="resetForDemo()">↩ Reset (Demo Only)</button>
+    <button class="replay-btn" onclick="resetForDemo()">↩ Reset (Demo)</button>
   </div>
 
 </div>
-
 <div class="copied-toast" id="toast">COPIED TO CLIPBOARD</div>
 
-<!-- ═══════════════════════════════════════
-     GAME DATA — EDIT CLIPS HERE
-     ═══════════════════════════════════════ -->
-
 <script>
-const CLIPS = [
-  {
-    videoId: "Hco5rd_iwdM",
-    startAt: 2,
-    pauseAt: 125,            // 2 minutes 5 seconds
-    title: "Gerrard Stamp — What's the Call?",
-    correct: "red",
+// ═══════════════════════════════════════════════════════════════
+//  FILE NAMING CONVENTION  →  DDMMYY-N-X.mp4
+//
+//  DD   = day (zero-padded)
+//  MM   = month (zero-padded)
+//  YY   = 2-digit year
+//  N    = clip number (1, 2, 3 …)
+//  X    = answer code:
+//           n = No Foul
+//           f = Free Kick
+//           y = Yellow Card
+//           r = Red Card
+//
+//  Examples for 8 May 2026:
+//    080526-1-r.mp4   clip 1 → Red Card
+//    080526-2-y.mp4   clip 2 → Yellow Card
+//    080526-3-f.mp4   clip 3 → Free Kick
+//    080526-4-n.mp4   clip 4 → No Foul
+//
+//  Just drop the files in the same folder as this HTML.
+//  No other config needed — the game reads the date and loads
+//  whatever clips it finds automatically.
+// ═══════════════════════════════════════════════════════════════
+
+// Optional: add titles & explanations per clip (key = "DDMMYY-N")
+const CLIP_META = {
+  "080526-1": {
+    title: "Gerrard Stamp",
     explanation: "Gerrard deliberately stamps on his opponent's leg with no attempt to play the ball. Totally unnecessary and intentional — straight red card for violent conduct.",
   },
-  // ── ADD MORE CLIPS BELOW ──
-  // {
-  //   videoId: "YOUR_VIDEO_ID",
-  //   startAt: 0,
-  //   pauseAt: 8,
-  //   title: "Penalty box challenge",
-  //   correct: "red",
-  //   explanation: "Last man denial — straight red card.",
-  // },
-];
-</script>
-
-<!-- ═══════════════════════════════════════
-     GAME ENGINE
-     ═══════════════════════════════════════ -->
-
-<script>
-const TODAY = new Date().toISOString().split("T")[0];
-
-// ── State ──
-let state = {
-  clipIndex: 0,
-  answers: [],   // [{chosen, correct}]
-  done: false,
-  date: TODAY,
 };
 
-let streak = { count: 0, lastDate: null };
-let player = null;
-let pauseTimer = null;
+// ── Defaults ──
+const ANSWER_MAP    = { n:"none", f:"freekick", y:"yellow", r:"red" };
+const ANSWER_LABELS = { none:"No Foul ✅", freekick:"Free Kick ⚽", yellow:"Yellow Card 🟨", red:"Red Card 🟥" };
+const DEFAULT_EXPLANATION = {
+  none:     "No foul — the challenge was fair and the referee played on.",
+  freekick: "A foul was committed, awarding a free kick to the opposition.",
+  yellow:   "A reckless or unsporting challenge — yellow card shown.",
+  red:      "Serious foul play or violent conduct — straight red card.",
+};
+
+// ── Date helpers ──
+function getTodayCode() {
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2,"0");
+  const mm = String(d.getMonth()+1).padStart(2,"0");
+  const yy = String(d.getFullYear()).slice(-2);
+  return `${dd}${mm}${yy}`;
+}
+
+function getTodayISO() {
+  return new Date().toISOString().split("T")[0];
+}
+
+// ── Probe whether a video file exists ──
+function probeVideo(filename) {
+  return new Promise(resolve => {
+    const v = document.createElement("video");
+    let done = false;
+    const finish = ok => { if (!done) { done = true; resolve(ok); } };
+    v.onloadedmetadata = () => finish(true);
+    v.onerror          = () => finish(false);
+    v.src = filename;
+    setTimeout(() => finish(false), 3000);
+  });
+}
+
+// ── Build clip list for today ──
+async function buildClipList(code) {
+  const clips = [];
+  for (let i = 1; i <= 9; i++) {
+    let found = false;
+    for (const code2 of ["n","f","y","r"]) {
+      const filename = `${code}-${i}-${code2}.mp4`;
+      if (await probeVideo(filename)) {
+        const key  = `${code}-${i}`;
+        const meta = CLIP_META[key] || {};
+        const ans  = ANSWER_MAP[code2];
+        clips.push({
+          filename,
+          correct: ans,
+          title:       meta.title       || `Incident ${i}`,
+          explanation: meta.explanation || DEFAULT_EXPLANATION[ans],
+        });
+        found = true;
+        break;
+      }
+    }
+    if (!found && i > 1) break; // stop scanning after first gap
+  }
+  return clips;
+}
+
+// ══════════════════════════════
+//  STATE
+// ══════════════════════════════
+const TODAY_CODE = getTodayCode();
+const TODAY_ISO  = getTodayISO();
+
+let CLIPS = [];
+let state  = { clipIndex:0, answers:[], done:false, date:TODAY_ISO };
+let streak = { count:0, lastDate:null };
 let hasAnswered = false;
 
-// ── Load saved state ──
-function loadState() {
+function loadPersistedState() {
   try {
-    const saved = JSON.parse(localStorage.getItem("theref_state") || "null");
-    if (saved && saved.date === TODAY) {
-      state = saved;
-    }
-    const savedStreak = JSON.parse(localStorage.getItem("theref_streak") || "null");
-    if (savedStreak) streak = savedStreak;
+    const s = JSON.parse(localStorage.getItem("theref_state")||"null");
+    if (s && s.date === TODAY_ISO) state = s;
+    const sk = JSON.parse(localStorage.getItem("theref_streak")||"null");
+    if (sk) streak = sk;
   } catch(e) {}
 }
+function saveState()  { localStorage.setItem("theref_state",  JSON.stringify(state));  }
+function saveStreak() { localStorage.setItem("theref_streak", JSON.stringify(streak)); }
 
-function saveState() {
-  localStorage.setItem("theref_state", JSON.stringify(state));
-}
-
-function saveStreak() {
-  localStorage.setItem("theref_streak", JSON.stringify(streak));
-}
-
-// ── Build progress pips ──
+// ══════════════════════════════
+//  PROGRESS PIPS
+// ══════════════════════════════
 function buildProgress() {
   const row = document.getElementById("progressRow");
   row.innerHTML = "";
-  CLIPS.forEach((_, i) => {
+  CLIPS.forEach((_,i) => {
     const pip = document.createElement("div");
     pip.className = "progress-pip";
     pip.id = `pip-${i}`;
-    if (i < state.answers.length) {
-      pip.classList.add(state.answers[i].correct ? "correct" : "wrong");
-    } else if (i === state.clipIndex) {
-      pip.classList.add("active");
-    }
+    if      (i < state.answers.length)        pip.classList.add(state.answers[i].correct ? "correct" : "wrong");
+    else if (i === state.clipIndex)            pip.classList.add("active");
     row.appendChild(pip);
   });
 }
 
-// ── YouTube API ──
-window.onYouTubeIframeAPIReady = function() {
-  loadClip(state.clipIndex);
-};
-
+// ══════════════════════════════
+//  CLIP LOADING
+// ══════════════════════════════
 function loadClip(index) {
   hasAnswered = false;
-  clearTimeout(pauseTimer);
-  const clip = CLIPS[index];
+  const clip  = CLIPS[index];
+  const video = document.getElementById("videoEl");
 
-  // Update UI
-  document.getElementById("clipLabel").textContent = `Clip ${index+1} of ${CLIPS.length}`;
-  document.getElementById("clipNum").textContent = `INCIDENT ${index+1} OF ${CLIPS.length}`;
-  document.getElementById("clipTitle").textContent = clip.title;
-  document.getElementById("freezeOverlay").classList.remove("visible");
-  document.getElementById("liveDot").style.display = "flex";
+  document.getElementById("clipLabel").textContent  = `Clip ${index+1} of ${CLIPS.length}`;
+  document.getElementById("clipNum").textContent    = `INCIDENT ${index+1} OF ${CLIPS.length}`;
+  document.getElementById("clipTitle").textContent  = clip.title;
   document.getElementById("resultCard").style.display = "none";
   document.getElementById("nextBtn").classList.remove("visible");
+  document.getElementById("makeCallOverlay").classList.remove("visible");
+  document.getElementById("watchingHint").textContent = "Watch the clip, then make your call";
 
-  // Reset buttons
+  // Lock buttons until video ends
   document.querySelectorAll(".ans-btn").forEach(b => {
+    b.classList.add("locked");
     b.disabled = false;
     b.classList.remove("selected-correct","selected-wrong","reveal-correct");
   });
 
-  if (player) {
-    player.loadVideoById({ videoId: clip.videoId, startSeconds: clip.startAt });
-  } else {
-    player = new YT.Player("ytPlayer", {
-      videoId: clip.videoId,
-      playerVars: {
-        autoplay: 1,
-        start: clip.startAt,
-        controls: 0,
-        modestbranding: 1,
-        rel: 0,
-        fs: 0,
-        iv_load_policy: 3,
-        disablekb: 1,
-      },
-      events: {
-        onReady: e => { e.target.playVideo(); schedulePause(clip); },
-        onStateChange: e => {
-          if (e.data === YT.PlayerState.PLAYING && !hasAnswered) {
-            schedulePause(clip);
-          }
-        }
-      }
-    });
-    return; // schedulePause called in onReady
-  }
-  schedulePause(clip);
+  buildProgress();
+
+  video.src = clip.filename;
+  video.currentTime = 0;
+  video.load();
+
+  video.onended = () => {
+    if (!hasAnswered) {
+      document.querySelectorAll(".ans-btn").forEach(b => b.classList.remove("locked"));
+      document.getElementById("makeCallOverlay").classList.add("visible");
+      document.getElementById("watchingHint").textContent = "";
+    }
+  };
+
+  video.play().catch(() => {
+    document.getElementById("watchingHint").textContent = "▶ Tap video to play";
+  });
 }
 
-function schedulePause(clip) {
-  clearTimeout(pauseTimer);
-  const delay = (clip.pauseAt - clip.startAt) * 1000;
-  if (delay <= 0) { freezeVideo(); return; }
-  pauseTimer = setTimeout(freezeVideo, delay);
-}
-
-function freezeVideo() {
-  if (player) player.pauseVideo();
-  document.getElementById("freezeOverlay").classList.add("visible");
-  document.getElementById("liveDot").style.display = "none";
-}
-
-// ── Answer ──
+// ══════════════════════════════
+//  ANSWERING
+// ══════════════════════════════
 function submitAnswer(chosen) {
+  // Reject if buttons still locked
+  if (document.querySelector(`.ans-btn[data-ans="${chosen}"]`).classList.contains("locked")) return;
   if (hasAnswered) return;
   hasAnswered = true;
-  clearTimeout(pauseTimer);
-  if (player) player.pauseVideo();
 
-  const clip = CLIPS[state.clipIndex];
+  document.getElementById("makeCallOverlay").classList.remove("visible");
+
+  const clip      = CLIPS[state.clipIndex];
   const isCorrect = chosen === clip.correct;
 
-  // Record
   state.answers.push({ chosen, correct: isCorrect });
   saveState();
 
-  // Style buttons
   document.querySelectorAll(".ans-btn").forEach(b => {
     b.disabled = true;
     const id = b.getAttribute("data-ans");
@@ -840,125 +397,97 @@ function submitAnswer(chosen) {
     if (id === clip.correct && !isCorrect) b.classList.add("reveal-correct");
   });
 
-  // Update pip
   const pip = document.getElementById(`pip-${state.clipIndex}`);
-  pip.classList.remove("active");
-  pip.classList.add(isCorrect ? "correct" : "wrong");
+  if (pip) { pip.classList.remove("active"); pip.classList.add(isCorrect ? "correct" : "wrong"); }
 
-  // Show result
-  showResult(isCorrect, clip);
-}
-
-const ANSWER_LABELS = { none:"No Foul ✅", freekick:"Free Kick ⚽", yellow:"Yellow Card 🟨", red:"Red Card 🟥" };
-
-function showResult(isCorrect, clip) {
   const card = document.getElementById("resultCard");
   card.style.display = "block";
   card.innerHTML = `
     <div class="result-header">
       <span style="font-size:22px">${isCorrect ? "✅" : "❌"}</span>
-      <span class="result-verdict ${isCorrect ? 'correct' : 'wrong'}">
-        ${isCorrect ? "CORRECT!" : "WRONG CALL"}
-      </span>
+      <span class="result-verdict ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? "CORRECT!" : "WRONG CALL"}</span>
       <span class="result-answer-tag">${ANSWER_LABELS[clip.correct]}</span>
     </div>
     <div class="result-explanation">${clip.explanation}</div>
   `;
 
   const isLast = state.clipIndex >= CLIPS.length - 1;
-  const nextBtn = document.getElementById("nextBtn");
-  nextBtn.classList.add("visible");
-  nextBtn.textContent = isLast ? "SEE RESULTS →" : "NEXT CLIP →";
+  const btn = document.getElementById("nextBtn");
+  btn.classList.add("visible");
+  btn.textContent = isLast ? "SEE RESULTS →" : "NEXT CLIP →";
 }
 
-// ── Next clip ──
+// ══════════════════════════════
+//  NEXT / FINISH
+// ══════════════════════════════
 function nextClip() {
-  const isLast = state.clipIndex >= CLIPS.length - 1;
-  if (isLast) {
+  if (state.clipIndex >= CLIPS.length - 1) {
     finishGame();
   } else {
     state.clipIndex++;
-    buildProgress();
     loadClip(state.clipIndex);
   }
 }
 
-// ── Finish ──
 function finishGame() {
   state.done = true;
   saveState();
 
-  // Update streak
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
-  if (streak.lastDate === yesterday) {
-    streak.count++;
-  } else if (streak.lastDate !== TODAY) {
-    streak.count = 1;
-  }
-  streak.lastDate = TODAY;
+  const yesterday = new Date(Date.now()-86400000).toISOString().split("T")[0];
+  if      (streak.lastDate === yesterday)  streak.count++;
+  else if (streak.lastDate !== TODAY_ISO)  streak.count = 1;
+  streak.lastDate = TODAY_ISO;
   saveStreak();
 
   document.getElementById("streakCount").textContent = streak.count;
-  showDoneScreen();
-}
-
-function showDoneScreen() {
   document.getElementById("gameArea").style.display = "none";
   const done = document.getElementById("doneScreen");
   done.classList.add("visible");
 
   const score = state.answers.filter(a => a.correct).length;
   document.getElementById("finalScore").textContent = `${score}/${CLIPS.length}`;
-
-  const emoji = score === CLIPS.length ? "🏆" : score >= CLIPS.length * 0.6 ? "🟨" : "🟥";
-  document.getElementById("doneEmoji").textContent = emoji;
-
-  const pips = document.getElementById("scorePips");
-  pips.innerHTML = state.answers.map(a =>
-    `<div class="score-pip ${a.correct ? 'correct' : 'wrong'}">${a.correct ? '✅' : '❌'}</div>`
+  document.getElementById("doneEmoji").textContent  = score === CLIPS.length ? "🏆" : score >= Math.ceil(CLIPS.length*0.6) ? "🟨" : "🟥";
+  document.getElementById("scorePips").innerHTML    = state.answers.map(a =>
+    `<div class="score-pip ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
   ).join("");
 
   startCountdown();
 }
 
-// ── Countdown ──
+// ══════════════════════════════
+//  COUNTDOWN / SHARE / RESET
+// ══════════════════════════════
 function startCountdown() {
-  function update() {
-    const now = new Date();
-    const midnight = new Date(now);
-    midnight.setHours(24,0,0,0);
-    const diff = midnight - now;
-    const h = String(Math.floor(diff/3600000)).padStart(2,"0");
-    const m = String(Math.floor(diff%3600000/60000)).padStart(2,"0");
-    const s = String(Math.floor(diff%60000/1000)).padStart(2,"0");
-    const val = `${h}:${m}:${s}`;
-    document.querySelectorAll(".countdown").forEach(el => el.textContent = val);
+  function tick() {
+    const now = new Date(), midnight = new Date(now); midnight.setHours(24,0,0,0);
+    const d = midnight - now;
+    const t = `${String(Math.floor(d/3600000)).padStart(2,"0")}:${String(Math.floor(d%3600000/60000)).padStart(2,"0")}:${String(Math.floor(d%60000/1000)).padStart(2,"0")}`;
+    document.querySelectorAll(".countdown").forEach(el => el.textContent = t);
   }
-  update();
-  setInterval(update, 1000);
+  tick(); setInterval(tick, 1000);
 }
 
-// ── Share ──
 function shareResult() {
-  const score = state.answers.filter(a => a.correct).length;
-  const pips = state.answers.map(a => a.correct ? "🟩" : "🟥").join("");
-  const text = `THE REF — ${TODAY}\n${pips}\n${score}/${CLIPS.length} correct\n🔥 ${streak.count} day streak\ntheref.game`;
+  const score = state.answers.filter(a=>a.correct).length;
+  const pips  = state.answers.map(a => a.correct ? "🟩" : "🟥").join("");
+  const text  = `THE REF — ${TODAY_ISO}\n${pips}\n${score}/${CLIPS.length} correct\n🔥 ${streak.count} day streak\ntheref.game`;
   navigator.clipboard.writeText(text).then(() => {
-    const toast = document.getElementById("toast");
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 2200);
+    const t = document.getElementById("toast");
+    t.classList.add("show");
+    setTimeout(() => t.classList.remove("show"), 2200);
   });
 }
 
-// ── Reset (demo only) ──
 function resetForDemo() {
   localStorage.removeItem("theref_state");
   location.reload();
 }
 
-// ── Init ──
-function init() {
-  loadState();
+// ══════════════════════════════
+//  INIT
+// ══════════════════════════════
+async function init() {
+  loadPersistedState();
   document.getElementById("streakCount").textContent = streak.count;
 
   if (state.done) {
@@ -968,12 +497,37 @@ function init() {
     return;
   }
 
-  buildProgress();
+  // Show a loading state while probing files
+  document.getElementById("watchingHint").textContent = "Loading today's clips…";
 
-  // Load YouTube API
-  const tag = document.createElement("script");
-  tag.src = "https://www.youtube.com/iframe_api";
-  document.head.appendChild(tag);
+  CLIPS = await buildClipList(TODAY_CODE);
+
+  if (CLIPS.length === 0) {
+    document.getElementById("progressRow").style.display  = "none";
+    document.getElementById("videoWrap").style.display    = "none";
+    document.getElementById("watchingHint").style.display = "none";
+    document.querySelector(".answer-grid").style.display  = "none";
+    document.querySelector(".clip-info").style.display    = "none";
+    document.getElementById("gameArea").insertAdjacentHTML("beforeend", `
+      <div class="no-clips">
+        <h2>No clips found for today</h2>
+        <p style="color:var(--muted);font-size:14px;line-height:1.6">
+          Place your MP4 files in the <strong style="color:var(--text)">same folder</strong> as this HTML.<br>
+          Today's date code is <strong style="color:var(--accent)">${TODAY_CODE}</strong>
+        </p>
+        <code>${TODAY_CODE}-1-r.mp4 &nbsp;← clip 1, Red Card
+${TODAY_CODE}-2-y.mp4 &nbsp;← clip 2, Yellow Card
+${TODAY_CODE}-3-f.mp4 &nbsp;← clip 3, Free Kick
+${TODAY_CODE}-4-n.mp4 &nbsp;← clip 4, No Foul
+${TODAY_CODE}-5-r.mp4 &nbsp;← clip 5, Red Card</code>
+      </div>
+    `);
+    return;
+  }
+
+  if (state.clipIndex >= CLIPS.length) state.clipIndex = CLIPS.length - 1;
+  buildProgress();
+  loadClip(state.clipIndex);
 }
 
 init();
