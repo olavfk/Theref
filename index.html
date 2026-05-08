@@ -176,6 +176,13 @@ video.ready{opacity:1;}
 }
 .archive-tag.show{display:block;}
 
+.play-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:52px;color:rgba(255,255,255,.85);opacity:0;
+  transition:opacity .2s;pointer-events:none;
+}
+.play-overlay.show{opacity:1;}
+
 /* ── ARCHIVE DAY HEADER ── */
 .archive-day-header{
   text-align:center;margin-bottom:16px;
@@ -378,6 +385,7 @@ video.ready{opacity:1;}
   </div>
   <div id="todayView">
 
+```
 <div id="game">
   <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
   <div class="progress" id="progress" style="display:none"></div>
@@ -415,6 +423,7 @@ video.ready{opacity:1;}
   </div>
   <button class="btn-share" onclick="shareResult()">SHARE RESULT</button>
 </div>
+```
 
   </div>
   <div id="calendarView">
@@ -480,6 +489,12 @@ function showToast(msg) {
 }
 
 window.toggleUserMenu = () => $('userMenu').classList.toggle('show');
+
+window.togglePlay = () => {
+  const v = $('video');
+  if (v.paused) { v.play(); $('playOverlay').classList.remove('show'); }
+  else          { v.pause(); $('playOverlay').classList.add('show'); }
+};
 
 // ── CLIP CONFIG ───────────────────────────────
 // File naming: DDMMYY/DDMMYY-N-X.mp4
@@ -687,7 +702,7 @@ function loadClip(index) {
   if (!archiveMode) { $('archiveDayHeader').style.display = 'none'; $('archiveTag').classList.remove('show'); }
 
   $('videoWrap').style.display  = 'block';
-  $('video').controls = true;
+  $('playOverlay').classList.remove('show');
   $('hint').style.display       = 'block';
   $('answersGrid').style.display = 'grid';
   video.classList.remove('ready');
@@ -712,6 +727,7 @@ function loadClip(index) {
     if (answered) return;
     document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
     $('hint').textContent = 'Make your call';
+    $('playOverlay').classList.add('show');
   };
   video.play().catch(() => { $('hint').textContent = 'Tap play to watch'; });
 
@@ -746,14 +762,13 @@ function submitAnswer(choice) {
   buildProgress();
 
   $('result').style.display = 'block';
-  $('result').innerHTML = `
-    <div class="result-top">
-      <div style="font-size:22px">${correct ? '✅' : '❌'}</div>
-      <div class="result-title ${correct ? 'correct' : 'wrong'}">${correct ? 'Correct' : 'Wrong Call'}</div>
-      <div class="result-tag">${ANSWER_LABELS[clip.correct]}</div>
-    </div>
-    <div class="result-text">${clip.explanation}</div>
-  `;
+  $('result').innerHTML =
+    '<div class="result-top">' +
+    '<div style="font-size:22px">' + (correct ? '✅' : '❌') + '</div>' +
+    '<div class="result-title ' + (correct ? 'correct' : 'wrong') + '">' + (correct ? 'Correct' : 'Wrong Call') + '</div>' +
+    '<div class="result-tag">' + ANSWER_LABELS[clip.correct] + '</div>' +
+    '</div>' +
+    '<div class="result-text">' + clip.explanation + '</div>';
 
   $('nextButton').classList.add('visible');
   $('nextButton').style.display = 'block';
