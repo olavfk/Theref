@@ -566,7 +566,7 @@ async function buildClips(code) {
   for (let i = 1; i <= 9; i++) {
     let found = false;
     for (const c of ['n','f','y','r']) {
-      const filename = `${code}-${i}-${c}.mp4`;
+      const filename = `${code}/${code}-${i}-${c}.mp4`;
       if (await fileExists(filename)) {
         const key  = `${code}-${i}`;
         const meta = CLIP_META[key] || {};
