@@ -376,9 +376,6 @@ video.ready{opacity:1;}
     <button class="nav-tab active" id="tabToday"   onclick="showTab('today')">TODAY</button>
     <button class="nav-tab"        id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
   </div>
-
-  <!-- TODAY -->
-
   <div id="todayView">
 
 ```
@@ -386,25 +383,25 @@ video.ready{opacity:1;}
   <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
   <div class="progress" id="progress" style="display:none"></div>
 
-  <div class="video-wrap">
+  <div class="video-wrap" id="videoWrap" style="display:none">
     <div class="video-top">
       <div class="clip-label" id="clipLabel">Clip 1</div>
       <div class="archive-tag" id="archiveTag"></div>
     </div>
-    <video id="video" playsinline webkit-playsinline controls></video>
+    <video id="video" playsinline webkit-playsinline></video>
   </div>
 
-  <div class="hint" id="hint">Watch the clip</div>
+  <div class="hint" id="hint" style="display:none">Watch the clip</div>
 
-  <div class="answers">
-    <button class="answer none"     data-answer="none">    <div class="answer-icon">✅</div><div class="answer-label">No Foul</div></button>
+  <div class="answers" id="answersGrid" style="display:none">
+    <button class="answer none" data-answer="none"><div class="answer-icon">✅</div><div class="answer-label">No Foul</div></button>
     <button class="answer freekick" data-answer="freekick"><div class="answer-icon">⚽</div><div class="answer-label">Free Kick</div></button>
-    <button class="answer yellow"   data-answer="yellow">  <div class="answer-icon">🟨</div><div class="answer-label">Yellow</div></button>
-    <button class="answer red"      data-answer="red">     <div class="answer-icon">🟥</div><div class="answer-label">Red Card</div></button>
+    <button class="answer yellow" data-answer="yellow"><div class="answer-icon">🟨</div><div class="answer-label">Yellow</div></button>
+    <button class="answer red" data-answer="red"><div class="answer-icon">🟥</div><div class="answer-label">Red Card</div></button>
   </div>
 
   <div class="result" id="result"></div>
-  <button class="next visible" id="nextButton" style="display:none">NEXT →</button>
+  <button class="next" id="nextButton" style="display:none">NEXT →</button>
 </div>
 
 <div class="done" id="done">
@@ -422,9 +419,6 @@ video.ready{opacity:1;}
 ```
 
   </div>
-
-  <!-- ARCHIVE -->
-
   <div id="calendarView">
     <div class="cal-header">
       <div class="cal-month" id="calMonthLabel">May 2026</div>
@@ -694,6 +688,10 @@ function loadClip(index) {
   // Hide archive header if playing today
   if (!archiveMode) { $('archiveDayHeader').style.display = 'none'; $('archiveTag').classList.remove('show'); }
 
+  $('videoWrap').style.display  = 'block';
+  $('video').controls = true;
+  $('hint').style.display       = 'block';
+  $('answersGrid').style.display = 'grid';
   video.classList.remove('ready');
   $('clipLabel').textContent = `Clip ${index+1} of ${clips.length}`;
   $('hint').textContent      = 'Watch the clip';
