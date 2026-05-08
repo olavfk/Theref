@@ -707,15 +707,16 @@ function renderCalendar() {
         const dot = document.createElement('div');
         dot.className = 'cal-day-dot';
         el.appendChild(dot);
-        el.style.cursor = 'pointer';
+        el.style.cursor = 'default';
         el.title = `${d} ${MONTH_NAMES[calMonth]} — ${hist.score}/${hist.total||3} correct`;
-        el.addEventListener('click', () => playArchiveDay(code, date));
       } else if (isToday) {
         el.classList.add(userState.done ? 'today-done' : 'today');
         if (userState.done) {
           const check = document.createElement('div'); check.className='cal-check'; check.textContent='✓'; el.appendChild(check);
+          el.style.cursor = 'default';
+        } else {
+          el.addEventListener('click', () => showTab('today'));
         }
-        el.addEventListener('click', () => showTab('today'));
       } else {
         // Past, not played
         el.classList.add('available');
@@ -737,6 +738,11 @@ let archiveCode = null;
 let archiveDate = null;
 
 async function playArchiveDay(code, date) {
+  // Block replay — once done, it's done
+  if (archiveData[code] && archiveData[code].done) {
+    showToast('Already played — no replays');
+    return;
+  }
   showTab('today');
 
   // Reset UI
