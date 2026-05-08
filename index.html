@@ -636,7 +636,24 @@ window.showTab = (tab) => {
   $('calendarView').classList.toggle('show', isArchive);
   $('tabToday').classList.toggle('active', !isArchive);
   $('tabArchive').classList.toggle('active', isArchive);
-  if (isArchive) renderCalendar();
+  if (isArchive) {
+    renderCalendar();
+  } else if (archiveMode) {
+    // User tapped Today while playing archive — cancel archive and restore today
+    archiveMode = false;
+    archiveCode = null;
+    archiveDate = null;
+    $('archiveDayHeader').style.display = 'none';
+    $('archiveTag').classList.remove('show');
+    clips     = todayClips;
+    gameState = todayState;
+    $('game').style.display = todayState.done ? 'none' : 'block';
+    $('done').classList.toggle('visible', todayState.done);
+    if (!todayState.done) {
+      buildProgress();
+      // Don't reload video, just restore progress state
+    }
+  }
 };
 
 function showTodayViewKeepArchiveTab() {
@@ -649,6 +666,7 @@ function showTodayViewKeepArchiveTab() {
 
 // ── GAME ENGINE ───────────────────────────────
 let clips       = [];
+let todayClips  = []; // always holds today's clips for tab switching
 let answered    = false;
 let archiveMode = false;
 let archiveCode = null;
@@ -826,7 +844,7 @@ async function playArchiveDay(code, date) {
   $('archiveTag').textContent = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive`;
   $('archiveTag').classList.add('show');
   $('archiveDayHeader').style.display = 'block';
-  $('archiveDayHeader').innerHTML = `<div class="archive-day-header-label">Archive</div><div class="archive-day-header-date">${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}</div>`;
+  $('archiveDayHeader').innerHTML = '<div class="archive-day-header-label">Archive</div><div class="archive-day-header-date">' + date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear() + '</div>';
   $('game').style.display = 'block';
   $('done').classList.remove('visible');
 
@@ -959,6 +977,7 @@ onAuthStateChanged(auth, async (user) => {
   $('streakCount').textContent = streak.count;
 
   clips = await buildClips(TODAY_CODE);
+  todayClips = clips;
 
   $('loadingScreen').classList.remove('show');
   $('appScreen').style.display = 'block';
