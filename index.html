@@ -28,11 +28,8 @@
 
 html,body{
   background:radial-gradient(circle at top,#162014 0%,#0a0f0a 45%),#0a0f0a;
-  color:var(--text);
-  min-height:100vh;
-  overflow-x:hidden;
-  font-family:'Inter',sans-serif;
-  -webkit-font-smoothing:antialiased;
+  color:var(--text);min-height:100vh;overflow-x:hidden;
+  font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;
 }
 
 body::before{
@@ -43,155 +40,65 @@ body::before{
 
 .wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:20px 16px 80px;}
 
-/* ── AUTH SCREEN ── */
-#authScreen{
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;min-height:100vh;gap:0;
-  padding:40px 20px;
-}
-
-.auth-logo{
-  font-family:'Bebas Neue',cursive;font-size:56px;letter-spacing:4px;
-  color:var(--accent);text-shadow:0 0 40px #a3e63540;line-height:1;
-  margin-bottom:6px;
-}
-
-.auth-sub{
-  font-size:12px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--muted);margin-bottom:40px;
-}
-
-.auth-card{
-  width:100%;max-width:380px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:32px;
-  display:flex;flex-direction:column;gap:14px;
-}
-
-.auth-title{
-  font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;
-  color:var(--text);margin-bottom:4px;text-align:center;
-}
-
-.auth-toggle{
-  text-align:center;font-size:13px;color:var(--muted);margin-bottom:4px;
-}
-
+/* ── AUTH ── */
+#authScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 20px;}
+.auth-logo{font-family:'Bebas Neue',cursive;font-size:56px;letter-spacing:4px;color:var(--accent);text-shadow:0 0 40px #a3e63540;line-height:1;margin-bottom:6px;}
+.auth-sub{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:40px;}
+.auth-card{width:100%;max-width:380px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:14px;}
+.auth-title{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:var(--text);margin-bottom:4px;text-align:center;}
+.auth-toggle{text-align:center;font-size:13px;color:var(--muted);}
 .auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600;}
 .auth-toggle a:hover{text-decoration:underline;}
-
 .input-group{display:flex;flex-direction:column;gap:6px;}
-
 .input-label{font-size:12px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
-
-.input-field{
-  background:#0d130d;border:1.5px solid var(--border);
-  border-radius:12px;padding:13px 16px;
-  font-size:15px;color:var(--text);font-family:'Inter',sans-serif;
-  outline:none;transition:border-color .2s;width:100%;
-}
-
+.input-field{background:#0d130d;border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;font-size:15px;color:var(--text);font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;width:100%;}
 .input-field:focus{border-color:var(--accent);}
 .input-field::placeholder{color:#3a4a39;}
-
-.btn-primary{
-  width:100%;padding:14px;border:none;border-radius:14px;
-  background:var(--accent);color:#0a0f0a;
-  font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px;
-  cursor:pointer;transition:transform .15s,background .15s;
-}
+.btn-primary{width:100%;padding:14px;border:none;border-radius:14px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px;cursor:pointer;transition:transform .15s,background .15s;}
 .btn-primary:hover{background:#b5f040;transform:translateY(-1px);}
-.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-
-.divider{
-  display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;
-}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-
-.btn-google{
-  width:100%;padding:13px;border:1.5px solid var(--border);
-  border-radius:14px;background:transparent;color:var(--text);
-  font-size:15px;font-weight:600;font-family:'Inter',sans-serif;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
-  transition:border-color .2s,background .2s;
-}
+.btn-google{width:100%;padding:13px;border:1.5px solid var(--border);border-radius:14px;background:transparent;color:var(--text);font-size:15px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:border-color .2s,background .2s;}
 .btn-google:hover{border-color:#6b7a6a;background:#0d130d;}
-
 .google-icon{width:20px;height:20px;}
-
-.auth-error{
-  background:#450a0a;border:1px solid var(--red);
-  border-radius:10px;padding:10px 14px;
-  font-size:13px;color:#fca5a5;display:none;
-}
-
+.auth-error{background:#450a0a;border:1px solid var(--red);border-radius:10px;padding:10px 14px;font-size:13px;color:#fca5a5;display:none;}
 .auth-error.show{display:block;}
 
 /* ── LOADING ── */
-#loadingScreen{
-  display:none;flex-direction:column;align-items:center;
-  justify-content:center;min-height:100vh;gap:16px;
-}
-
+#loadingScreen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;gap:16px;}
 #loadingScreen.show{display:flex;}
-
-.spinner{
-  width:36px;height:36px;border-radius:50%;
-  border:3px solid var(--border);border-top-color:var(--accent);
-  animation:spin .8s linear infinite;
-}
-
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 .loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 
 /* ── HEADER ── */
-.header{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-bottom:24px;padding-top:4px;
-}
-
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-top:4px;}
 .logo{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;line-height:1;}
 .logo span{display:block;margin-top:2px;font-size:12px;letter-spacing:3px;opacity:.45;font-family:'Barlow Condensed',sans-serif;}
-
 .header-right{display:flex;align-items:center;gap:12px;}
-
 .streak{display:flex;flex-direction:column;align-items:center;gap:1px;}
 .streak-fire{font-size:22px;}
 .streak-count{font-family:'Bebas Neue',cursive;font-size:24px;line-height:1;color:#fb923c;}
 .streak-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
-
-.user-btn{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--card2);border:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;transition:border-color .2s;
-  flex-shrink:0;
-}
+.user-btn{width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:border-color .2s;flex-shrink:0;}
 .user-btn:hover{border-color:var(--muted);}
 
-/* User menu */
-.user-menu{
-  position:fixed;top:0;right:0;bottom:0;left:0;
-  z-index:50;display:none;
-}
+/* user menu */
+.user-menu{position:fixed;top:0;right:0;bottom:0;left:0;z-index:50;display:none;}
 .user-menu.show{display:block;}
 .user-menu-backdrop{position:absolute;inset:0;}
-.user-menu-card{
-  position:absolute;top:68px;right:20px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:16px;padding:8px;min-width:220px;
-  box-shadow:0 20px 60px #00000080;
-}
-.user-menu-email{padding:10px 12px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:4px;}
-.user-menu-item{
-  padding:11px 14px;border-radius:10px;font-size:14px;font-weight:500;
-  cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:10px;
-}
+.user-menu-card{position:absolute;top:68px;right:20px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:8px;min-width:220px;box-shadow:0 20px 60px #00000080;}
+.user-menu-email{padding:10px 12px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border);margin-bottom:4px;word-break:break-all;}
+.user-menu-item{padding:11px 14px;border-radius:10px;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:10px;}
 .user-menu-item:hover{background:var(--card2);}
 .user-menu-item.danger{color:var(--red);}
+
+/* ── NAV TABS ── */
+.nav-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px;}
+.nav-tab{flex:1;padding:10px;border:none;background:transparent;color:var(--muted);font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;cursor:pointer;border-radius:10px;transition:background .15s,color .15s;}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{background:var(--card2);color:var(--accent);border:1px solid var(--border);}
 
 /* ── PROGRESS ── */
 .progress{display:flex;gap:8px;margin-bottom:20px;}
@@ -202,55 +109,33 @@ body::before{
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 /* ── VIDEO ── */
-.video-wrap{
-  position:relative;width:100%;aspect-ratio:16/9;
-  overflow:hidden;border-radius:20px;background:#000;
-  border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);
-}
-
-video{
-  width:100%;height:100%;object-fit:contain;background:#000;display:block;
-  opacity:0;transition:opacity .35s ease;
-}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:20px;background:#000;border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);}
+video{width:100%;height:100%;object-fit:contain;background:#000;display:block;opacity:0;transition:opacity .35s ease;}
 video.ready{opacity:1;}
-
-.video-top{
-  position:absolute;top:0;left:0;right:0;padding:14px;
-  background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);z-index:2;
-}
+.video-top{position:absolute;top:0;left:0;right:0;padding:14px;background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);z-index:2;}
 .clip-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#ffffffcc;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
 
-/* ── INFO ── */
+/* archive banner inside video */
+.archive-banner{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(to top,rgba(0,0,0,.8),transparent);z-index:2;display:none;}
+.archive-banner.show{display:block;}
+.archive-banner-text{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#facc15cc;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+
+/* ── CLIP INFO ── */
 .clip-info{margin:18px 0 4px;}
 .clip-number{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
 .clip-title{font-size:24px;font-weight:700;line-height:1.15;}
-
-.hint{
-  text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;
-  color:#9ca3af;margin:14px 0;min-height:18px;
-}
+.hint{text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin:14px 0;min-height:18px;}
 
 /* ── ANSWERS ── */
 .answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
-
-.answer{
-  position:relative;padding:22px 14px;border-radius:18px;
-  border:1px solid #2d3a2c;
-  background:linear-gradient(to bottom,#1b241a,#141a13);
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-  cursor:pointer;
-  transition:transform .15s,border-color .2s,background .2s,opacity .2s;
-}
-
+.answer{position:relative;padding:22px 14px;border-radius:18px;border:1px solid #2d3a2c;background:linear-gradient(to bottom,#1b241a,#141a13);display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:transform .15s,border-color .2s,background .2s,opacity .2s;}
 .answer:hover:not(:disabled):not(.locked){transform:translateY(-3px);border-color:#84cc16;background:linear-gradient(to bottom,#212b1f,#171d16);}
 .answer:disabled{cursor:not-allowed;}
 .answer.locked{opacity:.35;cursor:not-allowed;pointer-events:none;}
-
 .answer.correct-selected{border-color:var(--green)!important;background:#14532d!important;}
 .answer.wrong-selected{border-color:var(--red)!important;background:#450a0a!important;}
 .answer.reveal{border-color:var(--green)!important;background:#14532d55!important;}
 .answer.dimmed{opacity:.3;}
-
 .answer-icon{font-size:30px;}
 .answer-label{font-family:'Bebas Neue',cursive;letter-spacing:1.5px;font-size:18px;}
 .answer.none .answer-label{color:var(--green);}
@@ -259,13 +144,8 @@ video.ready{opacity:1;}
 .answer.red .answer-label{color:var(--red);}
 
 /* ── RESULT ── */
-.result{
-  display:none;margin-top:16px;background:var(--card);
-  border:1px solid var(--border);border-radius:18px;
-  padding:18px;animation:up .25s ease;
-}
+.result{display:none;margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;animation:up .25s ease;}
 @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
 .result-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .result-title{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:24px;}
 .result-title.correct{color:var(--green);}
@@ -273,18 +153,13 @@ video.ready{opacity:1;}
 .result-tag{margin-left:auto;padding:4px 8px;border-radius:6px;background:#ffffff12;font-size:12px;letter-spacing:1px;font-weight:700;}
 .result-text{color:#a8b5a7;line-height:1.7;font-size:14px;}
 
-/* ── NEXT ── */
-.next{
-  width:100%;margin-top:16px;padding:16px;border:none;
-  border-radius:18px;background:var(--accent);color:#0a0f0a;
-  font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;
-  cursor:pointer;display:none;transition:transform .15s;
-}
-.next:hover{transform:translateY(-2px);}
+/* ── NEXT BTN ── */
+.next{width:100%;margin-top:16px;padding:16px;border:none;border-radius:18px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s,background .15s;}
+.next:hover{transform:translateY(-2px);background:#b5f040;}
 .next.visible{display:block;}
 
-/* ── DONE ── */
-.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:22px;padding-top:40px;}
+/* ── DONE SCREEN ── */
+.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:22px;padding-top:20px;}
 .done.visible{display:flex;}
 .done-emoji{font-size:70px;}
 .done-title{font-family:'Bebas Neue',cursive;font-size:54px;letter-spacing:4px;}
@@ -294,14 +169,76 @@ video.ready{opacity:1;}
 .score-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
 .score-box.correct{background:#14532d;border:1px solid var(--green);}
 .score-box.wrong{background:#450a0a;border:1px solid var(--red);}
-
 .countdown-box{width:100%;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;}
 .countdown-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 .countdown{font-family:'Bebas Neue',cursive;font-size:42px;letter-spacing:4px;}
-
 .btn-row{display:flex;flex-direction:column;gap:10px;width:100%;}
-.share{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;}
+.share{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;transition:background .15s;}
 .share:hover{background:#b5f040;}
+.btn-ghost{width:100%;padding:13px;background:transparent;color:var(--muted);border:1.5px solid var(--border);border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;transition:border-color .15s,color .15s;letter-spacing:1px;}
+.btn-ghost:hover{border-color:var(--muted);color:var(--text);}
+
+/* ── CALENDAR ── */
+#calendarView{display:none;}
+#calendarView.show{display:block;}
+
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.cal-month{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;}
+.cal-nav{display:flex;gap:8px;}
+.cal-nav-btn{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s;}
+.cal-nav-btn:hover{border-color:var(--accent);}
+.cal-nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;}
+.cal-weekday{text-align:center;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 0;}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+
+.cal-day{
+  aspect-ratio:1;border-radius:12px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:3px;
+  border:1px solid transparent;position:relative;
+  transition:border-color .15s,background .15s,transform .12s;
+}
+
+.cal-day-num{font-size:14px;font-weight:600;line-height:1;}
+.cal-day-dot{width:6px;height:6px;border-radius:50%;}
+
+/* states */
+.cal-day.empty{background:transparent;border-color:transparent;cursor:default;}
+.cal-day.future{background:transparent;border-color:var(--border);opacity:.25;cursor:not-allowed;}
+.cal-day.locked{background:var(--card);border-color:var(--border);opacity:.3;cursor:not-allowed;}
+
+.cal-day.available{background:var(--card);border-color:var(--border);cursor:pointer;}
+.cal-day.available:hover{border-color:var(--accent);transform:translateY(-2px);}
+.cal-day.available .cal-day-dot{background:var(--muted);}
+
+.cal-day.today{background:var(--card2);border-color:var(--accent);cursor:pointer;}
+.cal-day.today .cal-day-num{color:var(--accent);}
+.cal-day.today:hover{transform:translateY(-2px);}
+
+.cal-day.done-perfect{background:#14532d;border-color:var(--green);cursor:pointer;}
+.cal-day.done-perfect .cal-day-num{color:var(--green);}
+.cal-day.done-perfect .cal-day-dot{background:var(--green);}
+
+.cal-day.done-partial{background:#1a2e0a;border-color:#84cc16;cursor:pointer;}
+.cal-day.done-partial .cal-day-num{color:#84cc16;}
+.cal-day.done-partial .cal-day-dot{background:#84cc16;}
+
+.cal-day.done-bad{background:#2d1010;border-color:#f87171;cursor:pointer;}
+.cal-day.done-bad .cal-day-num{color:#f87171;}
+.cal-day.done-bad .cal-day-dot{background:#f87171;}
+
+.cal-day.today-done{background:#0d2b1a;border-color:var(--green);}
+.cal-day.today-done .cal-day-num{color:var(--green);}
+
+/* checkmark badge */
+.cal-check{position:absolute;top:4px;right:4px;font-size:9px;line-height:1;}
+
+/* legend */
+.cal-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+.cal-legend-dot{width:10px;height:10px;border-radius:3px;}
 
 /* ── NO CLIPS ── */
 .no-clips{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;}
@@ -310,79 +247,56 @@ video.ready{opacity:1;}
 .no-clips code{display:inline-block;margin-top:12px;background:#0d130d;border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:monospace;font-size:13px;color:var(--accent);text-align:left;line-height:2;}
 
 /* ── TOAST ── */
-.toast{
-  position:fixed;left:50%;bottom:28px;
-  transform:translateX(-50%) translateY(16px);
-  background:var(--accent);color:#0a0f0a;
-  padding:10px 20px;border-radius:10px;
-  font-size:13px;letter-spacing:2px;font-weight:700;
-  opacity:0;transition:.3s ease;pointer-events:none;z-index:200;
-}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);background:var(--accent);color:#0a0f0a;padding:10px 20px;border-radius:10px;font-size:13px;letter-spacing:2px;font-weight:700;opacity:0;transition:.3s ease;pointer-events:none;z-index:200;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 
 </head>
 <body>
 
-<!-- ── AUTH SCREEN ── -->
+<!-- AUTH -->
 
 <div id="authScreen">
   <div class="auth-logo">THE REF</div>
   <div class="auth-sub">Daily Football Decisions</div>
-
   <div class="auth-card">
     <div class="auth-title" id="authTitle">SIGN IN</div>
-
-```
-<div class="auth-error" id="authError"></div>
-
-<!-- Email fields -->
-<div class="input-group">
-  <div class="input-label">Email</div>
-  <input class="input-field" type="email" id="authEmail" placeholder="you@example.com" autocomplete="email"/>
-</div>
-
-<div class="input-group">
-  <div class="input-label">Password</div>
-  <input class="input-field" type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password"/>
-</div>
-
-<!-- Name field (register only) -->
-<div class="input-group" id="nameGroup" style="display:none">
-  <div class="input-label">Name</div>
-  <input class="input-field" type="text" id="authName" placeholder="Your name"/>
-</div>
-
-<button class="btn-primary" id="authSubmit" onclick="handleEmailAuth()">SIGN IN</button>
-
-<div class="divider">or</div>
-
-<button class="btn-google" onclick="handleGoogleAuth()">
-  <svg class="google-icon" viewBox="0 0 24 24">
-    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
-    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-  </svg>
-  Continue with Google
-</button>
-
-<div class="auth-toggle" id="authToggle">
-  No account? <a onclick="toggleAuthMode()">Create one</a>
-</div>
-```
-
+    <div class="auth-error" id="authError"></div>
+    <div class="input-group">
+      <div class="input-label">Email</div>
+      <input class="input-field" type="email" id="authEmail" placeholder="you@example.com" autocomplete="email"/>
+    </div>
+    <div class="input-group">
+      <div class="input-label">Password</div>
+      <input class="input-field" type="password" id="authPassword" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <div class="input-group" id="nameGroup" style="display:none">
+      <div class="input-label">Name</div>
+      <input class="input-field" type="text" id="authName" placeholder="Your name"/>
+    </div>
+    <button class="btn-primary" id="authSubmit" onclick="handleEmailAuth()">SIGN IN</button>
+    <div class="divider">or</div>
+    <button class="btn-google" onclick="handleGoogleAuth()">
+      <svg class="google-icon" viewBox="0 0 24 24">
+        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+      </svg>
+      Continue with Google
+    </button>
+    <div class="auth-toggle" id="authToggle">No account? <a onclick="toggleAuthMode()">Create one</a></div>
   </div>
 </div>
 
-<!-- ── LOADING ── -->
+<!-- LOADING -->
 
 <div id="loadingScreen">
   <div class="spinner"></div>
-  <div class="loading-text">Loading clips…</div>
+  <div class="loading-text" id="loadingText">Loading…</div>
 </div>
 
-<!-- ── GAME ── -->
+<!-- APP -->
 
 <div style="display:none" id="appScreen">
 <div class="wrapper">
@@ -399,78 +313,124 @@ video.ready{opacity:1;}
     </div>
   </header>
 
-  <!-- User menu -->
+  <!-- user menu -->
 
   <div class="user-menu" id="userMenu">
     <div class="user-menu-backdrop" onclick="toggleUserMenu()"></div>
     <div class="user-menu-card">
       <div class="user-menu-email" id="userMenuEmail"></div>
-      <div class="user-menu-item danger" onclick="signOut()">
-        <span>🚪</span> Sign out
-      </div>
+      <div class="user-menu-item danger" onclick="doSignOut()"><span>🚪</span> Sign out</div>
     </div>
   </div>
 
-  <!-- GAME AREA -->
+  <!-- NAV TABS -->
 
-  <div id="game">
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tabToday" onclick="showTab('today')">TODAY</button>
+    <button class="nav-tab" id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
+  </div>
+
+  <!-- TODAY TAB -->
+
+  <div id="todayView">
 
 ```
-<div class="progress" id="progress"></div>
+<div id="game">
+  <div class="progress" id="progress"></div>
 
-<div class="video-wrap">
-  <div class="video-top">
-    <div class="clip-label" id="clipLabel">Clip 1</div>
+  <div class="video-wrap">
+    <div class="video-top">
+      <div class="clip-label" id="clipLabel">Clip 1</div>
+    </div>
+    <video id="video" playsinline webkit-playsinline controls></video>
+    <div class="archive-banner" id="archiveBanner">
+      <div class="archive-banner-text" id="archiveBannerText">📅 Archive — does not affect streak</div>
+    </div>
   </div>
-  <video id="video" playsinline webkit-playsinline controls></video>
+
+  <div class="clip-info">
+    <div class="clip-number" id="clipNumber">Incident 1</div>
+    <div class="clip-title" id="clipTitle">Loading…</div>
+  </div>
+
+  <div class="hint" id="hint">Watch the clip</div>
+
+  <div class="answers">
+    <button class="answer none locked" data-answer="none">
+      <div class="answer-icon">✅</div>
+      <div class="answer-label">No Foul</div>
+    </button>
+    <button class="answer freekick locked" data-answer="freekick">
+      <div class="answer-icon">⚽</div>
+      <div class="answer-label">Free Kick</div>
+    </button>
+    <button class="answer yellow locked" data-answer="yellow">
+      <div class="answer-icon">🟨</div>
+      <div class="answer-label">Yellow</div>
+    </button>
+    <button class="answer red locked" data-answer="red">
+      <div class="answer-icon">🟥</div>
+      <div class="answer-label">Red Card</div>
+    </button>
+  </div>
+
+  <div class="result" id="result"></div>
+  <button class="next" id="nextButton">NEXT →</button>
 </div>
 
-<div class="clip-info">
-  <div class="clip-number" id="clipNumber">Incident 1</div>
-  <div class="clip-title" id="clipTitle">Loading…</div>
+<!-- DONE -->
+<div class="done" id="done">
+  <div class="done-emoji" id="doneEmoji">🏆</div>
+  <div class="done-title">FULL TIME</div>
+  <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
+  <div class="score-row" id="scoreRow"></div>
+  <div class="countdown-box">
+    <div class="countdown-label">Next clips in</div>
+    <div class="countdown" id="countdown">00:00:00</div>
+  </div>
+  <div class="btn-row">
+    <button class="share" onclick="shareResult()">SHARE RESULT</button>
+    <button class="btn-ghost" onclick="showTab('archive')">📅 View Archive</button>
+  </div>
 </div>
-
-<div class="hint" id="hint">Watch the clip</div>
-
-<div class="answers">
-  <button class="answer none locked" data-answer="none">
-    <div class="answer-icon">✅</div>
-    <div class="answer-label">No Foul</div>
-  </button>
-  <button class="answer freekick locked" data-answer="freekick">
-    <div class="answer-icon">⚽</div>
-    <div class="answer-label">Free Kick</div>
-  </button>
-  <button class="answer yellow locked" data-answer="yellow">
-    <div class="answer-icon">🟨</div>
-    <div class="answer-label">Yellow</div>
-  </button>
-  <button class="answer red locked" data-answer="red">
-    <div class="answer-icon">🟥</div>
-    <div class="answer-label">Red Card</div>
-  </button>
-</div>
-
-<div class="result" id="result"></div>
-<button class="next" id="nextButton">NEXT →</button>
 ```
 
   </div>
 
-  <!-- DONE -->
+  <!-- ARCHIVE TAB -->
 
-  <div class="done" id="done">
-    <div class="done-emoji" id="doneEmoji">🏆</div>
-    <div class="done-title">FULL TIME</div>
-    <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
-    <div class="score-row" id="scoreRow"></div>
-    <div class="countdown-box">
-      <div class="countdown-label">Next clips in</div>
-      <div class="countdown" id="countdown">00:00:00</div>
-    </div>
-    <div class="btn-row">
-      <button class="share" onclick="shareResult()">SHARE RESULT</button>
-    </div>
+  <div id="calendarView">
+
+```
+<div class="cal-header">
+  <div class="cal-month" id="calMonthLabel">May 2026</div>
+  <div class="cal-nav">
+    <button class="cal-nav-btn" id="calPrev" onclick="calNav(-1)">‹</button>
+    <button class="cal-nav-btn" id="calNext" onclick="calNav(1)">›</button>
+  </div>
+</div>
+
+<div class="cal-weekdays">
+  <div class="cal-weekday">Mon</div>
+  <div class="cal-weekday">Tue</div>
+  <div class="cal-weekday">Wed</div>
+  <div class="cal-weekday">Thu</div>
+  <div class="cal-weekday">Fri</div>
+  <div class="cal-weekday">Sat</div>
+  <div class="cal-weekday">Sun</div>
+</div>
+
+<div class="cal-grid" id="calGrid"></div>
+
+<div class="cal-legend">
+  <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#22c55e"></div> Perfect</div>
+  <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#84cc16"></div> Some correct</div>
+  <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#f87171"></div> All wrong</div>
+  <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#3a4a39"></div> Not played</div>
+  <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#1e281e;border:1px solid #a3e635"></div> Today</div>
+</div>
+```
+
   </div>
 
 </div>
@@ -478,32 +438,20 @@ video.ready{opacity:1;}
 
 <div class="toast" id="toast">COPIED</div>
 
-<!-- ══════════════════════════════════════════════
-     FIREBASE
-══════════════════════════════════════════════ -->
+<!-- FIREBASE -->
 
 <script type="module">
-import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAnalytics }                         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+import { initializeApp }           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAnalytics }            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 import {
-  getAuth,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut as fbSignOut,
-  updateProfile
+  getAuth, onAuthStateChanged,
+  signInWithEmailAndPassword, createUserWithEmailAndPassword,
+  GoogleAuthProvider, signInWithPopup, signOut as fbSignOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  serverTimestamp
+  getFirestore, doc, getDoc, setDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── Config ──
 const firebaseConfig = {
   apiKey:            "AIzaSyCqJdsYjI6fS54klT1RGLQEF8UmzIbkxC4",
   authDomain:        "bearef-d744a.firebaseapp.com",
@@ -514,53 +462,61 @@ const firebaseConfig = {
   measurementId:     "G-925SX7ZHLS"
 };
 
-const app       = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth      = getAuth(app);
-const db        = getFirestore(app);
+const app  = initializeApp(firebaseConfig);
+getAnalytics(app);
+const auth = getAuth(app);
+const db   = getFirestore(app);
 
-// ══════════════════════════════════════════════
-//  CLIP DATA CONFIG
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
+//  CLIP CONFIG
+// ══════════════════════════════════════════
 
-const ANSWER_MAP = { n:'none', f:'freekick', y:'yellow', r:'red' };
-
-const ANSWER_LABELS = {
-  none:'No Foul ✅',
-  freekick:'Free Kick ⚽',
-  yellow:'Yellow Card 🟨',
-  red:'Red Card 🟥'
-};
-
-const DEFAULT_EXPLANATIONS = {
-  none:     'No foul was committed. The challenge was fair — play continues.',
+const ANSWER_MAP     = { n:'none', f:'freekick', y:'yellow', r:'red' };
+const ANSWER_LABELS  = { none:'No Foul ✅', freekick:'Free Kick ⚽', yellow:'Yellow Card 🟨', red:'Red Card 🟥' };
+const DEFAULT_EXPL   = {
+  none:     'No foul committed. The challenge was fair — play continues.',
   freekick: 'A foul was committed, awarding a free kick to the opposition.',
   yellow:   'A reckless or unsporting challenge — yellow card shown.',
   red:      'Serious foul play or violent conduct — straight red card.'
 };
 
-// Add titles and explanations per clip here
-// Key = "DDMMYY-N"
+// Add titles + explanations per clip. Key = "DDMMYY-N"
 const CLIP_META = {
-  '080526-1':{ title:'Gerrard Stamp', explanation:'Gerrard deliberately stamps on his opponent\'s leg with no attempt to play the ball. Totally unnecessary and intentional — straight red card for violent conduct.' },
-  // '080526-2':{ title:'...', explanation:'...' },
-  // '080526-3':{ title:'...', explanation:'...' },
+  '070526-1':{ title:'Opening Day Incident', explanation:'The first ever clip on The Ref.' },
+  '080526-1':{ title:'Gerrard Stamp',        explanation:'Gerrard deliberately stamps on his opponent\'s leg with no attempt to play the ball. Totally unnecessary — straight red card for violent conduct.' },
 };
 
-// ── Dates ──
-function todayCode() {
-  const d = new Date();
+// ── Earliest playable date ──
+const EARLIEST = new Date(2026, 4, 7); // 7 May 2026
+
+// ══════════════════════════════════════════
+//  DATE HELPERS
+// ══════════════════════════════════════════
+
+function dateToCode(d) {
   return String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + String(d.getFullYear()).slice(-2);
 }
-function todayISO() { return new Date().toISOString().split('T')[0]; }
 
-// ── File probe ──
-async function fileExists(url) {
-  try { const r = await fetch(url,{method:'HEAD'}); return r.ok; }
-  catch { return false; }
+function dateToISO(d) {
+  return d.toISOString().split('T')[0];
 }
 
-// ── Build clips ──
+function today() { return new Date(); }
+function todayCode() { return dateToCode(today()); }
+function todayISO()  { return dateToISO(today()); }
+
+function isSameDay(a, b) {
+  return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+}
+
+// ══════════════════════════════════════════
+//  FILE PROBE + CLIP BUILDER
+// ══════════════════════════════════════════
+
+async function fileExists(url) {
+  try { const r = await fetch(url,{method:'HEAD'}); return r.ok; } catch { return false; }
+}
+
 async function buildClips(code) {
   const clips = [];
   for (let i = 1; i <= 9; i++) {
@@ -570,14 +526,8 @@ async function buildClips(code) {
       if (await fileExists(filename)) {
         const key  = `${code}-${i}`;
         const meta = CLIP_META[key] || {};
-        clips.push({
-          filename,
-          correct:     ANSWER_MAP[c],
-          title:       meta.title       || `Incident ${i}`,
-          explanation: meta.explanation || DEFAULT_EXPLANATIONS[ANSWER_MAP[c]]
-        });
-        found = true;
-        break;
+        clips.push({ filename, correct:ANSWER_MAP[c], title:meta.title||`Incident ${i}`, explanation:meta.explanation||DEFAULT_EXPL[ANSWER_MAP[c]] });
+        found = true; break;
       }
     }
     if (!found && i > clips.length) break;
@@ -585,137 +535,256 @@ async function buildClips(code) {
   return clips;
 }
 
-// ══════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
+//  FIRESTORE
+// ══════════════════════════════════════════
 
 const TODAY_CODE = todayCode();
 const TODAY_ISO  = todayISO();
 
-let clips    = [];
-let answered = false;
-let currentUser = null;
+let currentUser  = null;
+let userStreak   = { count:0, lastDate:null };
+let userState    = { clipIndex:0, answers:[], done:false, date:TODAY_ISO };
+let archiveData  = {}; // { "DDMMYY": { answers:[...], done:true, score:2 } }
 
-// Per-user state stored in Firestore
-let userState  = { clipIndex:0, answers:[], done:false, date:TODAY_ISO };
-let userStreak = { count:0, lastDate:null };
-
-// ── Firestore helpers ──
 async function loadUserData(uid) {
-  const ref  = doc(db, 'users', uid);
-  const snap = await getDoc(ref);
+  const snap = await getDoc(doc(db,'users',uid));
   if (snap.exists()) {
-    const data = snap.data();
-    if (data.streak) userStreak = data.streak;
-    if (data.gameState && data.gameState.date === TODAY_ISO) {
-      userState = data.gameState;
-    }
+    const d = snap.data();
+    if (d.streak)    userStreak  = d.streak;
+    if (d.gameState && d.gameState.date === TODAY_ISO) userState = d.gameState;
+    if (d.archive)   archiveData = d.archive;
   }
 }
 
 async function saveUserData(uid) {
-  const ref = doc(db, 'users', uid);
-  await setDoc(ref, {
-    streak:    userStreak,
-    gameState: userState,
-    updatedAt: serverTimestamp()
-  }, { merge: true });
+  await setDoc(doc(db,'users',uid), {
+    streak: userStreak, gameState: userState, archive: archiveData, updatedAt: serverTimestamp()
+  }, { merge:true });
 }
 
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
 //  AUTH UI
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
 
-let isRegisterMode = false;
+let isRegMode = false;
 
 window.toggleAuthMode = () => {
-  isRegisterMode = !isRegisterMode;
-  document.getElementById('authTitle').textContent    = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
-  document.getElementById('authSubmit').textContent   = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
-  document.getElementById('nameGroup').style.display  = isRegisterMode ? 'flex' : 'none';
-  document.getElementById('authToggle').innerHTML     = isRegisterMode
+  isRegMode = !isRegMode;
+  document.getElementById('authTitle').textContent   = isRegMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  document.getElementById('authSubmit').textContent  = isRegMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  document.getElementById('nameGroup').style.display = isRegMode ? 'flex' : 'none';
+  document.getElementById('authToggle').innerHTML    = isRegMode
     ? 'Have an account? <a onclick="toggleAuthMode()">Sign in</a>'
     : 'No account? <a onclick="toggleAuthMode()">Create one</a>';
-  clearAuthError();
+  clearErr();
 };
 
-function showAuthError(msg) {
-  const el = document.getElementById('authError');
-  el.textContent = msg;
-  el.classList.add('show');
-}
+function showErr(msg){ const e=document.getElementById('authError'); e.textContent=msg; e.classList.add('show'); }
+function clearErr(){ document.getElementById('authError').classList.remove('show'); }
 
-function clearAuthError() {
-  document.getElementById('authError').classList.remove('show');
-}
-
-// Friendly Firebase error messages
-function friendlyError(code) {
-  switch(code) {
-    case 'auth/invalid-email':            return 'Invalid email address.';
-    case 'auth/user-not-found':           return 'No account found with this email.';
-    case 'auth/wrong-password':           return 'Incorrect password.';
-    case 'auth/email-already-in-use':     return 'An account already exists with this email.';
-    case 'auth/weak-password':            return 'Password must be at least 6 characters.';
-    case 'auth/popup-closed-by-user':     return 'Sign-in cancelled.';
-    case 'auth/network-request-failed':   return 'Network error. Check your connection.';
-    case 'auth/invalid-credential':       return 'Incorrect email or password.';
-    default: return 'Something went wrong. Please try again.';
-  }
+function friendlyErr(code) {
+  return { 'auth/invalid-email':'Invalid email.','auth/user-not-found':'No account with that email.',
+           'auth/wrong-password':'Wrong password.','auth/email-already-in-use':'Email already in use.',
+           'auth/weak-password':'Password needs 6+ characters.','auth/popup-closed-by-user':'Cancelled.',
+           'auth/invalid-credential':'Incorrect email or password.' }[code] || 'Something went wrong.';
 }
 
 window.handleEmailAuth = async () => {
-  clearAuthError();
-  const email    = document.getElementById('authEmail').value.trim();
-  const password = document.getElementById('authPassword').value;
-  const name     = document.getElementById('authName').value.trim();
-  const btn      = document.getElementById('authSubmit');
-
-  if (!email || !password) { showAuthError('Please enter your email and password.'); return; }
-
-  btn.disabled = true;
-  btn.textContent = '…';
-
+  clearErr();
+  const email=document.getElementById('authEmail').value.trim();
+  const pass =document.getElementById('authPassword').value;
+  const name =document.getElementById('authName').value.trim();
+  const btn  =document.getElementById('authSubmit');
+  if (!email||!pass){ showErr('Enter your email and password.'); return; }
+  btn.disabled=true; btn.textContent='…';
   try {
-    if (isRegisterMode) {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
-      if (name) await updateProfile(cred.user, { displayName: name });
-    } else {
-      await signInWithEmailAndPassword(auth, email, password);
-    }
+    if (isRegMode) { const c=await createUserWithEmailAndPassword(auth,email,pass); if(name) await updateProfile(c.user,{displayName:name}); }
+    else await signInWithEmailAndPassword(auth,email,pass);
   } catch(e) {
-    showAuthError(friendlyError(e.code));
-    btn.disabled = false;
-    btn.textContent = isRegisterMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+    showErr(friendlyErr(e.code));
+    btn.disabled=false; btn.textContent=isRegMode?'CREATE ACCOUNT':'SIGN IN';
   }
 };
 
 window.handleGoogleAuth = async () => {
-  clearAuthError();
-  try {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  } catch(e) {
-    if (e.code !== 'auth/popup-closed-by-user') {
-      showAuthError(friendlyError(e.code));
-    }
-  }
+  clearErr();
+  try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+  catch(e){ if(e.code!=='auth/popup-closed-by-user') showErr(friendlyErr(e.code)); }
 };
 
-window.signOut = async () => {
-  await fbSignOut(auth);
-};
+window.doSignOut = async () => { await fbSignOut(auth); };
 
-// Enter key on auth inputs
 ['authEmail','authPassword','authName'].forEach(id => {
-  document.getElementById(id)?.addEventListener('keydown', e => {
-    if (e.key === 'Enter') window.handleEmailAuth();
-  });
+  document.getElementById(id)?.addEventListener('keydown', e => { if(e.key==='Enter') window.handleEmailAuth(); });
 });
 
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════════
+
+window.showTab = (tab) => {
+  const isArchive = tab === 'archive';
+  document.getElementById('todayView').style.display    = isArchive ? 'none' : 'block';
+  document.getElementById('calendarView').classList.toggle('show', isArchive);
+  document.getElementById('tabToday').classList.toggle('active', !isArchive);
+  document.getElementById('tabArchive').classList.toggle('active', isArchive);
+  if (isArchive) renderCalendar();
+};
+
+// ══════════════════════════════════════════
+//  CALENDAR
+// ══════════════════════════════════════════
+
+let calYear  = today().getFullYear();
+let calMonth = today().getMonth(); // 0-based
+
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+window.calNav = (dir) => {
+  calMonth += dir;
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  if (calMonth > 11) { calMonth = 0;  calYear++; }
+  renderCalendar();
+};
+
+function renderCalendar() {
+  const now     = today();
+  const firstDay = new Date(calYear, calMonth, 1);
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+
+  document.getElementById('calMonthLabel').textContent = `${MONTH_NAMES[calMonth]} ${calYear}`;
+
+  // Prev/next nav limits
+  const earliestMonth = EARLIEST.getMonth(), earliestYear = EARLIEST.getFullYear();
+  document.getElementById('calPrev').disabled = (calYear === earliestYear && calMonth <= earliestMonth);
+  document.getElementById('calNext').disabled = (calYear === now.getFullYear() && calMonth >= now.getMonth());
+
+  // Mon=0 … Sun=6 offset
+  let startOffset = firstDay.getDay() - 1;
+  if (startOffset < 0) startOffset = 6;
+
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  // Empty cells
+  for (let i = 0; i < startOffset; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date    = new Date(calYear, calMonth, d);
+    const code    = dateToCode(date);
+    const isToday = isSameDay(date, now);
+    const isPast  = date < now && !isToday;
+    const isFuture= date > now;
+    const beforeEarliest = date < EARLIEST;
+
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+
+    const numEl = document.createElement('div');
+    numEl.className = 'cal-day-num';
+    numEl.textContent = d;
+    el.appendChild(numEl);
+
+    if (isFuture || beforeEarliest) {
+      el.classList.add(isFuture ? 'future' : 'locked');
+    } else {
+      const hist = archiveData[code];
+      const isArchivePlay = !isToday;
+
+      if (hist && hist.done) {
+        // Played — colour by score
+        const pct = hist.score / (hist.total || 3);
+        el.classList.add(isToday ? 'today-done' : pct === 1 ? 'done-perfect' : pct >= 0.5 ? 'done-partial' : 'done-bad');
+        const check = document.createElement('div');
+        check.className = 'cal-check';
+        check.textContent = '✓';
+        el.appendChild(check);
+        const dot = document.createElement('div');
+        dot.className = 'cal-day-dot';
+        el.appendChild(dot);
+        el.style.cursor = 'pointer';
+        el.title = `${d} ${MONTH_NAMES[calMonth]} — ${hist.score}/${hist.total||3} correct`;
+        el.addEventListener('click', () => playArchiveDay(code, date));
+      } else if (isToday) {
+        el.classList.add(userState.done ? 'today-done' : 'today');
+        if (userState.done) {
+          const check = document.createElement('div'); check.className='cal-check'; check.textContent='✓'; el.appendChild(check);
+        }
+        el.addEventListener('click', () => showTab('today'));
+      } else {
+        // Past, not played
+        el.classList.add('available');
+        const dot = document.createElement('div'); dot.className='cal-day-dot'; el.appendChild(dot);
+        el.addEventListener('click', () => playArchiveDay(code, date));
+      }
+    }
+
+    grid.appendChild(el);
+  }
+}
+
+// ══════════════════════════════════════════
+//  ARCHIVE GAME MODE
+// ══════════════════════════════════════════
+
+let archiveMode = false;
+let archiveCode = null;
+let archiveDate = null;
+
+async function playArchiveDay(code, date) {
+  showTab('today');
+
+  // Reset UI
+  document.getElementById('game').style.display  = 'block';
+  document.getElementById('done').classList.remove('visible');
+
+  document.getElementById('loadingText').textContent = `Loading ${date.getDate()} ${MONTH_NAMES[date.getMonth()]}…`;
+  document.getElementById('loadingScreen').classList.add('show');
+  document.getElementById('appScreen').style.display = 'none';
+
+  const archiveClips = await buildClips(code);
+
+  document.getElementById('loadingScreen').classList.remove('show');
+  document.getElementById('appScreen').style.display = 'block';
+
+  if (!archiveClips.length) {
+    showToast('No clips found for that day');
+    return;
+  }
+
+  archiveMode = true;
+  archiveCode = code;
+  archiveDate = date;
+  clips       = archiveClips;
+
+  // Archive state — fresh every time (can replay)
+  const existing = archiveData[code];
+  if (existing && existing.done) {
+    // Already done — still allow replay but reset progress display
+  }
+
+  userState = { clipIndex:0, answers:[], done:false, date:dateToISO(date) };
+
+  // Show archive banner
+  document.getElementById('archiveBanner').classList.add('show');
+  document.getElementById('archiveBannerText').textContent =
+    `📅 ${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive · No streak effect`;
+
+  buildProgress();
+  loadClip(0);
+}
+
+// ══════════════════════════════════════════
 //  GAME ENGINE
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
+
+let clips    = [];
+let answered = false;
 
 function buildProgress() {
   const row = document.getElementById('progress');
@@ -753,24 +822,15 @@ function loadClip(index) {
   video.src = clip.filename;
   video.load();
   video.oncanplay = () => video.classList.add('ready');
-
-  video.onended = () => {
+  video.onended   = () => {
     if (answered) return;
     document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
     document.getElementById('hint').textContent = 'Choose your decision';
   };
+  video.play().catch(() => { document.getElementById('hint').textContent = 'Tap play to watch'; });
 
-  video.play().catch(() => {
-    document.getElementById('hint').textContent = 'Tap play to watch';
-  });
-
-  // Preload next clip
   const next = clips[index+1];
-  if (next) {
-    const link = document.createElement('link');
-    link.rel = 'preload'; link.as = 'video'; link.href = next.filename;
-    document.head.appendChild(link);
-  }
+  if (next) { const l=document.createElement('link'); l.rel='preload'; l.as='video'; l.href=next.filename; document.head.appendChild(l); }
 }
 
 function submitAnswer(choice) {
@@ -782,7 +842,9 @@ function submitAnswer(choice) {
   const correct = choice === clip.correct;
 
   userState.answers.push({ chosen:choice, correct });
-  saveUserData(currentUser.uid);
+
+  // Save (today or archive)
+  if (!archiveMode) saveUserData(currentUser.uid);
 
   document.querySelectorAll('.answer').forEach(el => {
     el.disabled = true;
@@ -799,8 +861,8 @@ function submitAnswer(choice) {
   result.style.display = 'block';
   result.innerHTML = `
     <div class="result-top">
-      <div style="font-size:22px">${correct ? '✅' : '❌'}</div>
-      <div class="result-title ${correct ? 'correct' : 'wrong'}">${correct ? 'Correct' : 'Wrong Call'}</div>
+      <div style="font-size:22px">${correct?'✅':'❌'}</div>
+      <div class="result-title ${correct?'correct':'wrong'}">${correct?'Correct':'Wrong Call'}</div>
       <div class="result-tag">${ANSWER_LABELS[clip.correct]}</div>
     </div>
     <div class="result-text">${clip.explanation}</div>
@@ -808,35 +870,71 @@ function submitAnswer(choice) {
 
   const nb = document.getElementById('nextButton');
   nb.classList.add('visible');
-  nb.textContent = userState.clipIndex >= clips.length - 1 ? 'SEE RESULTS →' : 'NEXT →';
+  nb.textContent = userState.clipIndex >= clips.length-1 ? 'SEE RESULTS →' : 'NEXT →';
 }
 
 function nextClip() {
-  if (userState.clipIndex >= clips.length - 1) { finishGame(); return; }
+  if (userState.clipIndex >= clips.length-1) { finishGame(); return; }
   userState.clipIndex++;
   loadClip(userState.clipIndex);
 }
 
 function finishGame() {
+  const score = userState.answers.filter(a=>a.correct).length;
+
+  if (archiveMode) {
+    // Save to archive data
+    archiveData[archiveCode] = { done:true, score, total:clips.length, answers:userState.answers };
+    saveUserData(currentUser.uid);
+
+    // Show archive done state
+    document.getElementById('game').style.display = 'none';
+    const done = document.getElementById('done');
+    done.classList.add('visible');
+    document.getElementById('finalScore').textContent = `${score}/${clips.length}`;
+    document.getElementById('doneEmoji').textContent  = score===clips.length?'🏆':score>=2?'👏':score===1?'😬':'💀';
+    document.getElementById('scoreRow').innerHTML = userState.answers.map(a=>
+      `<div class="score-box ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
+    ).join('');
+
+    // Replace countdown with back button for archive
+    document.getElementById('countdown').closest('.countdown-box').innerHTML = `
+      <div style="font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Archive Complete</div>
+      <div style="font-family:'Bebas Neue',cursive;font-size:26px;letter-spacing:2px;color:var(--accent)">
+        ${archiveDate.getDate()} ${MONTH_NAMES[archiveDate.getMonth()]} ${archiveDate.getFullYear()}
+      </div>
+    `;
+
+    archiveMode = false;
+    return;
+  }
+
+  // Today's game finish
   userState.done = true;
 
   const yesterday = new Date(Date.now()-86400000).toISOString().split('T')[0];
-  if      (userStreak.lastDate === yesterday)    userStreak.count++;
-  else if (userStreak.lastDate !== TODAY_ISO)    userStreak.count = 1;
+  if      (userStreak.lastDate === yesterday) userStreak.count++;
+  else if (userStreak.lastDate !== TODAY_ISO)  userStreak.count = 1;
   userStreak.lastDate = TODAY_ISO;
+
+  // Also save today in archive for calendar display
+  archiveData[TODAY_CODE] = { done:true, score, total:clips.length, answers:userState.answers };
 
   saveUserData(currentUser.uid);
 
   document.getElementById('streakCount').textContent = userStreak.count;
   document.getElementById('game').style.display = 'none';
   document.getElementById('done').classList.add('visible');
-
-  const score = userState.answers.filter(a=>a.correct).length;
   document.getElementById('finalScore').textContent = `${score}/${clips.length}`;
   document.getElementById('doneEmoji').textContent  = score===clips.length?'🏆':score>=2?'👏':score===1?'😬':'💀';
   document.getElementById('scoreRow').innerHTML = userState.answers.map(a=>
     `<div class="score-box ${a.correct?'correct':'wrong'}">${a.correct?'✅':'❌'}</div>`
   ).join('');
+
+  // Restore countdown box in case it was replaced by archive
+  document.getElementById('countdown').closest
+    ? null
+    : document.querySelector('.countdown-box').innerHTML = `<div class="countdown-label">Next clips in</div><div class="countdown" id="countdown">00:00:00</div>`;
 
   startCountdown();
 }
@@ -844,69 +942,58 @@ function finishGame() {
 window.shareResult = () => {
   const score = userState.answers.filter(a=>a.correct).length;
   const pips  = userState.answers.map(a=>a.correct?'🟩':'🟥').join('');
-  const text  = `THE REF ${TODAY_ISO}\n${pips}\n${score}/${clips.length}\n🔥 ${userStreak.count} day streak`;
-  navigator.clipboard.writeText(text).then(()=>{
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(()=>t.classList.remove('show'),2000);
-  });
+  const label = archiveMode ? archiveDate : today();
+  const text  = `THE REF ${dateToISO(label)}\n${pips}\n${score}/${clips.length}\n🔥 ${userStreak.count} day streak`;
+  navigator.clipboard.writeText(text).then(()=>showToast('COPIED'));
 };
 
 function startCountdown() {
   const tick = () => {
-    const now = new Date(), mn = new Date(now); mn.setHours(24,0,0,0);
-    const d = mn-now;
-    document.getElementById('countdown').textContent = [
-      Math.floor(d/3600000),Math.floor(d%3600000/60000),Math.floor(d%60000/1000)
-    ].map(n=>String(n).padStart(2,'0')).join(':');
+    const now=new Date(), mn=new Date(now); mn.setHours(24,0,0,0);
+    const d=mn-now;
+    const el = document.getElementById('countdown');
+    if (el) el.textContent=[Math.floor(d/3600000),Math.floor(d%3600000/60000),Math.floor(d%60000/1000)].map(n=>String(n).padStart(2,'0')).join(':');
   };
   tick(); setInterval(tick,1000);
 }
 
-// ── User menu ──
-window.toggleUserMenu = () => {
-  document.getElementById('userMenu').classList.toggle('show');
-};
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
 
-// ══════════════════════════════════════════════
-//  ANSWER BUTTON LISTENERS
-// ══════════════════════════════════════════════
+window.toggleUserMenu = () => { document.getElementById('userMenu').classList.toggle('show'); };
+
+// ── Listeners ──
 document.querySelectorAll('.answer').forEach(btn => {
   btn.addEventListener('click', () => submitAnswer(btn.dataset.answer));
 });
 document.getElementById('nextButton').addEventListener('click', nextClip);
 
-// ══════════════════════════════════════════════
-//  AUTH STATE OBSERVER — main entry point
-// ══════════════════════════════════════════════
+// ══════════════════════════════════════════
+//  AUTH STATE
+// ══════════════════════════════════════════
 onAuthStateChanged(auth, async (user) => {
-
   if (!user) {
-    // Show auth screen
-    document.getElementById('authScreen').style.display   = 'flex';
-    document.getElementById('loadingScreen').style.display = 'none';
-    document.getElementById('appScreen').style.display    = 'none';
+    document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('loadingScreen').classList.remove('show');
+    document.getElementById('appScreen').style.display  = 'none';
     return;
   }
 
-  // User signed in — show loading
   currentUser = user;
-  document.getElementById('authScreen').style.display    = 'none';
+  document.getElementById('authScreen').style.display  = 'none';
   document.getElementById('loadingScreen').classList.add('show');
-  document.getElementById('appScreen').style.display     = 'none';
+  document.getElementById('loadingText').textContent   = 'Loading clips…';
+  document.getElementById('appScreen').style.display   = 'none';
 
-  // Load user data from Firestore
   await loadUserData(user.uid);
 
-  // Set user menu info
-  document.getElementById('userMenuEmail').textContent =
-    user.displayName ? `${user.displayName}\n${user.email}` : user.email;
-  document.getElementById('streakCount').textContent = userStreak.count;
+  document.getElementById('userMenuEmail').textContent = user.displayName ? `${user.displayName} · ${user.email}` : user.email;
+  document.getElementById('streakCount').textContent   = userStreak.count;
 
-  // Load today's clips
   clips = await buildClips(TODAY_CODE);
 
-  // Hide loading, show app
   document.getElementById('loadingScreen').classList.remove('show');
   document.getElementById('appScreen').style.display = 'block';
 
@@ -914,7 +1001,7 @@ onAuthStateChanged(auth, async (user) => {
     document.getElementById('game').innerHTML = `
       <div class="no-clips">
         <h2>No clips today</h2>
-        <p>Add your MP4 files to the repo.<br>Today's code: <strong style="color:var(--accent)">${TODAY_CODE}</strong><br><br>
+        <p>Add your MP4 files to the repo.<br>Today's folder: <strong style="color:var(--accent)">${TODAY_CODE}/</strong><br><br>
         <code>${TODAY_CODE}-1-r.mp4<br>${TODAY_CODE}-2-y.mp4<br>${TODAY_CODE}-3-f.mp4</code></p>
       </div>
     `;
@@ -922,7 +1009,6 @@ onAuthStateChanged(auth, async (user) => {
   }
 
   if (userState.done) {
-    // Already played today
     const score = userState.answers.filter(a=>a.correct).length;
     document.getElementById('game').style.display = 'none';
     document.getElementById('done').classList.add('visible');
