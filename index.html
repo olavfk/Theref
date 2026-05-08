@@ -7,363 +7,285 @@
 <title>Be a Ref</title>
 <meta name="theme-color" content="#0a0f0a"/>
 <link rel="icon" href="data:,">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-–bg:#0a0f0a;
-–card:#121712;
-–card2:#181f18;
-–border:#273127;
-–text:#f3f6f2;
-–muted:#8b978a;
-–accent:#a3e635;
-–green:#22c55e;
-–blue:#38bdf8;
-–yellow:#facc15;
-–red:#f43f5e;
+  --bg:#0a0f0a;
+  --card:#121712;
+  --card-2:#181f18;
+  --border:#273127;
+  --text:#f3f6f2;
+  --muted:#8b978a;
+  --accent:#a3e635;
+  --green:#22c55e;
+  --blue:#38bdf8;
+  --yellow:#facc15;
+  --red:#f43f5e;
 }
 
-/* Start fully invisible — JS reveals the correct screen */
 html,body{
-background:radial-gradient(circle at top,#162014 0%,#0a0f0a 45%),#0a0f0a;
-color:var(–text);min-height:100vh;overflow-x:hidden;
-font-family:‘Inter’,sans-serif;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(circle at top,#162014 0%,#0a0f0a 45%),#0a0f0a;
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
 }
 
 body::before{
-content:’’;position:fixed;inset:0;
-background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
-opacity:.35;pointer-events:none;z-index:0;
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.35;pointer-events:none;z-index:0;
 }
 
-/* Auth shown by default — Firebase will switch to correct screen */
-#authScreen{ display:flex; }
-#loadingScreen,#appScreen{ display:none; }
+.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:20px 16px 80px;}
 
-.wrap{position:relative;z-index:1;width:100%;max-width:680px;margin:0 auto;padding:20px 16px 80px;}
-
-/* ── AUTH ── */
+/* ── AUTH SCREEN ── */
 #authScreen{
-flex-direction:column;align-items:center;
-justify-content:center;min-height:100vh;padding:40px 20px;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;padding:40px 20px;
 }
 .auth-logo{
-font-family:‘Bebas Neue’,cursive;font-size:52px;letter-spacing:4px;
-color:var(–accent);text-shadow:0 0 40px #a3e63540;line-height:1;margin-bottom:6px;
+  font-family:'Bebas Neue',cursive;font-size:56px;letter-spacing:4px;
+  color:var(--accent);text-shadow:0 0 40px #a3e63540;line-height:1;margin-bottom:6px;
 }
-.auth-sub{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(–muted);margin-bottom:36px;}
+.auth-sub{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:40px;}
 .auth-card{
-width:100%;max-width:360px;background:var(–card);
-border:1px solid var(–border);border-radius:20px;
-padding:28px;display:flex;flex-direction:column;gap:12px;
+  width:100%;max-width:380px;background:var(--card);
+  border:1px solid var(--border);border-radius:24px;
+  padding:32px;display:flex;flex-direction:column;gap:14px;
 }
-.auth-title{font-family:‘Bebas Neue’,cursive;font-size:26px;letter-spacing:2px;text-align:center;margin-bottom:2px;}
-.auth-toggle{text-align:center;font-size:13px;color:var(–muted);}
-.auth-toggle a{color:var(–accent);cursor:pointer;font-weight:600;text-decoration:none;}
+.auth-title{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:var(--text);margin-bottom:4px;text-align:center;}
+.auth-toggle{text-align:center;font-size:13px;color:var(--muted);}
+.auth-toggle a{color:var(--accent);cursor:pointer;text-decoration:none;font-weight:600;}
 .auth-toggle a:hover{text-decoration:underline;}
-.input-group{display:flex;flex-direction:column;gap:5px;}
-.input-label{font-size:11px;font-weight:600;letter-spacing:1px;color:var(–muted);text-transform:uppercase;}
+.input-group{display:flex;flex-direction:column;gap:6px;}
+.input-label{font-size:12px;font-weight:600;letter-spacing:1px;color:var(--muted);text-transform:uppercase;}
 .input-field{
-background:#0d130d;border:1.5px solid var(–border);border-radius:10px;
-padding:12px 14px;font-size:15px;color:var(–text);
-font-family:‘Inter’,sans-serif;outline:none;transition:border-color .2s;width:100%;
+  background:#0d130d;border:1.5px solid var(--border);border-radius:12px;
+  padding:13px 16px;font-size:15px;color:var(--text);
+  font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;width:100%;
 }
-.input-field:focus{border-color:var(–accent);}
+.input-field:focus{border-color:var(--accent);}
 .input-field::placeholder{color:#3a4a39;}
 .btn-primary{
-width:100%;padding:13px;border:none;border-radius:12px;
-background:var(–accent);color:#0a0f0a;
-font-family:‘Bebas Neue’,cursive;font-size:19px;letter-spacing:2px;
-cursor:pointer;transition:transform .15s,background .15s;
+  width:100%;padding:14px;border:none;border-radius:14px;
+  background:var(--accent);color:#0a0f0a;
+  font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:2px;
+  cursor:pointer;transition:transform .15s,background .15s;
 }
 .btn-primary:hover{background:#b5f040;transform:translateY(-1px);}
 .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.or-divider{display:flex;align-items:center;gap:10px;color:var(–muted);font-size:12px;}
-.or-divider::before,.or-divider::after{content:’’;flex:1;height:1px;background:var(–border);}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 .btn-google{
-width:100%;padding:12px;border:1.5px solid var(–border);border-radius:12px;
-background:transparent;color:var(–text);font-size:14px;font-weight:600;
-font-family:‘Inter’,sans-serif;cursor:pointer;
-display:flex;align-items:center;justify-content:center;gap:10px;
-transition:border-color .2s,background .2s;
+  width:100%;padding:13px;border:1.5px solid var(--border);border-radius:14px;
+  background:transparent;color:var(--text);font-size:15px;font-weight:600;
+  font-family:'Inter',sans-serif;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:border-color .2s,background .2s;
 }
 .btn-google:hover{border-color:#6b7a6a;background:#0d130d;}
-.google-icon{width:18px;height:18px;flex-shrink:0;}
+.google-icon{width:20px;height:20px;}
 .auth-error{
-background:#450a0a;border:1px solid var(–red);border-radius:8px;
-padding:9px 12px;font-size:13px;color:#fca5a5;display:none;
+  background:#450a0a;border:1px solid var(--red);border-radius:10px;
+  padding:10px 14px;font-size:13px;color:#fca5a5;display:none;
 }
 .auth-error.show{display:block;}
 
 /* ── LOADING ── */
 #loadingScreen{
-flex-direction:column;align-items:center;
-justify-content:center;min-height:100vh;gap:14px;
+  display:none;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;gap:16px;
 }
-.spinner{width:32px;height:32px;border-radius:50%;border:3px solid var(–border);border-top-color:var(–accent);animation:spin .8s linear infinite;}
+#loadingScreen.show{display:flex;}
+.spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(--border);border-top-color:var(--accent);animation:spin .8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:12px;letter-spacing:2px;color:var(–muted);text-transform:uppercase;}
+.loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 
 /* ── HEADER ── */
-.header{
-display:flex;align-items:center;justify-content:space-between;
-margin-bottom:22px;padding-top:4px;
-}
-.logo{font-family:‘Bebas Neue’,cursive;font-size:38px;letter-spacing:3px;line-height:1;}
-.logo span{display:block;margin-top:2px;font-size:11px;letter-spacing:3px;opacity:.4;font-family:‘Barlow Condensed’,sans-serif;}
-.header-right{
-display:flex;align-items:center;
-background:var(–card);border:1px solid var(–border);
-border-radius:100px;padding:6px 6px 6px 14px;gap:10px;
-}
-.streak-pill{display:flex;align-items:center;gap:5px;}
-.streak-fire{font-size:15px;line-height:1;}
-.streak-num{font-family:‘Bebas Neue’,cursive;font-size:20px;line-height:1;color:#fb923c;}
-.streak-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(–muted);}
-.vdivider{width:1px;height:18px;background:var(–border);}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-top:4px;}
+.logo{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;line-height:1;}
+.logo span{display:block;margin-top:2px;font-size:12px;letter-spacing:3px;opacity:.45;font-family:'Barlow Condensed',sans-serif;}
+.header-right{display:flex;align-items:center;gap:12px;}
+.streak{display:flex;flex-direction:column;align-items:center;gap:1px;}
+.streak-fire{font-size:22px;}
+.streak-count{font-family:'Bebas Neue',cursive;font-size:24px;line-height:1;color:#fb923c;}
+.streak-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 .user-btn{
-width:28px;height:28px;border-radius:50%;
-background:var(–card2);border:1px solid var(–border);
-display:flex;align-items:center;justify-content:center;
-cursor:pointer;font-size:13px;transition:border-color .2s;
+  width:36px;height:36px;border-radius:50%;
+  background:var(--card-2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:16px;transition:border-color .2s;flex-shrink:0;
 }
-.user-btn:hover{border-color:var(–muted);}
+.user-btn:hover{border-color:var(--muted);}
 
-/* user dropdown */
-.user-menu{position:fixed;inset:0;z-index:50;display:none;}
-.user-menu.open{display:block;}
+/* user menu */
+.user-menu{position:fixed;top:0;right:0;bottom:0;left:0;z-index:50;display:none;}
+.user-menu.show{display:block;}
 .user-menu-backdrop{position:absolute;inset:0;}
 .user-menu-card{
-position:absolute;top:62px;right:16px;
-background:var(–card);border:1px solid var(–border);
-border-radius:14px;padding:6px;min-width:200px;
-box-shadow:0 16px 48px rgba(0,0,0,.6);
+  position:absolute;top:68px;right:20px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:16px;padding:8px;min-width:220px;
+  box-shadow:0 20px 60px #00000080;
 }
-.user-menu-info{padding:10px 12px;border-bottom:1px solid var(–border);margin-bottom:4px;}
+.user-menu-info{padding:10px 12px;border-bottom:1px solid var(--border);margin-bottom:4px;}
 .user-menu-name{font-size:14px;font-weight:600;margin-bottom:2px;}
-.user-menu-email{font-size:12px;color:var(–muted);word-break:break-all;}
+.user-menu-email{font-size:12px;color:var(--muted);word-break:break-all;}
 .user-menu-item{
-padding:10px 12px;border-radius:8px;font-size:14px;font-weight:500;
-cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:8px;
+  padding:11px 14px;border-radius:10px;font-size:14px;font-weight:500;
+  cursor:pointer;transition:background .15s;display:flex;align-items:center;gap:10px;
 }
-.user-menu-item:hover{background:var(–card2);}
-.user-menu-item.danger{color:var(–red);}
+.user-menu-item:hover{background:var(--card-2);}
+.user-menu-item.danger{color:var(--red);}
 
-/* ── TABS ── */
-.tabs{
-display:flex;gap:4px;margin-bottom:22px;
-background:var(–card);border:1px solid var(–border);
-border-radius:12px;padding:4px;
-}
-.tab{
-flex:1;padding:9px;border:none;background:transparent;
-color:var(–muted);font-family:‘Bebas Neue’,cursive;
-font-size:15px;letter-spacing:2px;cursor:pointer;
-border-radius:8px;transition:background .15s,color .15s;
-}
-.tab:hover{color:var(–text);}
-.tab.active{background:var(–card2);color:var(–accent);border:1px solid var(–border);}
+/* ── NAV TABS ── */
+.nav-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px;}
+.nav-tab{flex:1;padding:10px;border:none;background:transparent;color:var(--muted);font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;cursor:pointer;border-radius:10px;transition:background .15s,color .15s;}
+.nav-tab:hover{color:var(--text);}
+.nav-tab.active{background:var(--card-2);color:var(--accent);border:1px solid var(--border);}
 
 /* ── PROGRESS ── */
-.progress{display:flex;gap:8px;margin-bottom:18px;}
-.pip{flex:1;height:5px;border-radius:999px;background:#202820;overflow:hidden;position:relative;}
-.pip.active::after{content:’’;position:absolute;inset:0;background:var(–accent);animation:pulse 1.4s infinite;}
-.pip.correct{background:var(–green);}
-.pip.wrong{background:var(–red);}
+.progress{display:flex;gap:8px;margin-bottom:20px;}
+.progress-pip{flex:1;height:6px;border-radius:999px;background:#202820;overflow:hidden;position:relative;}
+.progress-pip.active::after{content:'';position:absolute;inset:0;background:var(--accent);animation:pulse 1.4s infinite;}
+.progress-pip.correct{background:var(--green);}
+.progress-pip.wrong{background:var(--red);}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 /* ── VIDEO ── */
-.video-wrap{
-position:relative;width:100%;aspect-ratio:16/9;
-overflow:hidden;border-radius:18px;background:#000;
-border:1px solid #1f271f;box-shadow:0 16px 60px rgba(0,0,0,.6);
-}
-video{
-width:100%;height:100%;object-fit:contain;
-background:#000;display:block;
-opacity:0;transition:opacity .3s;
-}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:20px;background:#000;border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);}
+video{width:100%;height:100%;object-fit:contain;background:#000;display:block;opacity:0;transition:opacity .35s ease;}
 video.ready{opacity:1;}
-.video-bar{
-position:absolute;top:0;left:0;right:0;padding:12px 14px;
-background:linear-gradient(to bottom,rgba(0,0,0,.7),transparent);
-z-index:2;pointer-events:none;
-display:flex;align-items:center;justify-content:space-between;
+.video-top{
+  position:absolute;top:0;left:0;right:0;padding:14px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.75),transparent);z-index:2;
+  display:flex;align-items:center;justify-content:space-between;pointer-events:none;
 }
-.clip-counter{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);font-family:‘Barlow Condensed’,sans-serif;font-weight:700;}
-.archive-badge{
-font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
-font-family:‘Barlow Condensed’,sans-serif;font-weight:700;
-color:var(–yellow);background:rgba(0,0,0,.55);
-border:1px solid rgba(250,204,21,.4);border-radius:4px;
-padding:2px 8px;display:none;
+.clip-label{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#ffffffcc;font-family:'Barlow Condensed',sans-serif;font-weight:700;}
+.archive-tag{
+  font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  color:var(--yellow);background:rgba(0,0,0,.55);
+  border:1px solid rgba(250,204,21,.4);border-radius:4px;
+  padding:2px 8px;display:none;
 }
-.archive-badge.show{display:block;}
+.archive-tag.show{display:block;}
 
 /* ── HINT ── */
-.hint{
-text-align:center;font-size:11px;letter-spacing:3px;
-text-transform:uppercase;color:var(–muted);
-margin:14px 0 10px;min-height:16px;
-}
+.hint{text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin:14px 0;min-height:18px;}
 
-/* ── ANSWER BUTTONS ── */
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;}
+/* ── ANSWERS ── */
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
 .answer{
-padding:20px 12px;border-radius:16px;
-border:1px solid #2d3a2c;
-background:linear-gradient(to bottom,#1b241a,#141a13);
-display:flex;flex-direction:column;align-items:center;gap:7px;
-cursor:pointer;transition:transform .15s,border-color .2s,background .2s,opacity .2s;
+  position:relative;padding:22px 14px;border-radius:18px;
+  border:1px solid #2d3a2c;
+  background:linear-gradient(to bottom,#1b241a,#141a13);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  cursor:pointer;transition:transform .15s,border-color .2s,background .2s,opacity .2s;
 }
-.answer:hover:not(:disabled):not(.locked){transform:translateY(-3px);border-color:var(–accent);}
-.answer:disabled,.answer.locked{cursor:not-allowed;}
-.answer.locked{opacity:.28;pointer-events:none;}
-.answer.sel-correct{border-color:var(–green)!important;background:#0e3320!important;transform:none!important;}
-.answer.sel-wrong  {border-color:var(–red)!important;  background:#3a0a0a!important;transform:none!important;}
-.answer.sel-reveal {border-color:var(–green)!important;background:#0e332044!important;transform:none!important;}
-.answer.sel-dim    {opacity:.2;}
-.answer-icon {font-size:28px;}
-.answer-label{font-family:‘Bebas Neue’,cursive;letter-spacing:1.5px;font-size:17px;}
-.answer.none     .answer-label{color:var(–green);}
-.answer.freekick .answer-label{color:var(–blue);}
-.answer.yellow   .answer-label{color:var(–yellow);}
-.answer.red      .answer-label{color:var(–red);}
+.answer:hover:not(:disabled):not(.locked){transform:translateY(-3px);border-color:#84cc16;background:linear-gradient(to bottom,#212b1f,#171d16);}
+.answer:disabled{cursor:not-allowed;}
+.answer.locked{opacity:.35;cursor:not-allowed;pointer-events:none;}
+.answer.correct-selected{border-color:var(--green)!important;background:#14532d!important;}
+.answer.wrong-selected{border-color:var(--red)!important;background:#450a0a!important;}
+.answer.reveal{border-color:var(--green)!important;background:#14532d55!important;}
+.answer.dimmed{opacity:.3;}
+.answer-icon{font-size:30px;}
+.answer-label{font-family:'Bebas Neue',cursive;letter-spacing:1.5px;font-size:18px;}
+.answer.none .answer-label{color:var(--green);}
+.answer.freekick .answer-label{color:var(--blue);}
+.answer.yellow .answer-label{color:var(--yellow);}
+.answer.red .answer-label{color:var(--red);}
 
-/* ── RESULT CARD ── */
-.result-card{
-display:none;margin-top:14px;
-background:var(–card);border:1px solid var(–border);
-border-radius:16px;padding:16px;
-animation:fadeUp .2s ease;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.result-top{display:flex;align-items:center;gap:9px;margin-bottom:8px;}
-.result-verdict{font-family:‘Bebas Neue’,cursive;letter-spacing:2px;font-size:22px;}
-.result-verdict.v-correct{color:var(–green);}
-.result-verdict.v-wrong  {color:var(–red);}
-.result-tag{margin-left:auto;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.07);font-size:11px;letter-spacing:1px;font-weight:600;}
-.result-body{color:#a8b5a7;line-height:1.7;font-size:14px;}
+/* ── RESULT ── */
+.result{display:none;margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;animation:up .25s ease;}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.result-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.result-title{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:24px;}
+.result-title.correct{color:var(--green);}
+.result-title.wrong{color:var(--red);}
+.result-tag{margin-left:auto;padding:4px 8px;border-radius:6px;background:#ffffff12;font-size:12px;letter-spacing:1px;font-weight:700;}
+.result-text{color:#a8b5a7;line-height:1.7;font-size:14px;}
 
-/* ── NEXT BUTTON ── */
-.next-btn{
-width:100%;margin-top:12px;padding:15px;border:none;border-radius:16px;
-background:var(–accent);color:#0a0f0a;
-font-family:‘Bebas Neue’,cursive;font-size:20px;letter-spacing:3px;
-cursor:pointer;display:none;transition:transform .15s,background .15s;
-}
-.next-btn:hover{transform:translateY(-2px);background:#b5f040;}
-.next-btn.show{display:block;}
+/* ── NEXT ── */
+.next{width:100%;margin-top:16px;padding:16px;border:none;border-radius:18px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s;}
+.next:hover{transform:translateY(-2px);}
+.next.visible{display:block;}
 
-/* ── DONE SCREEN ── */
-.done-screen{
-display:none;flex-direction:column;align-items:center;
-text-align:center;gap:20px;padding-top:16px;
-animation:fadeUp .3s ease;
-}
-.done-screen.show{display:flex;}
-.done-emoji{font-size:64px;}
-.done-headline{font-family:‘Bebas Neue’,cursive;font-size:50px;letter-spacing:4px;line-height:1;}
-.done-sub{font-size:14px;color:var(–muted);margin-top:-10px;}
-.done-score-text{font-size:16px;color:var(–muted);}
-.done-score-text strong{color:var(–text);font-size:30px;}
-.score-boxes{display:flex;gap:8px;}
-.score-box{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-.score-box.c{background:#0e3320;border:1px solid var(–green);}
-.score-box.w{background:#3a0a0a;border:1px solid var(–red);}
-.done-infobox{
-width:100%;background:var(–card);border:1px solid var(–border);
-border-radius:16px;padding:18px 20px;text-align:center;
-}
-.done-infobox-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(–muted);margin-bottom:8px;}
-.countdown{font-family:‘Bebas Neue’,cursive;font-size:40px;letter-spacing:4px;}
-.archive-done-label{font-family:‘Bebas Neue’,cursive;font-size:26px;letter-spacing:2px;color:var(–accent);display:none;}
-.share-btn{
-width:100%;padding:15px;border:none;border-radius:14px;
-background:var(–accent);color:#0a0f0a;cursor:pointer;
-font-family:‘Bebas Neue’,cursive;font-size:19px;letter-spacing:3px;
-transition:background .15s,transform .15s;
-}
-.share-btn:hover{background:#b5f040;transform:translateY(-1px);}
+/* ── DONE ── */
+.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:22px;padding-top:20px;}
+.done.visible{display:flex;}
+.done-emoji{font-size:70px;}
+.done-title{font-family:'Bebas Neue',cursive;font-size:54px;letter-spacing:4px;}
+.done-score{font-size:18px;color:var(--muted);}
+.done-score strong{color:var(--text);font-size:34px;}
+.score-row{display:flex;gap:10px;}
+.score-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+.score-box.correct{background:#14532d;border:1px solid var(--green);}
+.score-box.wrong{background:#450a0a;border:1px solid var(--red);}
+.countdown-box{width:100%;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;text-align:center;}
+.countdown-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.countdown{font-family:'Bebas Neue',cursive;font-size:42px;letter-spacing:4px;}
+.archive-done-date{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:var(--accent);display:none;}
+.btn-share{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;transition:background .15s;}
+.btn-share:hover{background:#b5f040;}
 
 /* ── CALENDAR ── */
-#calView{display:none;}
-#calView.show{display:block;}
-.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
-.cal-month{font-family:‘Bebas Neue’,cursive;font-size:26px;letter-spacing:2px;}
-.cal-nav{display:flex;gap:6px;}
-.cal-btn{
-width:34px;height:34px;border-radius:8px;
-background:var(–card);border:1px solid var(–border);
-color:var(–text);font-size:15px;cursor:pointer;
-display:flex;align-items:center;justify-content:center;
-transition:border-color .15s;
+#calendarView{display:none;}
+#calendarView.show{display:block;}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.cal-month{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;}
+.cal-nav{display:flex;gap:8px;}
+.cal-nav-btn{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s;}
+.cal-nav-btn:hover:not(:disabled){border-color:var(--accent);}
+.cal-nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.cal-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;}
+.cal-weekday{text-align:center;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:6px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+.cal-day{
+  aspect-ratio:1;border-radius:12px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  border:1px solid transparent;position:relative;
+  transition:border-color .15s,background .15s,transform .12s;cursor:default;
 }
-.cal-btn:hover:not(:disabled){border-color:var(–accent);}
-.cal-btn:disabled{opacity:.3;cursor:not-allowed;}
-.cal-days-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:6px;}
-.cal-day-name{text-align:center;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(–muted);padding:4px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
-.cal-cell{
-aspect-ratio:1;border-radius:10px;
-display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-border:1px solid transparent;position:relative;
-transition:border-color .15s,background .15s,transform .12s;
-cursor:default;
-}
-.cal-cell-num{font-size:13px;font-weight:600;line-height:1;}
-.cal-cell-check{position:absolute;top:3px;right:4px;font-size:8px;opacity:.7;}
+.cal-day-num{font-size:13px;font-weight:600;line-height:1;}
+.cal-check{position:absolute;top:3px;right:4px;font-size:8px;opacity:.8;}
 
-/* cell states */
-.cal-cell.s-empty       {background:transparent;}
-.cal-cell.s-future      {background:transparent;border-color:var(–border);opacity:.18;}
-.cal-cell.s-prelaunched {background:var(–card);border-color:var(–border);opacity:.2;}
-.cal-cell.s-playable    {background:var(–card);border-color:var(–border);cursor:pointer;}
-.cal-cell.s-playable:hover{border-color:var(–accent);transform:translateY(-2px);}
-.cal-cell.s-playable .cal-cell-num{color:var(–muted);}
-.cal-cell.s-today       {background:var(–card2);border-color:var(–accent);cursor:pointer;}
-.cal-cell.s-today:hover {transform:translateY(-2px);}
-.cal-cell.s-today .cal-cell-num{color:var(–accent);}
-/* done — colour by score, same logic for today and archive */
-.cal-cell.s-done-perfect {background:#0d2416;border-color:var(–green);}
-.cal-cell.s-done-perfect .cal-cell-num{color:var(–green);}
-.cal-cell.s-done-partial {background:#272000;border-color:var(–yellow);}
-.cal-cell.s-done-partial .cal-cell-num{color:var(–yellow);}
-.cal-cell.s-done-bad     {background:#280e0e;border-color:var(–red);}
-.cal-cell.s-done-bad     .cal-cell-num{color:var(–red);}
+/* calendar day states */
+.cal-day.empty{background:transparent;}
+.cal-day.future{background:transparent;border-color:var(--border);opacity:.2;}
+.cal-day.before-launch{background:var(--card);border-color:var(--border);opacity:.25;}
+.cal-day.playable{background:var(--card);border-color:var(--border);cursor:pointer;}
+.cal-day.playable:hover{border-color:var(--accent);transform:translateY(-2px);}
+.cal-day.playable .cal-day-num{color:var(--muted);}
+.cal-day.today-open{background:var(--card-2);border-color:var(--accent);cursor:pointer;}
+.cal-day.today-open:hover{transform:translateY(-2px);}
+.cal-day.today-open .cal-day-num{color:var(--accent);}
+/* done — all use score-based colour, no special case for today */
+.cal-day.done-perfect{background:#0f2e1a;border-color:var(--green);}
+.cal-day.done-perfect .cal-day-num{color:var(--green);}
+.cal-day.done-partial{background:#2a2200;border-color:var(--yellow);}
+.cal-day.done-partial .cal-day-num{color:var(--yellow);}
+.cal-day.done-bad{background:#2a0f0f;border-color:var(--red);}
+.cal-day.done-bad .cal-day-num{color:var(--red);}
 
-.cal-legend{
-display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;
-padding:12px 14px;background:var(–card);border:1px solid var(–border);border-radius:12px;
-}
-.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(–muted);}
+.cal-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:14px;}
+.cal-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
 .cal-legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
 
 /* ── NO CLIPS ── */
-.no-clips{
-margin-top:16px;background:var(–card);border:1px solid var(–border);
-border-radius:18px;padding:28px;text-align:center;
-}
-.no-clips h2{font-family:‘Bebas Neue’,cursive;letter-spacing:2px;font-size:28px;margin-bottom:10px;}
-.no-clips p{color:var(–muted);line-height:1.8;font-size:14px;}
-.no-clips code{
-display:block;margin-top:12px;background:#0d130d;
-border:1px solid var(–border);border-radius:8px;
-padding:12px 14px;font-family:monospace;font-size:12px;
-color:var(–accent);text-align:left;line-height:2.2;
-}
+.no-clips{margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;text-align:center;}
+.no-clips h2{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:34px;margin-bottom:10px;}
+.no-clips p{color:var(--muted);line-height:1.7;font-size:14px;}
+.no-clips code{display:block;margin-top:12px;background:#0d130d;border:1px solid var(--border);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:13px;color:var(--accent);text-align:left;line-height:2;}
 
 /* ── TOAST ── */
-.toast{
-position:fixed;left:50%;bottom:24px;
-transform:translateX(-50%) translateY(12px);
-background:var(–accent);color:#0a0f0a;
-padding:9px 18px;border-radius:8px;
-font-size:12px;letter-spacing:2px;font-weight:700;
-opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
-}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(16px);background:var(--accent);color:#0a0f0a;padding:10px 20px;border-radius:10px;font-size:13px;letter-spacing:2px;font-weight:700;opacity:0;transition:.3s ease;pointer-events:none;z-index:200;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 
@@ -391,7 +313,7 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
       <input class="input-field" type="text" id="authName" placeholder="Your name"/>
     </div>
     <button class="btn-primary" id="authSubmit" onclick="handleEmailAuth()">SIGN IN</button>
-    <div class="or-divider">or</div>
+    <div class="divider">or</div>
     <button class="btn-google" onclick="handleGoogleAuth()">
       <svg class="google-icon" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -414,18 +336,17 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
 
 <!-- APP -->
 
-<div id="appScreen">
-<div class="wrap">
+<div id="appScreen" style="display:none">
+<div class="wrapper">
 
   <header class="header">
     <div class="logo">BE A REF<span>DAILY FOOTBALL DECISIONS</span></div>
     <div class="header-right">
-      <div class="streak-pill">
-        <span class="streak-fire">🔥</span>
-        <span class="streak-num" id="streakNum">0</span>
-        <span class="streak-lbl">streak</span>
+      <div class="streak">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-count" id="streakCount">0</div>
+        <div class="streak-label">Streak</div>
       </div>
-      <div class="vdivider"></div>
       <div class="user-btn" onclick="toggleUserMenu()">👤</div>
     </div>
   </header>
@@ -441,9 +362,9 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
     </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" id="tabToday"   onclick="showTab('today')">TODAY</button>
-    <button class="tab"        id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tabToday"   onclick="showTab('today')">TODAY</button>
+    <button class="nav-tab"        id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
   </div>
 
   <!-- TODAY -->
@@ -451,15 +372,15 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
   <div id="todayView">
 
 ```
-<div id="gameArea">
-  <div class="progress" id="progressBar"></div>
+<div id="game">
+  <div class="progress" id="progress"></div>
 
   <div class="video-wrap">
-    <div class="video-bar">
-      <div class="clip-counter" id="clipCounter">Clip 1</div>
-      <div class="archive-badge" id="archiveBadge"></div>
+    <div class="video-top">
+      <div class="clip-label" id="clipLabel">Clip 1</div>
+      <div class="archive-tag" id="archiveTag"></div>
     </div>
-    <video id="vid" playsinline webkit-playsinline controls></video>
+    <video id="video" playsinline webkit-playsinline controls></video>
   </div>
 
   <div class="hint" id="hint">Watch the clip</div>
@@ -471,22 +392,21 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
     <button class="answer red"      data-answer="red">     <div class="answer-icon">🟥</div><div class="answer-label">Red Card</div></button>
   </div>
 
-  <div class="result-card" id="resultCard"></div>
-  <button class="next-btn" id="nextBtn">NEXT →</button>
+  <div class="result" id="result"></div>
+  <button class="next visible" id="nextButton" style="display:none">NEXT →</button>
 </div>
 
-<div class="done-screen" id="doneScreen">
-  <div class="done-emoji" id="doneEmoji"></div>
-  <div class="done-headline">FULL TIME</div>
-  <div class="done-sub" id="doneSub"></div>
-  <div class="done-score-text">You scored <strong id="doneScore"></strong></div>
-  <div class="score-boxes" id="scoreBoxes"></div>
-  <div class="done-infobox">
-    <div class="done-infobox-label" id="infoLabel">Next clips in</div>
+<div class="done" id="done">
+  <div class="done-emoji" id="doneEmoji">🏆</div>
+  <div class="done-title">FULL TIME</div>
+  <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
+  <div class="score-row" id="scoreRow"></div>
+  <div class="countdown-box">
+    <div class="countdown-label" id="countdownLabel">Next clips in</div>
     <div class="countdown" id="countdown">00:00:00</div>
-    <div class="archive-done-label" id="archiveDoneLabel"></div>
+    <div class="archive-done-date" id="archiveDoneDate"></div>
   </div>
-  <button class="share-btn" onclick="shareResult()">SHARE RESULT</button>
+  <button class="btn-share" onclick="shareResult()">SHARE RESULT</button>
 </div>
 ```
 
@@ -494,33 +414,33 @@ opacity:0;transition:.25s ease;pointer-events:none;z-index:200;
 
   <!-- ARCHIVE -->
 
-  <div id="calView">
+  <div id="calendarView">
     <div class="cal-header">
-      <div class="cal-month" id="calMonth">May 2026</div>
+      <div class="cal-month" id="calMonthLabel">May 2026</div>
       <div class="cal-nav">
-        <button class="cal-btn" id="calPrev" onclick="calNav(-1)">‹</button>
-        <button class="cal-btn" id="calNext" onclick="calNav(1)">›</button>
+        <button class="cal-nav-btn" id="calPrev" onclick="calNav(-1)">‹</button>
+        <button class="cal-nav-btn" id="calNext" onclick="calNav(1)">›</button>
       </div>
     </div>
-    <div class="cal-days-header">
-      <div class="cal-day-name">Mon</div><div class="cal-day-name">Tue</div>
-      <div class="cal-day-name">Wed</div><div class="cal-day-name">Thu</div>
-      <div class="cal-day-name">Fri</div><div class="cal-day-name">Sat</div>
-      <div class="cal-day-name">Sun</div>
+    <div class="cal-weekdays">
+      <div class="cal-weekday">Mon</div><div class="cal-weekday">Tue</div>
+      <div class="cal-weekday">Wed</div><div class="cal-weekday">Thu</div>
+      <div class="cal-weekday">Fri</div><div class="cal-weekday">Sat</div>
+      <div class="cal-weekday">Sun</div>
     </div>
     <div class="cal-grid" id="calGrid"></div>
     <div class="cal-legend">
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>All correct</div>
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--yellow)"></div>Some correct</div>
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--red)"></div>All wrong</div>
-      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--border)"></div>Not played</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#2a362a"></div>Not played</div>
     </div>
   </div>
 
 </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast">COPIED</div>
 
 <script type="module">
 import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -547,19 +467,20 @@ getAnalytics(app);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
-// ── UTILS ────────────────────────────────────
-const g    = id => document.getElementById(id);
-const show = id => { const el=g(id); el.style.display=el.tagName==='DIV'?'flex':'block'; };
-const hide = id => g(id).style.display='none';
-const toast = msg => {
-  const t=g('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-};
-window.toggleUserMenu = () => g('userMenu').classList.toggle('open');
+// ── helpers ──────────────────────────────────
+const $ = id => document.getElementById(id);
 
-// ── CLIP CONFIG ──────────────────────────────
-// Answer codes in filename: n=No Foul  f=Free Kick  y=Yellow  r=Red
-// File path: DDMMYY/DDMMYY-N-X.mp4
+function showToast(msg) {
+  const t = $('toast'); t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+window.toggleUserMenu = () => $('userMenu').classList.toggle('show');
+
+// ── CLIP CONFIG ───────────────────────────────
+// File naming: DDMMYY/DDMMYY-N-X.mp4
+// X codes: n=No Foul  f=Free Kick  y=Yellow  r=Red
 
 const ANSWER_MAP    = { n:'none', f:'freekick', y:'yellow', r:'red' };
 const ANSWER_LABELS = { none:'No Foul ✅', freekick:'Free Kick ⚽', yellow:'Yellow Card 🟨', red:'Red Card 🟥' };
@@ -570,27 +491,31 @@ const DEFAULT_EXPL  = {
   red:      'Serious foul play or violent conduct — straight red card.'
 };
 
-// Optional per-clip metadata. Key = "DDMMYY-N"
+// Add per-clip explanations here. Key = "DDMMYY-N"
 const CLIP_META = {
-  '070526-1': { explanation: 'Opening day clip.' },
+  '070526-1': { explanation: 'The first ever clip on Be a Ref.' },
   '080526-1': { explanation: "Deliberate stamp on the opponent's leg with no attempt to play the ball — straight red card for violent conduct." },
 };
 
-const EARLIEST     = new Date(2026, 4, 7); // 7 May 2026
-const MONTH_NAMES  = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const EARLIEST    = new Date(2026, 4, 7); // 7 May 2026
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-// ── DATE HELPERS ─────────────────────────────
+// ── DATE HELPERS ──────────────────────────────
 const NOW        = new Date();
 const TODAY_CODE = fmtCode(NOW);
-const TODAY_ISO  = fmtISO(NOW);
+const TODAY_ISO  = NOW.toISOString().split('T')[0];
 
-function fmtCode(d){ return pad(d.getDate()) + pad(d.getMonth()+1) + String(d.getFullYear()).slice(-2); }
-function fmtISO(d) { return d.toISOString().split('T')[0]; }
-function pad(n)    { return String(n).padStart(2,'0'); }
-function sameDay(a,b){ return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+function fmtCode(d) {
+  return String(d.getDate()).padStart(2,'0') + String(d.getMonth()+1).padStart(2,'0') + String(d.getFullYear()).slice(-2);
+}
+function sameDay(a,b) {
+  return a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+}
 
-// ── FILE PROBE ───────────────────────────────
-async function probe(url){ try{ return (await fetch(url,{method:'HEAD'})).ok; }catch{ return false; } }
+// ── FILE PROBE ────────────────────────────────
+async function fileExists(url) {
+  try { return (await fetch(url, { method:'HEAD' })).ok; } catch { return false; }
+}
 
 async function buildClips(code) {
   const clips = [];
@@ -598,10 +523,10 @@ async function buildClips(code) {
     let found = false;
     for (const c of ['n','f','y','r']) {
       const file = `${code}/${code}-${i}-${c}.mp4`;
-      if (await probe(file)) {
+      if (await fileExists(file)) {
         const m   = CLIP_META[`${code}-${i}`] || {};
         const ans = ANSWER_MAP[c];
-        clips.push({ file, correct:ans, explanation:m.explanation || DEFAULT_EXPL[ans] });
+        clips.push({ file, correct: ans, explanation: m.explanation || DEFAULT_EXPL[ans] });
         found = true; break;
       }
     }
@@ -610,45 +535,45 @@ async function buildClips(code) {
   return clips;
 }
 
-// ── USER DATA ────────────────────────────────
+// ── USER DATA ─────────────────────────────────
 let currentUser = null;
-let streak      = { count:0, lastDate:null };
-let todayState  = { clipIndex:0, answers:[], done:false };
+let streak      = { count: 0, lastDate: null };
+let todayState  = { clipIndex: 0, answers: [], done: false };
 let archive     = {};
 
 async function loadUser(uid) {
-  const snap = await getDoc(doc(db,'users',uid));
+  const snap = await getDoc(doc(db, 'users', uid));
   if (!snap.exists()) return;
   const d = snap.data();
-  if (d.streak)                            streak     = d.streak;
-  if (d.archive)                           archive    = d.archive;
-  if (d.today && d.today.date===TODAY_ISO) todayState = d.today;
+  if (d.streak)                             streak     = d.streak;
+  if (d.archive)                            archive    = d.archive;
+  if (d.today && d.today.date === TODAY_ISO) todayState = d.today;
 }
 
 function saveUser() {
-  return setDoc(doc(db,'users',currentUser.uid), {
+  return setDoc(doc(db, 'users', currentUser.uid), {
     streak, archive,
-    today: { ...todayState, date:TODAY_ISO },
+    today: { ...todayState, date: TODAY_ISO },
     updatedAt: serverTimestamp()
-  }, { merge:true });
+  }, { merge: true });
 }
 
-// ── AUTH UI ──────────────────────────────────
+// ── AUTH UI ───────────────────────────────────
 let regMode = false;
 
 window.toggleAuthMode = () => {
   regMode = !regMode;
-  g('authTitle').textContent   = regMode ? 'CREATE ACCOUNT' : 'SIGN IN';
-  g('authSubmit').textContent  = regMode ? 'CREATE ACCOUNT' : 'SIGN IN';
-  g('nameGroup').style.display = regMode ? 'flex' : 'none';
-  g('authToggle').innerHTML    = regMode
+  $('authTitle').textContent   = regMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  $('authSubmit').textContent  = regMode ? 'CREATE ACCOUNT' : 'SIGN IN';
+  $('nameGroup').style.display = regMode ? 'flex' : 'none';
+  $('authToggle').innerHTML    = regMode
     ? 'Have an account? <a onclick="toggleAuthMode()">Sign in</a>'
     : 'No account? <a onclick="toggleAuthMode()">Create one</a>';
   clearErr();
 };
 
-const showErr  = m => { g('authError').textContent=m; g('authError').classList.add('show'); };
-const clearErr = () => g('authError').classList.remove('show');
+const showErr  = m => { $('authError').textContent = m; $('authError').classList.add('show'); };
+const clearErr = ()  => $('authError').classList.remove('show');
 
 const AUTH_ERRORS = {
   'auth/invalid-email':        'Invalid email address.',
@@ -661,48 +586,49 @@ const AUTH_ERRORS = {
 
 window.handleEmailAuth = async () => {
   clearErr();
-  const email = g('authEmail').value.trim();
-  const pass  = g('authPassword').value;
-  const name  = g('authName').value.trim();
+  const email = $('authEmail').value.trim();
+  const pass  = $('authPassword').value;
+  const name  = $('authName').value.trim();
   if (!email || !pass) { showErr('Please enter your email and password.'); return; }
-  const btn = g('authSubmit');
-  btn.disabled=true; btn.textContent='Please wait';
+  const btn = $('authSubmit');
+  btn.disabled = true; btn.textContent = 'Please wait';
   try {
     if (regMode) {
-      const c = await createUserWithEmailAndPassword(auth,email,pass);
-      if (name) await updateProfile(c.user, { displayName:name });
+      const c = await createUserWithEmailAndPassword(auth, email, pass);
+      if (name) await updateProfile(c.user, { displayName: name });
     } else {
-      await signInWithEmailAndPassword(auth,email,pass);
+      await signInWithEmailAndPassword(auth, email, pass);
     }
   } catch(e) {
     showErr(AUTH_ERRORS[e.code] || 'Something went wrong.');
-    btn.disabled=false; btn.textContent=regMode?'CREATE ACCOUNT':'SIGN IN';
+    btn.disabled = false;
+    btn.textContent = regMode ? 'CREATE ACCOUNT' : 'SIGN IN';
   }
 };
 
 window.handleGoogleAuth = async () => {
   clearErr();
   try { await signInWithPopup(auth, new GoogleAuthProvider()); }
-  catch(e){ if(e.code!=='auth/popup-closed-by-user') showErr(AUTH_ERRORS[e.code]||'Something went wrong.'); }
+  catch(e) { if (e.code !== 'auth/popup-closed-by-user') showErr(AUTH_ERRORS[e.code] || 'Something went wrong.'); }
 };
 
 window.doSignOut = () => fbSignOut(auth);
 
 ['authEmail','authPassword','authName'].forEach(id =>
-  g(id)?.addEventListener('keydown', e => { if(e.key==='Enter') window.handleEmailAuth(); })
+  $(id)?.addEventListener('keydown', e => { if (e.key === 'Enter') window.handleEmailAuth(); })
 );
 
-// ── TABS ─────────────────────────────────────
+// ── TABS ──────────────────────────────────────
 window.showTab = (tab) => {
   const isArchive = tab === 'archive';
-  g('todayView').style.display = isArchive ? 'none' : 'block';
-  g('calView').classList.toggle('show', isArchive);
-  g('tabToday').classList.toggle('active', !isArchive);
-  g('tabArchive').classList.toggle('active', isArchive);
+  $('todayView').style.display    = isArchive ? 'none' : 'block';
+  $('calendarView').classList.toggle('show', isArchive);
+  $('tabToday').classList.toggle('active', !isArchive);
+  $('tabArchive').classList.toggle('active', isArchive);
   if (isArchive) renderCalendar();
 };
 
-// ── GAME ENGINE ──────────────────────────────
+// ── GAME ENGINE ───────────────────────────────
 let clips       = [];
 let answered    = false;
 let archiveMode = false;
@@ -711,51 +637,51 @@ let archiveDate = null;
 let gameState   = null;
 
 function buildProgress() {
-  const bar = g('progressBar');
-  bar.innerHTML = '';
-  clips.forEach((_,i) => {
+  const row = $('progress');
+  row.innerHTML = '';
+  clips.forEach((_, i) => {
     const pip = document.createElement('div');
-    pip.className = 'pip';
+    pip.className = 'progress-pip';
     if      (i < gameState.answers.length) pip.classList.add(gameState.answers[i].correct ? 'correct' : 'wrong');
     else if (i === gameState.clipIndex)    pip.classList.add('active');
-    bar.appendChild(pip);
+    row.appendChild(pip);
   });
 }
 
 function loadClip(index) {
   answered = false;
-  const clip = clips[index];
-  const vid  = g('vid');
+  const clip  = clips[index];
+  const video = $('video');
 
-  vid.classList.remove('ready');
-  g('clipCounter').textContent = `Clip ${index+1} of ${clips.length}`;
-  g('hint').textContent        = 'Watch the clip';
-  g('resultCard').style.display = 'none';
-  g('nextBtn').classList.remove('show');
+  video.classList.remove('ready');
+  $('clipLabel').textContent = `Clip ${index+1} of ${clips.length}`;
+  $('hint').textContent      = 'Watch the clip';
+  $('result').style.display  = 'none';
+  $('nextButton').classList.remove('visible');
+  $('nextButton').style.display = 'none';
 
-  document.querySelectorAll('.answer').forEach(b => {
-    b.disabled = false;
-    b.classList.add('locked');
-    b.classList.remove('sel-correct','sel-wrong','sel-reveal','sel-dim');
+  document.querySelectorAll('.answer').forEach(btn => {
+    btn.classList.add('locked');
+    btn.disabled = false;
+    btn.classList.remove('correct-selected','wrong-selected','reveal','dimmed');
   });
 
   buildProgress();
 
-  vid.src = clip.file;
-  vid.load();
-  vid.oncanplay = () => vid.classList.add('ready');
-  vid.onended   = () => {
+  video.src = clip.file;
+  video.load();
+  video.oncanplay = () => video.classList.add('ready');
+  video.onended   = () => {
     if (answered) return;
     document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
-    g('hint').textContent = 'Make your call';
+    $('hint').textContent = 'Make your call';
   };
-  vid.play().catch(() => { g('hint').textContent = 'Tap play to watch'; });
+  video.play().catch(() => { $('hint').textContent = 'Tap play to watch'; });
 
-  // Preload next clip
   const next = clips[index+1];
   if (next) {
     const l = document.createElement('link');
-    l.rel='preload'; l.as='video'; l.href=next.file;
+    l.rel = 'preload'; l.as = 'video'; l.href = next.file;
     document.head.appendChild(l);
   }
 }
@@ -768,151 +694,151 @@ function submitAnswer(choice) {
   const clip    = clips[gameState.clipIndex];
   const correct = choice === clip.correct;
 
-  gameState.answers.push({ chosen:choice, correct });
+  gameState.answers.push({ chosen: choice, correct });
   if (!archiveMode) saveUser();
 
   document.querySelectorAll('.answer').forEach(el => {
     el.disabled = true;
     const id = el.dataset.answer;
-    if      (id===choice && correct)  el.classList.add('sel-correct');
-    else if (id===choice && !correct) el.classList.add('sel-wrong');
-    else if (id===clip.correct)       el.classList.add('sel-reveal');
-    else                              el.classList.add('sel-dim');
+    if      (id === choice && correct)  el.classList.add('correct-selected');
+    else if (id === choice && !correct) el.classList.add('wrong-selected');
+    else if (id === clip.correct)       el.classList.add('reveal');
+    else                                el.classList.add('dimmed');
   });
 
   buildProgress();
 
-  const card = g('resultCard');
-  card.style.display = 'block';
-  card.innerHTML = `
+  $('result').style.display = 'block';
+  $('result').innerHTML = `
     <div class="result-top">
-      <span style="font-size:20px">${correct?'✅':'❌'}</span>
-      <span class="result-verdict ${correct?'v-correct':'v-wrong'}">${correct?'Correct':'Wrong Call'}</span>
-      <span class="result-tag">${ANSWER_LABELS[clip.correct]}</span>
+      <div style="font-size:22px">${correct ? '✅' : '❌'}</div>
+      <div class="result-title ${correct ? 'correct' : 'wrong'}">${correct ? 'Correct' : 'Wrong Call'}</div>
+      <div class="result-tag">${ANSWER_LABELS[clip.correct]}</div>
     </div>
-    <div class="result-body">${clip.explanation}</div>
+    <div class="result-text">${clip.explanation}</div>
   `;
 
-  g('nextBtn').classList.add('show');
-  g('nextBtn').textContent = gameState.clipIndex >= clips.length-1 ? 'SEE RESULTS →' : 'NEXT →';
+  $('nextButton').classList.add('visible');
+  $('nextButton').style.display = 'block';
+  $('nextButton').textContent = gameState.clipIndex >= clips.length - 1 ? 'SEE RESULTS →' : 'NEXT →';
 }
 
 function nextClip() {
-  if (gameState.clipIndex >= clips.length-1) { finishGame(); return; }
+  if (gameState.clipIndex >= clips.length - 1) { finishGame(); return; }
   gameState.clipIndex++;
   loadClip(gameState.clipIndex);
 }
 
 function finishGame() {
-  const score = gameState.answers.filter(a=>a.correct).length;
+  const score = gameState.answers.filter(a => a.correct).length;
   const total = clips.length;
 
   if (archiveMode) {
-    archive[archiveCode] = { done:true, score, total, answers:gameState.answers };
+    archive[archiveCode] = { done: true, score, total, answers: gameState.answers };
     saveUser();
     const savedDate = archiveDate;
     archiveMode = false;
     archiveCode = null;
-    showDone({ score, total, isArchive:true, date:savedDate });
+    showDone({ score, total, isArchive: true, date: savedDate });
     return;
   }
 
-  // Today
   todayState.done = true;
-  const yesterday = new Date(Date.now()-86400000).toISOString().split('T')[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
   if      (streak.lastDate === yesterday) streak.count++;
   else if (streak.lastDate !== TODAY_ISO) streak.count = 1;
   streak.lastDate = TODAY_ISO;
-  archive[TODAY_CODE] = { done:true, score, total, answers:gameState.answers };
+  archive[TODAY_CODE] = { done: true, score, total, answers: gameState.answers };
   saveUser();
 
-  g('streakNum').textContent = streak.count;
-  showDone({ score, total, isArchive:false });
+  $('streakCount').textContent = streak.count;
+  showDone({ score, total, isArchive: false });
 }
 
 function showDone({ score, total, isArchive, date }) {
-  g('gameArea').style.display = 'none';
-  g('doneScreen').classList.add('show');
+  $('game').style.display = 'none';
+  $('done').classList.add('visible');
 
   const pct = score / total;
-  g('doneEmoji').textContent    = score===total ? '🏆' : pct>=0.6 ? '👏' : score>0 ? '😬' : '💀';
-  g('doneSub').textContent      = score===total ? 'Perfect score!' : pct>=0.6 ? 'Solid effort' : score>0 ? 'Keep studying' : 'Rough day';
-  g('doneScore').innerHTML      = `${score}/${total}`;
-  g('scoreBoxes').innerHTML     = gameState.answers.map(a=>`<div class="score-box ${a.correct?'c':'w'}">${a.correct?'✅':'❌'}</div>`).join('');
+  $('doneEmoji').textContent  = score === total ? '🏆' : pct >= 0.6 ? '👏' : score > 0 ? '😬' : '💀';
+  $('finalScore').textContent = `${score}/${total}`;
+  $('scoreRow').innerHTML     = gameState.answers.map(a =>
+    `<div class="score-box ${a.correct ? 'correct' : 'wrong'}">${a.correct ? '✅' : '❌'}</div>`
+  ).join('');
 
   if (isArchive) {
-    g('infoLabel').textContent         = 'Archive round';
-    g('countdown').style.display       = 'none';
-    g('archiveDoneLabel').style.display = 'block';
-    g('archiveDoneLabel').textContent  = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+    $('countdownLabel').textContent    = 'Archive';
+    $('countdown').style.display       = 'none';
+    $('archiveDoneDate').style.display = 'block';
+    $('archiveDoneDate').textContent   = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
   } else {
-    g('infoLabel').textContent         = 'Next clips in';
-    g('countdown').style.display       = 'block';
-    g('archiveDoneLabel').style.display = 'none';
+    $('countdownLabel').textContent    = 'Next clips in';
+    $('countdown').style.display       = 'block';
+    $('archiveDoneDate').style.display = 'none';
     startCountdown();
   }
 }
 
-// ── ARCHIVE PLAY ─────────────────────────────
+// ── ARCHIVE ───────────────────────────────────
 async function playArchiveDay(code, date) {
-  if (archive[code]?.done) return; // no replay
+  if (archive[code]?.done) return;
 
   showTab('today');
-  show('loadingScreen');
-  hide('appScreen');
+  $('appScreen').style.display     = 'none';
+  $('loadingScreen').classList.add('show');
 
   const archiveClips = await buildClips(code);
 
-  hide('loadingScreen');
-  show('appScreen');
+  $('loadingScreen').classList.remove('show');
+  $('appScreen').style.display = 'block';
 
-  if (!archiveClips.length) { toast('No clips found for that day'); return; }
+  if (!archiveClips.length) { showToast('No clips for that day'); return; }
 
   archiveMode = true;
   archiveCode = code;
   archiveDate = date;
   clips       = archiveClips;
-  gameState   = { clipIndex:0, answers:[], done:false };
+  gameState   = { clipIndex: 0, answers: [], done: false };
 
-  g('archiveBadge').textContent = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive`;
-  g('archiveBadge').classList.add('show');
-  g('gameArea').style.display = 'block';
-  g('doneScreen').classList.remove('show');
+  $('archiveTag').textContent = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive`;
+  $('archiveTag').classList.add('show');
+  $('game').style.display = 'block';
+  $('done').classList.remove('visible');
 
   buildProgress();
   loadClip(0);
 }
 
-// ── CALENDAR ─────────────────────────────────
+// ── CALENDAR ──────────────────────────────────
 let calYear  = NOW.getFullYear();
 let calMonth = NOW.getMonth();
 
 window.calNav = (dir) => {
   calMonth += dir;
-  if (calMonth < 0)  { calMonth=11; calYear--; }
-  if (calMonth > 11) { calMonth=0;  calYear++; }
+  if (calMonth < 0)  { calMonth = 11; calYear--; }
+  if (calMonth > 11) { calMonth = 0;  calYear++; }
   renderCalendar();
 };
 
 function renderCalendar() {
   const firstDay    = new Date(calYear, calMonth, 1);
-  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
-  g('calMonth').textContent = `${MONTH_NAMES[calMonth]} ${calYear}`;
-  g('calPrev').disabled = (calYear===EARLIEST.getFullYear() && calMonth<=EARLIEST.getMonth());
-  g('calNext').disabled = (calYear===NOW.getFullYear() && calMonth>=NOW.getMonth());
+  $('calMonthLabel').textContent = `${MONTH_NAMES[calMonth]} ${calYear}`;
+  $('calPrev').disabled = (calYear === EARLIEST.getFullYear() && calMonth <= EARLIEST.getMonth());
+  $('calNext').disabled = (calYear === NOW.getFullYear() && calMonth >= NOW.getMonth());
 
   let offset = firstDay.getDay() - 1;
   if (offset < 0) offset = 6;
 
-  const grid = g('calGrid');
+  const grid = $('calGrid');
   grid.innerHTML = '';
 
-  for (let i=0; i<offset; i++) {
-    const e=document.createElement('div'); e.className='cal-cell s-empty'; grid.appendChild(e);
+  for (let i = 0; i < offset; i++) {
+    const e = document.createElement('div'); e.className = 'cal-day empty'; grid.appendChild(e);
   }
 
-  for (let d=1; d<=daysInMonth; d++) {
+  for (let d = 1; d <= daysInMonth; d++) {
     const date     = new Date(calYear, calMonth, d);
     const code     = fmtCode(date);
     const isToday  = sameDay(date, NOW);
@@ -921,31 +847,33 @@ function renderCalendar() {
     const hist     = archive[code];
 
     const el  = document.createElement('div');
-    el.className = 'cal-cell';
+    el.className = 'cal-day';
     const num = document.createElement('div');
-    num.className = 'cal-cell-num';
+    num.className = 'cal-day-num';
     num.textContent = d;
     el.appendChild(num);
 
     if (isFuture) {
-      el.classList.add('s-future');
+      el.classList.add('future');
 
     } else if (tooEarly) {
-      el.classList.add('s-prelaunched');
+      el.classList.add('before-launch');
 
     } else if (hist?.done) {
-      // Colour by score — same logic for today and archive
+      // Score-based colour — same logic for today and archive
       const pct = hist.score / (hist.total || 3);
-      el.classList.add(pct===1 ? 's-done-perfect' : pct>0 ? 's-done-partial' : 's-done-bad');
-      const chk = document.createElement('div'); chk.className='cal-cell-check'; chk.textContent='✓'; el.appendChild(chk);
-      el.title = `${d} ${MONTH_NAMES[calMonth]} — ${hist.score}/${hist.total||3} correct`;
+      el.classList.add(pct === 1 ? 'done-perfect' : pct > 0 ? 'done-partial' : 'done-bad');
+      const chk = document.createElement('div');
+      chk.className = 'cal-check'; chk.textContent = '✓';
+      el.appendChild(chk);
+      el.title = `${d} ${MONTH_NAMES[calMonth]} — ${hist.score}/${hist.total || 3} correct`;
 
     } else if (isToday) {
-      el.classList.add('s-today');
+      el.classList.add('today-open');
       el.addEventListener('click', () => showTab('today'));
 
     } else {
-      el.classList.add('s-playable');
+      el.classList.add('playable');
       el.addEventListener('click', () => playArchiveDay(code, date));
     }
 
@@ -953,58 +881,65 @@ function renderCalendar() {
   }
 }
 
-// ── COUNTDOWN ────────────────────────────────
+// ── COUNTDOWN ─────────────────────────────────
 function startCountdown() {
   const tick = () => {
-    const now=new Date(), mn=new Date(now); mn.setHours(24,0,0,0);
-    const d=mn-now, el=g('countdown');
-    if(el) el.textContent=[Math.floor(d/3600000),Math.floor(d%3600000/60000),Math.floor(d%60000/1000)].map(n=>pad(n)).join(':');
+    const now = new Date(), mn = new Date(now); mn.setHours(24,0,0,0);
+    const d = mn - now;
+    const el = $('countdown');
+    if (el) el.textContent = [
+      Math.floor(d / 3600000),
+      Math.floor(d % 3600000 / 60000),
+      Math.floor(d % 60000 / 1000)
+    ].map(n => String(n).padStart(2,'0')).join(':');
   };
-  tick(); setInterval(tick,1000);
+  tick(); setInterval(tick, 1000);
 }
 
-// ── SHARE ────────────────────────────────────
+// ── SHARE ─────────────────────────────────────
 window.shareResult = () => {
-  const score   = gameState.answers.filter(a=>a.correct).length;
-  const pips    = gameState.answers.map(a=>a.correct?'🟩':'🟥').join('');
+  const score   = gameState.answers.filter(a => a.correct).length;
+  const pips    = gameState.answers.map(a => a.correct ? '🟩' : '🟥').join('');
   const dateStr = archiveDate
     ? `${archiveDate.getDate()} ${MONTH_NAMES[archiveDate.getMonth()]} ${archiveDate.getFullYear()}`
     : TODAY_ISO;
   const text = `Be a Ref — ${dateStr}\n${pips}\n${score}/${clips.length}\n🔥 ${streak.count} day streak`;
-  navigator.clipboard.writeText(text).then(()=>toast('Copied'));
+  navigator.clipboard.writeText(text).then(() => showToast('COPIED'));
 };
 
-// ── UTILS ────────────────────────────────────
-
+// ── ANSWER LISTENERS ──────────────────────────
 document.querySelectorAll('.answer').forEach(btn =>
   btn.addEventListener('click', () => submitAnswer(btn.dataset.answer))
 );
-g('nextBtn').addEventListener('click', nextClip);
+$('nextButton').addEventListener('click', nextClip);
 
-// ── AUTH STATE ───────────────────────────────
+// ── AUTH STATE ────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
-  // Make page visible now that we know auth state
   if (!user) {
-    g('authScreen').style.display = 'flex';
+    $('authScreen').style.display    = 'flex';
+    $('loadingScreen').classList.remove('show');
+    $('appScreen').style.display     = 'none';
     return;
   }
 
   currentUser = user;
-  g('loadingScreen').style.display = 'flex';
+  $('authScreen').style.display    = 'none';
+  $('loadingScreen').classList.add('show');
+  $('appScreen').style.display     = 'none';
 
   await loadUser(user.uid);
 
-  g('menuName').textContent  = user.displayName || '';
-  g('menuEmail').textContent = user.email;
-  g('streakNum').textContent = streak.count;
+  $('menuName').textContent  = user.displayName || '';
+  $('menuEmail').textContent = user.email;
+  $('streakCount').textContent = streak.count;
 
   clips = await buildClips(TODAY_CODE);
 
-  g('loadingScreen').style.display = 'none';
-  g('appScreen').style.display     = 'block';
+  $('loadingScreen').classList.remove('show');
+  $('appScreen').style.display = 'block';
 
   if (!clips.length) {
-    g('gameArea').innerHTML = `
+    $('game').innerHTML = `
       <div class="no-clips">
         <h2>No clips today</h2>
         <p>Add today's videos to the repo.<br>Folder: <strong style="color:var(--accent)">${TODAY_CODE}/</strong>
@@ -1015,7 +950,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (todayState.done) {
     gameState = todayState;
-    showDone({ score:todayState.answers.filter(a=>a.correct).length, total:clips.length, isArchive:false });
+    showDone({ score: todayState.answers.filter(a => a.correct).length, total: clips.length, isArchive: false });
     return;
   }
 
