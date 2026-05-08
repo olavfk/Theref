@@ -38,8 +38,9 @@ background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmln
 opacity:.35;pointer-events:none;z-index:0;
 }
 
-/* All top-level screens hidden by default */
-#authScreen,#loadingScreen,#appScreen{ display:none; }
+/* Auth shown by default — Firebase will switch to correct screen */
+#authScreen{ display:flex; }
+#loadingScreen,#appScreen{ display:none; }
 
 .wrap{position:relative;z-index:1;width:100%;max-width:680px;margin:0 auto;padding:20px 16px 80px;}
 
