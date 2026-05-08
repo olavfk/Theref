@@ -30,9 +30,7 @@ html,body{
 background:radial-gradient(circle at top,#162014 0%,#0a0f0a 45%),#0a0f0a;
 color:var(–text);min-height:100vh;overflow-x:hidden;
 font-family:‘Inter’,sans-serif;-webkit-font-smoothing:antialiased;
-visibility:hidden;
 }
-body.ready{ visibility:visible; }
 
 body::before{
 content:’’;position:fixed;inset:0;
@@ -548,6 +546,16 @@ getAnalytics(app);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
+// ── UTILS ────────────────────────────────────
+const g    = id => document.getElementById(id);
+const show = id => { const el=g(id); el.style.display=el.tagName==='DIV'?'flex':'block'; };
+const hide = id => g(id).style.display='none';
+const toast = msg => {
+  const t=g('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+};
+window.toggleUserMenu = () => g('userMenu').classList.toggle('open');
+
 // ── CLIP CONFIG ──────────────────────────────
 // Answer codes in filename: n=No Foul  f=Free Kick  y=Yellow  r=Red
 // File path: DDMMYY/DDMMYY-N-X.mp4
@@ -966,14 +974,6 @@ window.shareResult = () => {
 };
 
 // ── UTILS ────────────────────────────────────
-const g    = id => document.getElementById(id);
-const show = id => { const el=g(id); el.style.display=el.tagName==='DIV'?'flex':'block'; };
-const hide = id => g(id).style.display='none';
-const toast = msg => {
-  const t=g('toast'); t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2000);
-};
-window.toggleUserMenu = () => g('userMenu').classList.toggle('open');
 
 document.querySelectorAll('.answer').forEach(btn =>
   btn.addEventListener('click', () => submitAnswer(btn.dataset.answer))
@@ -983,8 +983,6 @@ g('nextBtn').addEventListener('click', nextClip);
 // ── AUTH STATE ───────────────────────────────
 onAuthStateChanged(auth, async (user) => {
   // Make page visible now that we know auth state
-  document.body.classList.add('ready');
-
   if (!user) {
     g('authScreen').style.display = 'flex';
     return;
