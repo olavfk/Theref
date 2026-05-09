@@ -41,7 +41,7 @@ body::before{
   opacity:.35;pointer-events:none;z-index:0;
 }
 
-.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:12px 14px 40px;}
+.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:8px 14px 20px;}
 
 /* ── AUTH SCREEN ── */
 #authScreen{
@@ -108,7 +108,7 @@ video.ready{opacity:1;}
 .loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 
 /* ── HEADER ── */
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-top:2px;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-top:2px;}
 .logo{font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:3px;line-height:1;}
 .logo span{display:block;margin-top:1px;font-size:10px;letter-spacing:3px;opacity:.4;font-family:'Barlow Condensed',sans-serif;}
 .header-right{display:flex;align-items:center;gap:12px;}
@@ -146,13 +146,13 @@ video.ready{opacity:1;}
 .user-menu-item.danger{color:var(--red);}
 
 /* ── NAV TABS ── */
-.nav-tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:3px;}
+.nav-tabs{display:flex;gap:4px;margin-bottom:10px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:3px;}
 .nav-tab{flex:1;padding:8px;border:none;background:transparent;color:var(--muted);font-family:'Bebas Neue',cursive;font-size:15px;letter-spacing:2px;cursor:pointer;border-radius:9px;transition:background .15s,color .15s;}
 .nav-tab:hover{color:var(--text);}
 .nav-tab.active{background:var(--card-2);color:var(--accent);border:1px solid var(--border);}
 
 /* ── PROGRESS ── */
-.progress{display:flex;gap:8px;margin-bottom:10px;}
+.progress{display:flex;gap:8px;margin-bottom:6px;}
 .progress-pip{flex:1;height:6px;border-radius:999px;background:#202820;overflow:hidden;position:relative;}
 .progress-pip.active::after{content:'';position:absolute;inset:0;background:var(--accent);animation:pulse 1.4s infinite;}
 .progress-pip.correct{background:var(--green);}
@@ -179,12 +179,12 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 .archive-tag.show{display:block;}
 
 /* ── HINT ── */
-.hint{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin:8px 0;min-height:16px;}
+.hint{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin:5px 0;min-height:14px;}
 
 /* ── ANSWERS ── */
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px;}
 .answer{
-  position:relative;padding:14px 10px;border-radius:14px;
+  position:relative;padding:11px 10px;border-radius:12px;
   border:1px solid #2d3a2c;
   background:linear-gradient(to bottom,#1b241a,#141a13);
   display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -205,17 +205,17 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 .answer.red .answer-label{color:var(--red);}
 
 /* ── RESULT ── */
-.result{display:none;margin-top:10px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;animation:up .25s ease;}
+.result{display:none;margin-top:8px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px;animation:up .25s ease;}
 @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.result-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.result-top{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
 .result-title{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:24px;}
 .result-title.correct{color:var(--green);}
 .result-title.wrong{color:var(--red);}
-.result-tag{margin-left:auto;padding:4px 8px;border-radius:6px;background:#ffffff12;font-size:12px;letter-spacing:1px;font-weight:700;}
+
 .result-text{color:#a8b5a7;line-height:1.6;font-size:13px;}
 
 /* ── NEXT ── */
-.next{width:100%;margin-top:10px;padding:13px;border:none;border-radius:14px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s;}
+.next{width:100%;margin-top:6px;padding:12px;border:none;border-radius:12px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:19px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s;}
 .next:hover{transform:translateY(-2px);}
 .next.visible{display:block;}
 
@@ -257,7 +257,8 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   transition:border-color .15s,background .15s,transform .12s;cursor:default;
 }
 .cal-day-num{font-size:13px;font-weight:600;line-height:1;}
-.cal-check{position:absolute;top:3px;right:4px;font-size:8px;opacity:.8;}
+.cal-dots{display:flex;gap:3px;margin-top:2px;justify-content:center;}
+.cal-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.9;}
 
 /* calendar day states */
 .cal-day.empty{background:transparent;}
@@ -376,6 +377,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <div id="todayView">
 
+```
 <div id="game">
   <div class="progress" id="progress" style="display:none"></div>
 
@@ -412,6 +414,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <button class="btn-share" onclick="shareResult()">SHARE RESULT</button>
 </div>
+```
 
   </div>
   <div id="calendarView">
@@ -433,7 +436,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--green)"></div>All correct</div>
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--yellow)"></div>Some correct</div>
       <div class="cal-legend-item"><div class="cal-legend-dot" style="background:var(--red)"></div>All wrong</div>
-      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#2a362a"></div>Not played</div>
+      <div class="cal-legend-item"><div class="cal-legend-dot" style="background:#2a362a;border-radius:50%"></div>Not played</div>
     </div>
   </div>
 
@@ -746,7 +749,6 @@ function submitAnswer(choice) {
     '<div class="result-top">' +
     '<div style="font-size:22px">' + (correct ? '✅' : '❌') + '</div>' +
     '<div class="result-title ' + (correct ? 'correct' : 'wrong') + '">' + (correct ? 'Correct' : 'Wrong Call') + '</div>' +
-    '<div class="result-tag">' + ANSWER_LABELS[clip.correct] + '</div>' +
     '</div>' +
     '<div class="result-text">' + clip.explanation + '</div>';
 
@@ -921,9 +923,14 @@ function renderCalendar() {
       // Score-based colour — same logic for today and archive
       const pct = hist.score / (hist.total || 3);
       el.classList.add(pct === 1 ? 'done-perfect' : pct > 0 ? 'done-partial' : 'done-bad');
-      const chk = document.createElement('div');
-      chk.className = 'cal-check'; chk.textContent = '✓';
-      el.appendChild(chk);
+      const dots = document.createElement('div');
+      dots.className = 'cal-dots';
+      for (let s = 0; s < (hist.score || 0); s++) {
+        const dot = document.createElement('div');
+        dot.className = 'cal-dot';
+        dots.appendChild(dot);
+      }
+      el.appendChild(dots);
       el.title = d + ' ' + MONTH_NAMES[calMonth] + ' — ' + hist.score + '/' + (hist.total || 3) + ' correct';
 
     } else if (isToday) {
