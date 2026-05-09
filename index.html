@@ -380,6 +380,8 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
     <button class="nav-tab"        id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
   </div>
   <div id="todayView">
+
+```
 <div id="game">
   <div class="progress" id="progress" style="display:none"></div>
 
@@ -414,7 +416,8 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
     <div class="countdown" id="countdown">00:00:00</div>
     <div class="archive-done-date" id="archiveDoneDate"></div>
   </div>
-  <button class="btn-share" onclick="shareGame()">SHARE GAME</button>
+  <button class="btn-share" id="shareGameBtn" onclick="shareGame()">SHARE GAME</button>
+  <button class="btn-share" id="backToCalendarBtn" style="display:none;background:var(--card);color:var(--accent);border:1px solid var(--accent);" onclick="showTab('archive')">← BACK TO CALENDAR</button>
   <div id="guestPrompt" style="display:none" class="guest-prompt">
     <div class="guest-prompt-text">🔥 <strong>Save your streak!</strong> Create a free account to track your progress and play archive games.</div>
     <div class="guest-prompt-btns">
@@ -423,6 +426,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
     </div>
   </div>
 </div>
+```
 
   </div>
   <div id="calendarView">
@@ -613,18 +617,27 @@ window.showTab = (tab) => {
   $('tabToday').classList.toggle('active', !isArchive);
   $('tabArchive').classList.toggle('active', isArchive);
   if (isArchive) {
-    renderCalendar();
-  } else if (archiveMode) {
-    // User tapped Today while playing archive — cancel archive and restore today
+    // Reset archive mode when going to calendar
     archiveMode = false;
     archiveCode = null;
     archiveDate = null;
     $('archiveTag').classList.remove('show');
+    renderCalendar();
+  } else {
+    // Pressed Today — always restore today's state cleanly
     clips     = todayClips;
     gameState = todayState;
+    archiveMode = false;
+    archiveCode = null;
+    archiveDate = null;
+    $('archiveTag').classList.remove('show');
     $('game').style.display = todayState.done ? 'none' : 'block';
     $('done').classList.toggle('visible', todayState.done);
-    if (!todayState.done) {
+    if (todayState.done) {
+      // Restore today's done screen correctly
+      const score = todayState.answers.filter(a => a.correct).length;
+      showDone({ score, total: todayClips.length, isArchive: false });
+    } else {
       loadClip(todayState.clipIndex);
     }
   }
@@ -800,10 +813,14 @@ function showDone({ score, total, isArchive, date }) {
     $('countdown').style.display       = 'none';
     $('archiveDoneDate').style.display = 'block';
     $('archiveDoneDate').textContent   = date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear();
+    $('backToCalendarBtn').style.display = 'block';
+    $('shareGameBtn').style.display      = 'block';
   } else {
     $('countdownLabel').textContent    = 'Next clips in';
     $('countdown').style.display       = 'block';
     $('archiveDoneDate').style.display = 'none';
+    $('backToCalendarBtn').style.display = 'none';
+    $('shareGameBtn').style.display      = 'block';
     startCountdown();
   }
   // Show guest streak prompt if not logged in
