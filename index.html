@@ -380,6 +380,8 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
     <button class="nav-tab"        id="tabArchive" onclick="showTab('archive')">ARCHIVE</button>
   </div>
   <div id="todayView">
+
+```
 <div id="game">
   <div class="progress" id="progress" style="display:none"></div>
 
@@ -423,6 +425,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
     </div>
   </div>
 </div>
+```
 
   </div>
   <div id="calendarView">
@@ -662,6 +665,11 @@ function buildProgress() {
   });
 }
 
+function unlockAnswers() {
+  document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
+  $('hint').textContent = 'Make your call';
+}
+
 function loadClip(index) {
   answered = false;
   const clip  = clips[index];
@@ -694,10 +702,13 @@ function loadClip(index) {
   video.oncanplay = () => video.classList.add('ready');
   video.onended   = () => {
     if (answered) return;
-    document.querySelectorAll('.answer').forEach(b => b.classList.remove('locked'));
-    $('hint').textContent = 'Make your call';
+    unlockAnswers();
   };
-  video.play().catch(() => { $('hint').textContent = 'Tap play to watch'; });
+  // Fallback: if video fails to load/play, unlock after 3 seconds
+  video.onerror = () => { unlockAnswers(); };
+  video.play().catch(() => {
+    $('hint').textContent = 'Tap play to watch';
+  });
 
   const next = clips[index+1];
   if (next) {
@@ -716,7 +727,7 @@ function submitAnswer(choice) {
   const correct = choice === clip.correct;
 
   gameState.answers.push({ chosen: choice, correct });
-  if (archiveMode) { archiveStates[archiveCode] = gameState; } else { saveUser(); }
+  if (archiveMode) { archiveStates[archiveCode] = gameState; } else if (currentUser) { saveUser(); }
 
   document.querySelectorAll('.answer').forEach(el => {
     el.disabled = true;
@@ -754,7 +765,7 @@ function finishGame() {
 
   if (archiveMode) {
     archive[archiveCode] = { done: true, score, total, answers: gameState.answers };
-    saveUser();
+    if (currentUser) saveUser();
     updateTotalScore();
     const savedDate = archiveDate;
     archiveMode = false;
@@ -769,7 +780,7 @@ function finishGame() {
   else if (streak.lastDate !== TODAY_ISO) streak.count = 1;
   streak.lastDate = TODAY_ISO;
   archive[TODAY_CODE] = { done: true, score, total, answers: gameState.answers };
-  saveUser();
+  if (currentUser) saveUser();
 
   $('streakCount').textContent = streak.count;
   updateTotalScore();
@@ -805,11 +816,6 @@ function showDone({ score, total, isArchive, date }) {
 
 // ── ARCHIVE ───────────────────────────────────
 async function playArchiveDay(code, date) {
-  if (!currentUser) {
-    openAuthModal('signin');
-    $('authModalSub').textContent = 'Sign in to play archive games and save your streak.';
-    return;
-  }
   if (archive[code]?.done) return;
 
   showTodayViewKeepArchiveTab();
