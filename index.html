@@ -178,16 +178,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 }
 .archive-tag.show{display:block;}
 
-/* ── ARCHIVE DAY HEADER ── */
-.archive-day-header{
-  text-align:center;margin-bottom:16px;
-  padding:10px 16px;
-  background:var(--card);border:1px solid rgba(250,204,21,.3);
-  border-radius:12px;
-}
-.archive-day-header-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:2px;}
-.archive-day-header-date{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:var(--text);}
-
 /* ── HINT ── */
 .hint{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin:8px 0;min-height:16px;}
 
@@ -387,7 +377,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   <div id="todayView">
 
 <div id="game">
-  <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
   <div class="progress" id="progress" style="display:none"></div>
 
   <div class="video-wrap" id="videoWrap" style="display:none">
@@ -508,12 +497,6 @@ const DEFAULT_EXPL  = {
   red:      'Serious foul play or violent conduct — straight red card.'
 };
 
-// Add per-clip explanations here. Key = "DDMMYY-N"
-const CLIP_META = {
-  '070526-1': { explanation: 'The first ever clip on Be a Ref.' },
-  '080526-1': { explanation: "Deliberate stamp on the opponent's leg with no attempt to play the ball — straight red card for violent conduct." },
-};
-
 const EARLIEST    = new Date(2026, 4, 7); // 7 May 2026
 const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -541,9 +524,8 @@ async function buildClips(code) {
     for (const c of ['n','f','y','r']) {
       const file = `${code}/${code}-${i}-${c}.mp4`;
       if (await fileExists(file)) {
-        const m   = CLIP_META[`${code}-${i}`] || {};
         const ans = ANSWER_MAP[c];
-        clips.push({ file, correct: ans, explanation: m.explanation || DEFAULT_EXPL[ans] });
+        clips.push({ file, correct: ans, explanation: DEFAULT_EXPL[ans] });
         found = true; break;
       }
     }
@@ -649,7 +631,6 @@ window.showTab = (tab) => {
     archiveMode = false;
     archiveCode = null;
     archiveDate = null;
-    $('archiveDayHeader').style.display = 'none';
     $('archiveTag').classList.remove('show');
     clips     = todayClips;
     gameState = todayState;
@@ -678,6 +659,7 @@ let archiveMode = false;
 let archiveCode = null;
 let archiveDate = null;
 let gameState   = null;
+let archiveStates = {}; // stores in-progress archive games by code
 
 function buildProgress() {
   const row = $('progress');
@@ -698,7 +680,7 @@ function loadClip(index) {
   const video = $('video');
 
   // Hide archive header if playing today
-  if (!archiveMode) { $('archiveDayHeader').style.display = 'none'; $('archiveTag').classList.remove('show'); }
+  if (!archiveMode) { $('archiveTag').classList.remove('show'); }
 
   $('videoWrap').style.display  = 'block';
   $('video').controls = true;
@@ -746,7 +728,7 @@ function submitAnswer(choice) {
   const correct = choice === clip.correct;
 
   gameState.answers.push({ chosen: choice, correct });
-  if (!archiveMode) saveUser();
+  if (archiveMode) { archiveStates[archiveCode] = gameState; } else { saveUser(); }
 
   document.querySelectorAll('.answer').forEach(el => {
     el.disabled = true;
@@ -851,17 +833,38 @@ async function playArchiveDay(code, date) {
   archiveCode = code;
   archiveDate = date;
   clips       = archiveClips;
-  gameState   = { clipIndex: 0, answers: [], done: false };
+  // Restore in-progress state if user already started this day
+  gameState   = archiveStates[code] || { clipIndex: 0, answers: [], done: false };
+  archiveStates[code] = gameState;
 
   $('archiveTag').textContent = date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' — Archive';
   $('archiveTag').classList.add('show');
-  $('archiveDayHeader').style.display = 'block';
-  $('archiveDayHeader').innerHTML = '<div class="archive-day-header-label">Archive</div><div class="archive-day-header-date">' + date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear() + '</div>';
   $('game').style.display = 'block';
   $('done').classList.remove('visible');
 
   buildProgress();
-  loadClip(0);
+  // If already answered some clips, restore to current clip (don't restart)
+  const ci = gameState.clipIndex;
+  if (gameState.answers.length > 0 && gameState.answers.length >= clips.length) {
+    // All clips answered already — show done state
+    showDone({ score: gameState.answers.filter(a => a.correct).length, total: clips.length, isArchive: true, date: date });
+  } else {
+    loadClip(ci);
+    // Re-apply answer states if this clip was already answered
+    if (gameState.answers.length > ci) {
+      const ans = gameState.answers[ci];
+      document.querySelectorAll('.answer').forEach(el => {
+        el.disabled = true;
+        const id = el.dataset.answer;
+        if      (id === ans.chosen && ans.correct)  el.classList.add('correct-selected');
+        else if (id === ans.chosen && !ans.correct) el.classList.add('wrong-selected');
+        else if (id === clips[ci].correct)          el.classList.add('reveal');
+        else                                        el.classList.add('dimmed');
+      });
+      $('nextButton').style.display = 'block';
+      $('nextButton').textContent = ci >= clips.length - 1 ? 'SEE RESULTS' : 'NEXT';
+    }
+  }
 }
 
 // ── CALENDAR ──────────────────────────────────
