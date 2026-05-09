@@ -41,7 +41,7 @@ body::before{
   opacity:.35;pointer-events:none;z-index:0;
 }
 
-.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:20px 16px 80px;}
+.wrapper{position:relative;z-index:1;width:100%;max-width:720px;margin:0 auto;padding:12px 14px 40px;}
 
 /* ── AUTH SCREEN ── */
 #authScreen{
@@ -108,21 +108,22 @@ video.ready{opacity:1;}
 .loading-text{font-size:13px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;}
 
 /* ── HEADER ── */
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-top:4px;}
-.logo{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:3px;line-height:1;}
-.logo span{display:block;margin-top:2px;font-size:12px;letter-spacing:3px;opacity:.45;font-family:'Barlow Condensed',sans-serif;}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-top:2px;}
+.logo{font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:3px;line-height:1;}
+.logo span{display:block;margin-top:1px;font-size:10px;letter-spacing:3px;opacity:.4;font-family:'Barlow Condensed',sans-serif;}
 .header-right{display:flex;align-items:center;gap:12px;}
 .streak{display:flex;flex-direction:column;align-items:center;gap:1px;}
-.streak-fire{font-size:22px;}
-.streak-count{font-family:'Bebas Neue',cursive;font-size:24px;line-height:1;color:#fb923c;}
+.streak-fire{font-size:18px;}
+.streak-count{font-family:'Bebas Neue',cursive;font-size:20px;line-height:1;color:#fb923c;}
 .streak-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
 .user-btn{
-  width:36px;height:36px;border-radius:50%;
-  background:var(--card-2);border:1px solid var(--border);
+  width:34px;height:34px;border-radius:50%;
+  background:var(--accent);color:#0a0f0a;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;font-size:16px;transition:border-color .2s;flex-shrink:0;
+  cursor:pointer;font-size:13px;font-weight:700;font-family:'Inter',sans-serif;
+  transition:background .2s;flex-shrink:0;letter-spacing:0.5px;
 }
-.user-btn:hover{border-color:var(--muted);}
+.user-btn:hover{background:#b5f040;}
 
 /* user menu */
 .user-menu{position:fixed;top:0;right:0;bottom:0;left:0;z-index:50;display:none;}
@@ -145,13 +146,13 @@ video.ready{opacity:1;}
 .user-menu-item.danger{color:var(--red);}
 
 /* ── NAV TABS ── */
-.nav-tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:4px;}
-.nav-tab{flex:1;padding:10px;border:none;background:transparent;color:var(--muted);font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;cursor:pointer;border-radius:10px;transition:background .15s,color .15s;}
+.nav-tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:3px;}
+.nav-tab{flex:1;padding:8px;border:none;background:transparent;color:var(--muted);font-family:'Bebas Neue',cursive;font-size:15px;letter-spacing:2px;cursor:pointer;border-radius:9px;transition:background .15s,color .15s;}
 .nav-tab:hover{color:var(--text);}
 .nav-tab.active{background:var(--card-2);color:var(--accent);border:1px solid var(--border);}
 
 /* ── PROGRESS ── */
-.progress{display:flex;gap:8px;margin-bottom:20px;}
+.progress{display:flex;gap:8px;margin-bottom:10px;}
 .progress-pip{flex:1;height:6px;border-radius:999px;background:#202820;overflow:hidden;position:relative;}
 .progress-pip.active::after{content:'';position:absolute;inset:0;background:var(--accent);animation:pulse 1.4s infinite;}
 .progress-pip.correct{background:var(--green);}
@@ -159,7 +160,7 @@ video.ready{opacity:1;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
 /* ── VIDEO ── */
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:20px;background:#000;border:1px solid #1f271f;box-shadow:0 20px 80px rgba(0,0,0,.55);}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:14px;background:#000;border:1px solid #1f271f;}
 video{width:100%;height:100%;object-fit:contain;background:#000;display:block;opacity:0;transition:opacity .35s ease;}
 
 .video-top{
@@ -188,12 +189,12 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 .archive-day-header-date{font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:var(--text);}
 
 /* ── HINT ── */
-.hint{text-align:center;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#9ca3af;margin:14px 0;min-height:18px;}
+.hint{text-align:center;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#9ca3af;margin:8px 0;min-height:16px;}
 
 /* ── ANSWERS ── */
-.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px;}
 .answer{
-  position:relative;padding:22px 14px;border-radius:18px;
+  position:relative;padding:14px 10px;border-radius:14px;
   border:1px solid #2d3a2c;
   background:linear-gradient(to bottom,#1b241a,#141a13);
   display:flex;flex-direction:column;align-items:center;gap:8px;
@@ -206,44 +207,46 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 .answer.wrong-selected{border-color:var(--red)!important;background:#450a0a!important;}
 .answer.reveal{border-color:var(--green)!important;background:#14532d55!important;}
 .answer.dimmed{opacity:.3;}
-.answer-icon{font-size:30px;}
-.answer-label{font-family:'Bebas Neue',cursive;letter-spacing:1.5px;font-size:18px;}
+.answer-icon{font-size:24px;}
+.answer-label{font-family:'Bebas Neue',cursive;letter-spacing:1px;font-size:16px;}
 .answer.none .answer-label{color:var(--green);}
 .answer.freekick .answer-label{color:var(--blue);}
 .answer.yellow .answer-label{color:var(--yellow);}
 .answer.red .answer-label{color:var(--red);}
 
 /* ── RESULT ── */
-.result{display:none;margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;animation:up .25s ease;}
+.result{display:none;margin-top:10px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px;animation:up .25s ease;}
 @keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.result-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.result-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
 .result-title{font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:24px;}
 .result-title.correct{color:var(--green);}
 .result-title.wrong{color:var(--red);}
 .result-tag{margin-left:auto;padding:4px 8px;border-radius:6px;background:#ffffff12;font-size:12px;letter-spacing:1px;font-weight:700;}
-.result-text{color:#a8b5a7;line-height:1.7;font-size:14px;}
+.result-text{color:#a8b5a7;line-height:1.6;font-size:13px;}
 
 /* ── NEXT ── */
-.next{width:100%;margin-top:16px;padding:16px;border:none;border-radius:18px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s;}
+.next{width:100%;margin-top:10px;padding:13px;border:none;border-radius:14px;background:var(--accent);color:#0a0f0a;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;cursor:pointer;display:none;transition:transform .15s;}
 .next:hover{transform:translateY(-2px);}
 .next.visible{display:block;}
 
 /* ── DONE ── */
-.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:22px;padding-top:20px;}
+.done{display:none;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-top:10px;}
 .done.visible{display:flex;}
-.done-emoji{font-size:70px;}
-.done-title{font-family:'Bebas Neue',cursive;font-size:54px;letter-spacing:4px;}
-.done-score{font-size:18px;color:var(--muted);}
-.done-score strong{color:var(--text);font-size:34px;}
+.done-emoji{font-size:50px;}
+.done-title{font-family:'Bebas Neue',cursive;font-size:40px;letter-spacing:4px;}
+.done-score{font-size:14px;color:var(--muted);}
+.done-score strong{color:var(--text);font-size:26px;}
 .score-row{display:flex;gap:10px;}
 .score-box{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
 .score-box.correct{background:#14532d;border:1px solid var(--green);}
 .score-box.wrong{background:#450a0a;border:1px solid var(--red);}
-.countdown-box{width:100%;background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;text-align:center;}
+.countdown-box{width:100%;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center;}
 .countdown-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.countdown{font-family:'Bebas Neue',cursive;font-size:42px;letter-spacing:4px;}
+.countdown{font-family:'Bebas Neue',cursive;font-size:34px;letter-spacing:4px;}
 .archive-done-date{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:var(--accent);display:none;}
-.btn-share{width:100%;padding:16px;border-radius:18px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:20px;letter-spacing:3px;transition:background .15s;}
+.total-points{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.total-points strong{color:var(--accent);font-size:14px;}
+.btn-share{width:100%;padding:13px;border-radius:14px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:3px;transition:background .15s;}
 .btn-share:hover{background:#b5f040;}
 
 /* ── CALENDAR ── */
@@ -358,7 +361,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
         <div class="streak-count" id="streakCount">0</div>
         <div class="streak-label">Streak</div>
       </div>
-      <div class="user-btn" onclick="toggleUserMenu()">👤</div>
+      <div class="user-btn" id="userBtn" onclick="toggleUserMenu()">?</div>
     </div>
   </header>
 
@@ -379,7 +382,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <div id="todayView">
 
-```
 <div id="game">
   <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
   <div class="progress" id="progress" style="display:none"></div>
@@ -410,6 +412,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   <div class="done-title">FULL TIME</div>
   <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
   <div class="score-row" id="scoreRow"></div>
+  <div class="total-points" id="totalPoints"></div>
   <div class="countdown-box">
     <div class="countdown-label" id="countdownLabel">Next clips in</div>
     <div class="countdown" id="countdown">00:00:00</div>
@@ -417,7 +420,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <button class="btn-share" onclick="shareResult()">SHARE RESULT</button>
 </div>
-```
 
   </div>
   <div id="calendarView">
@@ -695,7 +697,7 @@ function loadClip(index) {
   $('hint').style.display       = 'block';
   $('answersGrid').style.display = 'grid';
   video.classList.remove('ready');
-  $('clipLabel').textContent = `Clip ${index+1} of ${clips.length}`;
+  $('clipLabel').textContent = 'Clip ' + (index+1) + ' of ' + clips.length;
   $('hint').textContent      = 'Watch the clip';
   $('result').style.display  = 'none';
   $('nextButton').classList.remove('visible');
@@ -801,16 +803,21 @@ function showDone({ score, total, isArchive, date }) {
 
   const pct = score / total;
   $('doneEmoji').textContent  = score === total ? '🏆' : pct >= 0.6 ? '👏' : score > 0 ? '😬' : '💀';
-  $('finalScore').textContent = `${score}/${total}`;
+  $('finalScore').textContent = score + '/' + total;
+  // Total points across all played days
+  const allDays = Object.values(archive);
+  const totalCorrect = allDays.reduce((sum, d) => sum + (d.score || 0), 0);
+  const totalPlayed  = allDays.reduce((sum, d) => sum + (d.total || 0), 0);
+  $('totalPoints').innerHTML = 'Total: <strong>' + totalCorrect + '</strong> / ' + totalPlayed + ' correct across all days';
   $('scoreRow').innerHTML     = gameState.answers.map(a =>
-    `<div class="score-box ${a.correct ? 'correct' : 'wrong'}">${a.correct ? '✅' : '❌'}</div>`
+    '<div class="score-box ' + (a.correct ? 'correct' : 'wrong') + '">' + (a.correct ? '✅' : '❌') + '</div>'
   ).join('');
 
   if (isArchive) {
     $('countdownLabel').textContent    = 'Archive';
     $('countdown').style.display       = 'none';
     $('archiveDoneDate').style.display = 'block';
-    $('archiveDoneDate').textContent   = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;
+    $('archiveDoneDate').textContent   = date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear();
   } else {
     $('countdownLabel').textContent    = 'Next clips in';
     $('countdown').style.display       = 'block';
@@ -840,7 +847,7 @@ async function playArchiveDay(code, date) {
   clips       = archiveClips;
   gameState   = { clipIndex: 0, answers: [], done: false };
 
-  $('archiveTag').textContent = `${date.getDate()} ${MONTH_NAMES[date.getMonth()]} — Archive`;
+  $('archiveTag').textContent = date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' — Archive';
   $('archiveTag').classList.add('show');
   $('archiveDayHeader').style.display = 'block';
   $('archiveDayHeader').innerHTML = '<div class="archive-day-header-label">Archive</div><div class="archive-day-header-date">' + date.getDate() + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getFullYear() + '</div>';
@@ -866,7 +873,7 @@ function renderCalendar() {
   const firstDay    = new Date(calYear, calMonth, 1);
   const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
-  $('calMonthLabel').textContent = `${MONTH_NAMES[calMonth]} ${calYear}`;
+  $('calMonthLabel').textContent = MONTH_NAMES[calMonth] + ' ' + calYear;
   $('calPrev').disabled = (calYear === EARLIEST.getFullYear() && calMonth <= EARLIEST.getMonth());
   $('calNext').disabled = (calYear === NOW.getFullYear() && calMonth >= NOW.getMonth());
 
@@ -908,7 +915,7 @@ function renderCalendar() {
       const chk = document.createElement('div');
       chk.className = 'cal-check'; chk.textContent = '✓';
       el.appendChild(chk);
-      el.title = `${d} ${MONTH_NAMES[calMonth]} — ${hist.score}/${hist.total || 3} correct`;
+      el.title = d + ' ' + MONTH_NAMES[calMonth] + ' — ' + hist.score + '/' + (hist.total || 3) + ' correct';
 
     } else if (isToday) {
       el.classList.add('today-open');
@@ -943,9 +950,9 @@ window.shareResult = () => {
   const score   = gameState.answers.filter(a => a.correct).length;
   const pips    = gameState.answers.map(a => a.correct ? '🟩' : '🟥').join('');
   const dateStr = archiveDate
-    ? `${archiveDate.getDate()} ${MONTH_NAMES[archiveDate.getMonth()]} ${archiveDate.getFullYear()}`
+    ? archiveDate.getDate() + ' ' + MONTH_NAMES[archiveDate.getMonth()] + ' ' + archiveDate.getFullYear()
     : TODAY_ISO;
-  const text = `Be a Ref — ${dateStr}\n${pips}\n${score}/${clips.length}\n🔥 ${streak.count} day streak`;
+  const text = 'Be a Ref — ' + dateStr + '\n' + pips + '\n' + score + '/' + clips.length + '\n🔥 ' + streak.count + ' day streak';
   navigator.clipboard.writeText(text).then(() => showToast('COPIED'));
 };
 
@@ -972,6 +979,9 @@ onAuthStateChanged(auth, async (user) => {
   await loadUser(user.uid);
 
   $('menuName').textContent  = user.displayName || '';
+  const initials = (user.displayName || user.email || '?')
+    .split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+  $('userBtn').textContent = initials;
   $('menuEmail').textContent = user.email;
   $('streakCount').textContent = streak.count;
 
