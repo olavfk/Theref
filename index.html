@@ -244,8 +244,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
 .countdown-label{font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 .countdown{font-family:'Bebas Neue',cursive;font-size:34px;letter-spacing:4px;}
 .archive-done-date{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:2px;color:var(--accent);display:none;}
-.total-points{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
-.total-points strong{color:var(--accent);font-size:14px;}
+
 .btn-share{width:100%;padding:13px;border-radius:14px;border:none;background:var(--accent);color:#0a0f0a;cursor:pointer;font-family:'Bebas Neue',cursive;font-size:18px;letter-spacing:3px;transition:background .15s;}
 .btn-share:hover{background:#b5f040;}
 
@@ -361,6 +360,11 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
         <div class="streak-count" id="streakCount">0</div>
         <div class="streak-label">Streak</div>
       </div>
+      <div class="streak">
+        <div class="streak-fire">⭐</div>
+        <div class="streak-count" id="totalScore" style="color:var(--accent)">0</div>
+        <div class="streak-label">Points</div>
+      </div>
       <div class="user-btn" id="userBtn" onclick="toggleUserMenu()">?</div>
     </div>
   </header>
@@ -382,6 +386,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <div id="todayView">
 
+```
 <div id="game">
   <div class="archive-day-header" id="archiveDayHeader" style="display:none"></div>
   <div class="progress" id="progress" style="display:none"></div>
@@ -412,7 +417,6 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   <div class="done-title">FULL TIME</div>
   <div class="done-score">You scored <strong id="finalScore">0/3</strong></div>
   <div class="score-row" id="scoreRow"></div>
-  <div class="total-points" id="totalPoints"></div>
   <div class="countdown-box">
     <div class="countdown-label" id="countdownLabel">Next clips in</div>
     <div class="countdown" id="countdown">00:00:00</div>
@@ -420,6 +424,7 @@ video{width:100%;height:100%;object-fit:contain;background:#000;display:block;op
   </div>
   <button class="btn-share" onclick="shareResult()">SHARE RESULT</button>
 </div>
+```
 
   </div>
   <div id="calendarView">
@@ -477,6 +482,11 @@ const db   = getFirestore(app);
 
 // ── helpers ──────────────────────────────────
 const $ = id => document.getElementById(id);
+
+function updateTotalScore() {
+  const total = Object.values(archive).reduce((sum, d) => sum + (d.score || 0), 0);
+  $('totalScore').textContent = total;
+}
 
 function showToast(msg) {
   const t = $('toast'); t.textContent = msg;
@@ -778,6 +788,7 @@ function finishGame() {
   if (archiveMode) {
     archive[archiveCode] = { done: true, score, total, answers: gameState.answers };
     saveUser();
+    updateTotalScore();
     const savedDate = archiveDate;
     archiveMode = false;
     archiveCode = null;
@@ -794,6 +805,7 @@ function finishGame() {
   saveUser();
 
   $('streakCount').textContent = streak.count;
+  updateTotalScore();
   showDone({ score, total, isArchive: false });
 }
 
@@ -804,11 +816,7 @@ function showDone({ score, total, isArchive, date }) {
   const pct = score / total;
   $('doneEmoji').textContent  = score === total ? '🏆' : pct >= 0.6 ? '👏' : score > 0 ? '😬' : '💀';
   $('finalScore').textContent = score + '/' + total;
-  // Total points across all played days
-  const allDays = Object.values(archive);
-  const totalCorrect = allDays.reduce((sum, d) => sum + (d.score || 0), 0);
-  const totalPlayed  = allDays.reduce((sum, d) => sum + (d.total || 0), 0);
-  $('totalPoints').innerHTML = 'Total: <strong>' + totalCorrect + '</strong> / ' + totalPlayed + ' correct across all days';
+
   $('scoreRow').innerHTML     = gameState.answers.map(a =>
     '<div class="score-box ' + (a.correct ? 'correct' : 'wrong') + '">' + (a.correct ? '✅' : '❌') + '</div>'
   ).join('');
@@ -984,6 +992,7 @@ onAuthStateChanged(auth, async (user) => {
   $('userBtn').textContent = initials;
   $('menuEmail').textContent = user.email;
   $('streakCount').textContent = streak.count;
+  updateTotalScore();
 
   clips = await buildClips(TODAY_CODE);
   todayClips = clips;
